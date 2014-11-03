@@ -21,7 +21,7 @@ import java.util.Date;
  * <br/>
  * Created by k3b on 03.11.2014.
  */
-public class IntegrationTest {
+public class CompressJobIntegrationTests {
     static private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
     static private File root = new File(System.getProperty("java.io.tmpdir")
             + "/k3bZipTests/"
@@ -46,7 +46,7 @@ public class IntegrationTest {
         CompressJob sut = new CompressJob(testZip);
         sut.add("", testContent.getAbsolutePath());
         int itemCount = sut.compress();
-        Assert.assertEquals(1,itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class IntegrationTest {
         item.setZipFileName(testContent.getName());
         int itemCount = sut.compress();
         Assert.assertEquals(2,itemCount);
-        Assert.assertEquals("testFile(1).txt",item.getZipFileName());
+        Assert.assertEquals("testFile(1).txt", item.getZipFileName());
     }
 
     private static void createTestFile(File testContent, Date fileDate) throws IOException {
