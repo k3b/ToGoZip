@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //  compile 'org.slf4j:slf4j-android:1.7.7'
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    testCompile 'junit:junit:4.11'
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito', version:'1.5.2'
+    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version:'1.5.2'
+    testCompile 'org.slf4j:slf4j-simple:1.7.7'
+}
