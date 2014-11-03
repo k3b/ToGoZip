@@ -9,7 +9,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * Created by EVE on 02.11.2014.
+ * unit-tests using mocked Zip*-api
+ * Created by k3b on 02.11.2014.
  */
 public class CompressJobTests {
 
@@ -19,8 +20,8 @@ public class CompressJobTests {
 
     @Before
     public void setup() {
-        zeA = new ZipEntry("a.txt");zeA.setTime(1);
-        zeA1 = new ZipEntry("a(1).txt");zeA1.setTime(2);
+        zeA = new ZipEntry("a.txt");zeA.setTime(10000);
+        zeA1 = new ZipEntry("a(1).txt");zeA1.setTime(20000);
         zipFile = mock(ZipFile.class);
         when(zipFile.getEntry(eq("a.txt"))).thenReturn(zeA);
         when(zipFile.getEntry(eq("a(1).txt"))).thenReturn(zeA1);
@@ -65,7 +66,7 @@ public class CompressJobTests {
 
         CompressJob sut = new CompressJob(null);
 
-        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime()+99);
+        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime()+9900);
 
         Assert.assertEquals("a(2).txt", result);
     }
