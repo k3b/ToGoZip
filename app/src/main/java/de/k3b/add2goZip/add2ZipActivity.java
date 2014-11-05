@@ -4,14 +4,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import de.k3b.add2goZip.R;
 
 public class add2ZipActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add2_go_zip);
+        setContentView(R.layout.activity_add2zip);
     }
 
 
