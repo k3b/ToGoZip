@@ -306,7 +306,8 @@ public class CompressJob {
     /** formats context message and does low level logging */
     private String getMessage(String format, Object... params) {
         String result = MessageFormat.format(format, params);
-        System.out.println(result);
+        logger.debug(result);
+        // System.out.println(result);
         return result;
     }
 

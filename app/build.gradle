@@ -25,4 +25,11 @@ dependencies {
     //  compile 'eu.lp0.slf4j:slf4j-android:1.7.7-1'
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.android.support:support-v4:20.0.0'
+    compile project(':libK3bZip')
+    //  compile 'org.slf4j:slf4j-android:1.7.7@jar' // replaces cellInfoLib.'slf4j-api'
+    compile 'eu.lp0.slf4j:slf4j-android:1.7.7-1@jar'
+    // using slf4j-android-1.7.6-1-SNAPSHOT.jar from libs
+    //  compile 'org.slf4j:slf4j-api:1.7.6@jar'
+    // compile 'com.android.support:appcompat-v7:19.+'
+    compile 'org.slf4j:slf4j-api:1.7.7@jar'
 }

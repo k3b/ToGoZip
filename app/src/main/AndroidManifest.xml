@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.k3b.add2goZip" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,6 +20,26 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.INSERT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:scheme="file" />
+                <!-- android does not allow to download *.ics-files via bluetooth but it works with other extensions.
+                    according to http://en.wikipedia.org/wiki/ICalendar .ical and .icalendar are also used.
+                <data android:pathPattern=".*\\.ics" />
+                <data android:pathPattern=".*\\.ical" />
+                <data android:pathPattern=".*\\.icalendar" />
+                 -->
+            </intent-filter>
+
         </activity>
     </application>
 

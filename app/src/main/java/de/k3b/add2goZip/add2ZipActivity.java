@@ -1,24 +1,40 @@
 package de.k3b.add2goZip;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.io.File;
+import java.net.URI;
+
+import de.k3b.zip.CompressJob;
 
 public class Add2ZipActivity extends ActionBarActivity {
+
+    private static final String TAG = "Add2ZipActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add2zip);
+        init();
+    }
 
+    private void init() {
         final Button saveButton = (Button) this
                 .findViewById(R.id.ButtonSaveTimeSlice);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                addToZip();
                 /*
                 TimeSliceEditActivity.this.timeSlice
                         .setNotes(TimeSliceEditActivity.this.notesEditText
@@ -65,4 +81,40 @@ public class Add2ZipActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private File getCurrentZipFile() {
+        final File sdcard = Environment.getExternalStorageDirectory();
+        String path = sdcard.getAbsolutePath() + File.separator + "copy"
+                + File.separator + "2go.zip";
+
+        return new File(path);
+    }
+
+    private void addToZip() {
+        File fileToBeAdded = getFileToBeAdded();
+        if (fileToBeAdded != null) {
+            File currentZipFile = getCurrentZipFile();
+            currentZipFile.getParentFile().mkdirs();
+            CompressJob sut = new CompressJob(currentZipFile);
+            sut.add("", fileToBeAdded.getAbsolutePath());
+            sut.compress();
+            Toast.makeText(this,"added " + fileToBeAdded, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private File getFileToBeAdded() {
+        Intent intent = getIntent();
+
+        Uri data = intent.getData();
+
+        if (Global.debugEnabled) {
+            Log.d(TAG, "getFileToBeAdded " + data);
+        }
+
+        if ((data != null)  && ("file".equalsIgnoreCase(data.getScheme()))) {
+            return new File(data.getPath());
+        }
+        return null;
+    }
+
 }
