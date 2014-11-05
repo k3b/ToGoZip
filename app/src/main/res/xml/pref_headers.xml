@@ -3,15 +3,15 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="de.k3b.add2zip.Add2ZipActivity$GeneralPreferenceFragment"
+        android:fragment="de.k3b.add2goZip.test$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="de.k3b.add2zip.Add2ZipActivity$NotificationPreferenceFragment"
+        android:fragment="de.k3b.add2goZip.test$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications" />
 
     <header
-        android:fragment="de.k3b.add2zip.Add2ZipActivity$DataSyncPreferenceFragment"
+        android:fragment="de.k3b.add2goZip.test$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />
 
 </preference-headers>
