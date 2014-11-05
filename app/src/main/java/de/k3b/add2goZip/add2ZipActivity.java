@@ -4,13 +4,46 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-public class add2ZipActivity extends ActionBarActivity {
+public class Add2ZipActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add2zip);
+
+        final Button saveButton = (Button) this
+                .findViewById(R.id.ButtonSaveTimeSlice);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                /*
+                TimeSliceEditActivity.this.timeSlice
+                        .setNotes(TimeSliceEditActivity.this.notesEditText
+                                .getText().toString());
+                if (TimeSliceEditActivity.this.validate()) {
+                    final Intent intent = new Intent();
+                    intent.putExtra(Global.EXTRA_TIMESLICE,
+                            TimeSliceEditActivity.this.timeSlice);
+                    TimeSliceEditActivity.this.setResult(Activity.RESULT_OK,
+                            intent);
+                }
+                */
+                finish();
+            }
+        });
+
+
+        final Button cancelButton = (Button) this
+                .findViewById(R.id.ButtonCancelTimeSlice);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
     }
 
 

@@ -12,7 +12,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".add2ZipActivity"
+            android:name=".Add2ZipActivity"
             android:label="@string/title_activity_add2_go_zip" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
