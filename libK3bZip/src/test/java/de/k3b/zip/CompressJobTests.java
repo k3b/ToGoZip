@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 import org.junit.*;
 // import org.mockito.Mock;
 
+import java.io.File;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -31,7 +32,7 @@ public class CompressJobTests {
     public void shouldRenameExisting() {
 
         CompressJob sut = new CompressJob(null);
-        sut.add("", "a.txt");
+        sut.addItem("", new File("a.txt"));
 
         List<CompressItem> result = sut.handleDuplicates(zipFile);
 
@@ -66,7 +67,7 @@ public class CompressJobTests {
 
         CompressJob sut = new CompressJob(null);
 
-        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime()+9900);
+        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime()+99900);
 
         Assert.assertEquals("a(2).txt", result);
     }

@@ -25,6 +25,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.INSERT" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -32,14 +34,12 @@
                 <data android:mimeType="*/*" />
                 <data android:host="*" />
                 <data android:scheme="file" />
-                <!-- android does not allow to download *.ics-files via bluetooth but it works with other extensions.
-                    according to http://en.wikipedia.org/wiki/ICalendar .ical and .icalendar are also used.
-                <data android:pathPattern=".*\\.ics" />
-                <data android:pathPattern=".*\\.ical" />
-                <data android:pathPattern=".*\\.icalendar" />
-                 -->
             </intent-filter>
-
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
         </activity>
     </application>
 

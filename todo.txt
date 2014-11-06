@@ -1,0 +1,6 @@
+todo.txt for k3b.add2Zip
+=========
+
+android
+	status-message beifehler/success
+		fehlermeldung wenn keine datei übergeben wurde

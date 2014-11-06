@@ -10,5 +10,10 @@
     <string name="add2zip_question">Do you want to add to zip?</string>
     <string name="zip_name">zip</string>
     <string name="zip_prompt">Zip to use</string>
+    <string name="default_zip_path">copy/2go.zip</string>
+    <string name="ERR_ADD">Could not update  %1$s :\n%2$s</string>
+    <string name="WARN_ADD_NO_CHANGES">Files are already included in\n%1$s</string>
+    <string name="SUCCESS_ADD">added %2$d files to \n%1$s</string>
+    <string name="WARN_ADD_NO_FILES">No files selected</string>
 
 </resources>

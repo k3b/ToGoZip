@@ -9,11 +9,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -22,6 +23,9 @@ import java.util.zip.ZipOutputStream;
 
 public class CompressJob {
     private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
+
+    public static final int RESULT_NO_CHANGES = 0;
+    public static final int RESULT_ERROR_ABOART = -1;
 
     // global settings
     /** remove obsoled bak file when done */
@@ -41,6 +45,7 @@ public class CompressJob {
 
     // used to copy content
     private byte[] buffer = new byte[4096];
+    private String lastError;
 
     public CompressJob(File destZip) {
         this.destZip = destZip;
@@ -50,15 +55,31 @@ public class CompressJob {
     public void add(String destZipPath, String... srcFiles) {
         if (srcFiles != null) {
             for (String srcFile : srcFiles) {
-                addItem(destZipPath, new File(srcFile));
+                add(destZipPath, new File(srcFile));
             }
         }
 
     }
 
-    /** this file will be added to the zip. package to allow unittesting */
+    /** these files will be added to the zip. */
+    public CompressItem add(String destZipPath, File... srcFiles) {
+        CompressItem item = null;
+        if (srcFiles != null) {
+            for (File srcFile : srcFiles) {
+                if (srcFile.isDirectory()) {
+                    String subDir = (destZipPath.length() > 0 ) ? destZipPath + "/" + srcFile.getName() + "/" : srcFile.getName() + "/";
+                    add(subDir, srcFile.listFiles());
+                } else if (srcFile.isFile()) {
+                    item = addItem(destZipPath, srcFile);
+                }
+            }
+        }
+        return item;
+    }
+
     CompressItem addItem(String destZipPath, File srcFile) {
-        CompressItem item = new CompressItem().setFile(srcFile).setZipFileName(
+        CompressItem item;
+        item = new CompressItem().setFile(srcFile).setZipFileName(
                 destZipPath + srcFile.getName());
         items.add(item);
         return item;
@@ -143,7 +164,7 @@ public class CompressJob {
             String newZifFileName = zipFileName + id + extension;
             ZipEntry newZipEntry = zipFile.getEntry(newZifFileName);
             if (newZipEntry == null) {
-                logger.debug("renamed zipentry from '{}' to '{}'", zipFileName, newZifFileName);
+                logger.debug("renamed zipentry from '{}' to '{}'", zipEntry.getName(), newZifFileName);
                 return newZifFileName;
             }
 
@@ -161,7 +182,20 @@ public class CompressJob {
 
     private boolean sameDate(ZipEntry zipEntry, long fileLastModified) {
         // may varay in millisec
-        return (fileLastModified / 1000) == (zipEntry.getTime() / 1000);
+        long zipLastModified = zipEntry.getTime();
+        long timeDiff = Math.abs(fileLastModified - zipLastModified);
+
+        if (logger.isDebugEnabled()) {
+            DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+            logger.debug("sameDate({}): {} <=> {} : diff {} millisecs"
+                    ,zipEntry.getName()
+                    , f.format(new java.util.Date(zipLastModified))
+                    , f.format(new java.util.Date(fileLastModified))
+                    , timeDiff
+            );
+        }
+
+        return timeDiff < 10000; // 10 seconds
     }
 
     // to make shure that orginal is not broken if there is an error:
@@ -169,13 +203,14 @@ public class CompressJob {
     // 2) rename exising to somefile.zip.bak
     // 3) rename somefile.zip.tmp to somefile.zip
     // 4) delete exising to somefile.zip.bak
-    /** @return number of items in the result zip or -1 if no change */
+    /** @return number of items in the result zip or RESULT_XXX  */
     public int compress() {
+        lastError = "";
         handleDuplicates();
 
         if (items.size() == 0) {
             logger.debug("aboard: no (more) files to add to zip");
-            return -1;
+            return RESULT_NO_CHANGES;
         }
 
         // global to allow garbage collection if there is an exception
@@ -244,7 +279,7 @@ public class CompressJob {
                         this.destZip, oldZip);
                 // i.e. /path/to/somefile.zip => /path/to/somefile.zip.bak
                 if (!this.destZip.renameTo(oldZip)) {
-                    thowrError("failed in " + context);
+                    thowrError(context);
                 }
             }
 
@@ -258,7 +293,7 @@ public class CompressJob {
                     oldZip.renameTo(this.destZip);
                 }
 
-                thowrError("failed in " + context);
+                thowrError(context);
             }
 
             // 4) delete exising renamed old somefile.zip.bak
@@ -271,8 +306,13 @@ public class CompressJob {
                     this.destZip);
 
         } catch (Exception e) {
-            System.err.println("Exception in " + context);
-            e.printStackTrace();
+            String errorMessage = e.getMessage();
+            if (!errorMessage.contains(context)) {
+                errorMessage = "Error in " + context + ":" + errorMessage;
+            }
+            logger.error(errorMessage, e);
+            this.lastError = errorMessage;
+            return RESULT_ERROR_ABOART;
         } finally {
             // 3) rename new created somefile.zip.tmp to somefile.zip
             context = getMessage("(5b) free resources");
@@ -285,8 +325,7 @@ public class CompressJob {
                 if (out != null)
                     out.close();
             } catch (IOException e) {
-                System.err.println("Exception in " + context);
-                e.printStackTrace();
+                logger.info("Error in " + context, e);
             }
         }
         return itemCount;
@@ -312,7 +351,7 @@ public class CompressJob {
     }
 
     private void thowrError(String message) throws Exception {
-        throw new Exception(message);
+        throw new Exception("failed in " + message);
     }
 
     /** add one item to zip */
@@ -330,4 +369,11 @@ public class CompressJob {
         }
     }
 
+    public String getLastError() {
+        return lastError;
+    }
+
+    public int getAddCount() {
+        return this.items.size();
+    }
 }

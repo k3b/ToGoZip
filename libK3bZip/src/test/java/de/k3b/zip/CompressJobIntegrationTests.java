@@ -30,14 +30,20 @@ public class CompressJobIntegrationTests {
     static private File testZip = new File(root, "test.zip");
     static private File testContent = new File(root, "testFile.txt");
     static private File testContent2 = new File(root, "testFile2.txt");
+    static private File testDirWith2SubItems = new File(root, "dir");
+    static private File testContent3 = new File(testDirWith2SubItems, "testFile3.txt");
+    static private File testContent4 = new File(testDirWith2SubItems, "testFile4.txt");
 
     private CompressJob sut;
 
     @BeforeClass
     static public void createTestData() throws IOException, ParseException {
         root.mkdirs();
+        testDirWith2SubItems.mkdirs();
         createTestFile(testContent, format.parse("1980-12-24_123456-123"));
         createTestFile(testContent2, new Date());
+        createTestFile(testContent3, format.parse("1981-12-24_123456-123"));
+        createTestFile(testContent4, format.parse("1982-12-24_123456-123"));
     }
 
     @Before
@@ -55,7 +61,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = new CompressJob(testZip);
         sut.add("", testContent.getAbsolutePath());
         int itemCount = sut.compress();
-        Assert.assertEquals(-1,itemCount);
+        Assert.assertEquals(CompressJob.RESULT_NO_CHANGES,itemCount);
     }
 
     @Test
@@ -68,10 +74,19 @@ public class CompressJobIntegrationTests {
     }
 
     @Test
+    public void shouldAppendDir()
+    {
+        CompressJob sut = new CompressJob(testZip);
+        sut.add("", testDirWith2SubItems);
+        int itemCount = sut.compress();
+        Assert.assertEquals(3,itemCount);
+    }
+
+    @Test
     public void shouldRenameSameFileNameWithDifferentDate()
     {
         CompressJob sut = new CompressJob(testZip);
-        CompressItem item = sut.addItem("", testContent2);
+        CompressItem item = sut.add("", testContent2);
         item.setZipFileName(testContent.getName());
         int itemCount = sut.compress();
         Assert.assertEquals(2,itemCount);
