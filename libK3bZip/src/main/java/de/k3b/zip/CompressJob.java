@@ -78,11 +78,20 @@ public class CompressJob {
     }
 
     CompressItem addItem(String destZipPath, File srcFile) {
+        if (find(srcFile) != null) return null;
+
         CompressItem item;
         item = new CompressItem().setFile(srcFile).setZipFileName(
                 destZipPath + srcFile.getName());
         items.add(item);
         return item;
+    }
+
+    private CompressItem find(File file) {
+        for (CompressItem item : this.items) {
+            if (file.equals(item.getFile())) return item;
+        }
+        return null;
     }
 
     /** depending on global options: duprlicate zip entries are either ignored or renamed */

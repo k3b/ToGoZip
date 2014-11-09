@@ -1,13 +1,19 @@
 package de.k3b.zip;
 
-import static org.mockito.Mockito.*;
-import org.junit.*;
-// import org.mockito.Mock;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+// import org.mockito.Mock;
 
 /**
  * unit-tests using mocked Zip*-api
@@ -37,6 +43,16 @@ public class CompressJobTests {
         List<CompressItem> result = sut.handleDuplicates(zipFile);
 
         Assert.assertEquals("a(2).txt", result.get(0).getZipFileName());
+    }
+
+    @Test
+    public void shouldNotAddDuplicate() {
+
+        CompressJob sut = new CompressJob(null);
+        sut.addItem("", new File("a.txt"));
+        CompressItem result = sut.addItem("", new File("a.txt"));
+
+        Assert.assertEquals(null, result);
     }
 
     @Test

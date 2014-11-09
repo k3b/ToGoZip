@@ -21,51 +21,41 @@ public class Add2ZipActivity extends ActionBarActivity {
 
     private static final String TAG = "Add2ZipActivity";
 
+    private final int ACTIVITY_CHOOSE_FILE = 4711;
+
+    //############## state ############
+
     private File[] fileToBeAdded = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.fileToBeAdded = getFileToBeAdded();
+
         if (this.fileToBeAdded == null) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
             this.finish();
         }
-        setContentView(R.layout.activity_add2zip);
-        init();
+
+        if (isGuiEnabled()) {
+            setContentView(R.layout.activity_add2zip);
+            initGui();
+        } else {
+            addToZip();
+            finish();
+        }
     }
 
-    private void init() {
-        final Button saveButton = (Button) this
-                .findViewById(R.id.ButtonSaveTimeSlice);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                addToZip();
-                /*
-                TimeSliceEditActivity.this.timeSlice
-                        .setNotes(TimeSliceEditActivity.this.notesEditText
-                                .getText().toString());
-                if (TimeSliceEditActivity.this.validate()) {
-                    final Intent intent = new Intent();
-                    intent.putExtra(Global.EXTRA_TIMESLICE,
-                            TimeSliceEditActivity.this.timeSlice);
-                    TimeSliceEditActivity.this.setResult(Activity.RESULT_OK,
-                            intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case ACTIVITY_CHOOSE_FILE: {
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    String filePath = uri.getPath();
                 }
-                */
-                finish();
             }
-        });
-
-
-        final Button cancelButton = (Button) this
-                .findViewById(R.id.ButtonCancelTimeSlice);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                finish();
-            }
-        });
+        }
     }
 
     @Override
@@ -87,31 +77,47 @@ public class Add2ZipActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initGui() {
+        final Button saveButton = (Button) this
+                .findViewById(R.id.ButtonSaveTimeSlice);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                addToZip();
+                finish();
+            }
+        });
+
+
+        final Button cancelButton = (Button) this
+                .findViewById(R.id.ButtonCancelTimeSlice);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
+
+        final Button fileButton = (Button) this
+                .findViewById(R.id.ButtonChooseFile);
+        fileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                chooseFile();
+            }
+        });
+    }
+
+    //############ state ##########
+
+    private boolean isGuiEnabled() {
+        return false; // todo implement gui
+    }
+
     private File getCurrentZipFile() {
         final File sdcard = Environment.getExternalStorageDirectory();
 
         return new File(sdcard.getAbsolutePath(), getString(R.string.default_zip_path));
-    }
-
-    private void addToZip() {
-        File currentZipFile = getCurrentZipFile();
-
-        if (fileToBeAdded != null) {
-            currentZipFile.getParentFile().mkdirs();
-            CompressJob job = new CompressJob(currentZipFile);
-            job.add("", fileToBeAdded);
-            int result = job.compress();
-            if (result == CompressJob.RESULT_ERROR_ABOART) {
-                Toast.makeText(this,
-                        String.format(getString(R.string.ERR_ADD),
-                                currentZipFile.getAbsolutePath(), job.getLastError()), Toast.LENGTH_LONG).show();
-            }
-            if (result == CompressJob.RESULT_NO_CHANGES) {
-                Toast.makeText(this, String.format(getString(R.string.WARN_ADD_NO_CHANGES), currentZipFile.getAbsolutePath()), Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, String.format(getString(R.string.SUCCESS_ADD), currentZipFile.getAbsolutePath(), job.getAddCount()), Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private File[] getFileToBeAdded() {
@@ -140,10 +146,42 @@ public class Add2ZipActivity extends ActionBarActivity {
         return result.toArray(new File[len]);
     }
 
+    //############ processing ########
+
+    private void addToZip() {
+        File currentZipFile = getCurrentZipFile();
+
+        if (this.fileToBeAdded != null) {
+            currentZipFile.getParentFile().mkdirs();
+            CompressJob job = new CompressJob(currentZipFile);
+            job.add("", this.fileToBeAdded);
+            int result = job.compress();
+            if (result == CompressJob.RESULT_ERROR_ABOART) {
+                Toast.makeText(this,
+                        String.format(getString(R.string.ERR_ADD),
+                                currentZipFile.getAbsolutePath(), job.getLastError()), Toast.LENGTH_LONG).show();
+            }
+            if (result == CompressJob.RESULT_NO_CHANGES) {
+                Toast.makeText(this, String.format(getString(R.string.WARN_ADD_NO_CHANGES), currentZipFile.getAbsolutePath()), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, String.format(getString(R.string.SUCCESS_ADD), currentZipFile.getAbsolutePath(), job.getAddCount()), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void addResult(ArrayList<File> result, Uri data) {
         if ((data != null) && ("file".equalsIgnoreCase(data.getScheme()))) {
             result.add(new File(data.getPath()));
         }
+    }
+
+    private void chooseFile() {
+        Intent chooseFile;
+        Intent intent;
+        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("folder/*");
+        intent = Intent.createChooser(chooseFile, "Choose a file");
+        startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
     }
 
 }

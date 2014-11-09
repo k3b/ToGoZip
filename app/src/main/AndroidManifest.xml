@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.k3b.add2goZip" >
+    package="de.k3b.add2goZip">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".test"
-            android:label="@string/app_name" >
-        </activity>
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Add2ZipActivity"
-            android:label="@string/title_activity_add2_go_zip" >
-            <intent-filter>
+            android:label="@string/title_activity_add2_go_zip">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
