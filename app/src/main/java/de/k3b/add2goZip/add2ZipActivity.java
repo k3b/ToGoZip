@@ -1,15 +1,10 @@
-package de.k3b.add2goZip;
+package de.k3b.add2GoZip;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -17,7 +12,7 @@ import java.util.ArrayList;
 
 import de.k3b.zip.CompressJob;
 
-public class Add2ZipActivity extends ActionBarActivity {
+public class Add2ZipActivity extends Activity {
 
     private static final String TAG = "Add2ZipActivity";
 
@@ -30,94 +25,20 @@ public class Add2ZipActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SettingsImpl.init(this);
+
         this.fileToBeAdded = getFileToBeAdded();
 
         if (this.fileToBeAdded == null) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
-            this.finish();
-        }
-
-        if (isGuiEnabled()) {
-            setContentView(R.layout.activity_add2zip);
-            initGui();
         } else {
             addToZip();
-            finish();
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ACTIVITY_CHOOSE_FILE: {
-                if (resultCode == RESULT_OK) {
-                    Uri uri = data.getData();
-                    String filePath = uri.getPath();
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.add2_go_zip, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void initGui() {
-        final Button saveButton = (Button) this
-                .findViewById(R.id.ButtonSaveTimeSlice);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                addToZip();
-                finish();
-            }
-        });
-
-
-        final Button cancelButton = (Button) this
-                .findViewById(R.id.ButtonCancelTimeSlice);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                finish();
-            }
-        });
-
-        final Button fileButton = (Button) this
-                .findViewById(R.id.ButtonChooseFile);
-        fileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                chooseFile();
-            }
-        });
-    }
-
-    //############ state ##########
-
-    private boolean isGuiEnabled() {
-        return false; // todo implement gui
+        this.finish();
     }
 
     private File getCurrentZipFile() {
-        final File sdcard = Environment.getExternalStorageDirectory();
-
-        return new File(sdcard.getAbsolutePath(), getString(R.string.default_zip_path));
+        return new File(SettingsImpl.getZipfile());
     }
 
     private File[] getFileToBeAdded() {
@@ -174,14 +95,4 @@ public class Add2ZipActivity extends ActionBarActivity {
             result.add(new File(data.getPath()));
         }
     }
-
-    private void chooseFile() {
-        Intent chooseFile;
-        Intent intent;
-        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-        chooseFile.setType("folder/*");
-        intent = Intent.createChooser(chooseFile, "Choose a file");
-        startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
-    }
-
 }

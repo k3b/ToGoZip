@@ -19,5 +19,8 @@
     <setting name="window_width" value="800"/>  
     <setting name="window_height" value="800"/>  
     <setting name="extended-state" value="0"/> 
+  </setting>  
+  <setting name="main_panel"> 
+    <setting name="current-tab" value="Task Tree"/> 
   </setting> 
 </root>

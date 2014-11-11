@@ -2,18 +2,105 @@
 <resources>
 
     <string name="app_name">Add2GoZip</string>
-    <string name="title_activity_add2_go_zip">add to zip</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="cmd_ok">Ok</string>
-    <string name="cmd_cancel">Cancel</string>
-    <string name="add2zip_question">Do you want to add to zip?</string>
-    <string name="zip_name">zip</string>
-    <string name="zip_prompt">Zip to use</string>
     <string name="default_zip_path">copy/2go.zip</string>
     <string name="ERR_ADD">Could not update  %1$s :\n%2$s</string>
     <string name="WARN_ADD_NO_CHANGES">Files are already included in\n%1$s</string>
     <string name="SUCCESS_ADD">added %2$d files to \n%1$s</string>
     <string name="WARN_ADD_NO_FILES">No files selected</string>
+    <string name="title_activity_add2_go_zip">Add To Zip</string>
+    <string name="about_summary">About Add2GoZip</string>
+    <string name="about_content_about">"<![CDATA[
+    <h2>About</h2><a href="https://github.com/k3b/EzTimeTracker/wiki">EZTime Tracker</a>&nbsp;is an Android app to
+    record timespend&nbsp;on&nbsp;user definable activities/categories. <br /><br />
+    It records the time between "punch in" and "punch out" even if theapp&nbsp;is not running.<br /><br />
+    There are reports for details or totals by day, week, month, year and/orcategory that can be
+    viewed or exported to textfile/email. You can alsouse your favorite SqLite-Databaseprogram to
+    filter the data using thedatabase-view 'time_slice_report'.<br /><br /><br />
+    Raw data can be exported to csv file on sd-card. <br /><br />
+    <a href="http://kebabapps.blogspot.com/search/label/Llama">AndroidLlama</a> + <a href="https://github.com/k3b/EzTimeTracker/wiki">EZ TimeTracker</a> =&nbsp;location based timetracking: i.e.aoutmatic recording when entering/leaving job/buro.<br />
+    <br />
+    ]]>"</string>
+
+    		<string name="about_content"><![CDATA[ <html><body>
+<a href="https://github.com/k3bAdd2GoZip/wiki"><b>Add2GoZip</b></a><br/>Version $versionName$
+<br />
+<hr />
+$about$
+<hr />
+<h2>History</h2>
+Improvements v0.1.2.20141111<br />
+<ul>
+  <li>Added Settings Activity to define zip-file.</li>
+  <li>Added this About-Box in Settings.</li>
+</ul>
+<br />
+Improvements v0.1.1.20141109<br />
+<ul>
+  <li>Created share handler for Add To Zip without a gui.</li>
+  <li>Hardcoded zipfile /sdcard/copy/2go.zip.</li>
+  <li>Implemented view/send/sendto/send_multible for file and folder.</li>
+  <li>slf4j-android support.</li>
+  <li>.</li>
+  <li>.</li>
+  <li>Android independant zip enginge
+      <ul>
+          <li>Create folder/zip if it does not exist yet.</li>
+          <li>Rename file in zip if already exists.</li>
+          <li>slf4j support.</li>
+          <li>With j2se Unit- and Integration-Tests.</li>
+      </ul>
+  </li>
+  <li></li>
+</ul>
+<hr />
+<h2>Links</h2>
+<ul>
+  <li>Source code of current version of Add2GoZip at git repository@github.com<br />
+    <a href="https://github.com/k3bAdd2GoZip/">https://github.com/k3bAdd2GoZip/</a></li>
+  <li>slf4j logging driver for android eu.lp0.slf4j:slf4j-android<br />
+    <a href="https://github.com/lp0/slf4j-android">https://github.com/lp0/slf4j-android</a>
+  </li>
+  <li>slf4j logging for java org.slf4j:slf4j-api<br />
+    <a href="http://www.slf4j.org/">http://www.slf4j.org/</a>
+  </li>
+  <li>junit Testing support junit:junit<br />
+    <a href="http://junit.org/">http://junit.org/</a>
+  </li>
+  <li>powermock-mockito Testing support powermock-api-mockito<br />
+    <a href="https://code.google.com/p/powermock/">https://code.google.com/p/powermock/</a><br />
+    <a href="https://github.com/mockito/mockito">https://github.com/mockito/mockito</a>
+  </li>
+  <li><br />
+    <a href=""></a>
+  </li>
+
+
+</ul>
+<br />
+<hr />
+<h2>Legal stuff</h2>
+<b>EZ Time Tracker</b>&nbsp;<br />
+&nbsp;<br />
+Copyright © 2010 by <a href="http://zettsetttech.blogspot.com/">Eric
+Z</a><br />
+Copyright © 2012 by k3b<br />
+Licensed under the Apache License, Version 2.0.<br />
+<br />
+<a href="#%20http://code.google.com/p/android-dateslider/">DateSlider</a>
+© 2011 Daniel Berndt - Codeus Ltd<br />
+Licensed under the Apache License, Version 2.0.<br />
+<br />
+You may obtain a copy of the License at<br />
+<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br />
+<br />
+<br />
+Android is a trademark of Google Inc. Use of this trademark is subject
+to Google Permissions.
+<br />
+<hr /><br />
+
+</body></html>
+]]>
+</string>
 
 </resources>

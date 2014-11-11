@@ -1,4 +1,4 @@
-package de.k3b.add2goZip;
+package de.k3b.add2GoZip;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

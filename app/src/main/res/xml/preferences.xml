@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    android:key="preferences"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Settings"
+        android:key="first_category">
+
+        <!-- EditTextPreference -->
+        <de.k3b.widgets.EditTextPreferenceWithSummary
+            android:key="zipfile"
+            android:summary="Zip where Files are added to."
+            android:title="Output Zip File" />
+        <!--
+            </PreferenceCategory>
+            <PreferenceCategory
+                android:title="Diagnostics"
+                android:key="second_category">
+        -->
+        <CheckBoxPreference
+            android:key="isDebugEnabled"
+            android:defaultValue="false"
+            android:title="Debug loggen"
+            android:summary="LogCat Protokoll with Debug Messages." />
+
+        <de.k3b.widgets.AboutDialogPreference
+            android:key="about"
+            android:title="@string/about_summary" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,4 +1,30 @@
 todo.txt for k3b.add2Zip
 =========
 
-	
+v remove gui from add2zip
+v settings dialog
+- create readme
+- create wiki history
+> settings-about
+- error as dialog with clipboard containig debug-log
+- Settings-Intent-chooser zip viewer/chooser
+- ? workflow encrypt-sendTo
+- - ? mail with email recipient
+- - ? bluetooth with enable bt?
+- publish via fdroid
+=========
+
+(1)
+in order to collect files to be transfered to a different computer
+as an offline mobile android user
+i want have a "share/sendTo" function "add2zip that adds the current selected folder/file(s)
+to be added to a zip file. This zip can be later transfered to the other computer
+via bluetooth, nfc or email.
+
+History
+
+v0.1.1.20141109
+    - gui disabled because not implemented yet
+    - share menue "add2zip" for file(s) and/or folder without additional gui
+    - use hardcoded filename .../copy/2go.zip
+
