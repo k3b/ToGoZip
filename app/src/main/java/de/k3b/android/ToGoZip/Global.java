@@ -16,33 +16,16 @@
  * You should have received a copy of the GNU General Public License along with 
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.zip;
-
-import java.io.File;
+package de.k3b.android.toGoZip;
 
 /**
- * @author k3b
+ * Global settings
  */
-public class CompressItem {
-    private File file;
-    private String zipFileName;
-
-    public File getFile() {
-        return file;
-    }
-
-    public CompressItem setFile(File file) {
-        this.file = file;
-        return this;
-    }
-
-    public String getZipFileName() {
-        return zipFileName;
-    }
-
-    public CompressItem setZipFileName(String zipFileName) {
-        this.zipFileName = zipFileName;
-        return this;
-    }
+public class Global {
+    public static final String LOG_CONTEXT = "toGoZip";
+    /**
+     * true: add several Log.d(...) to show what is going on
+     */
+    public static boolean debugEnabled = true;
 
 }

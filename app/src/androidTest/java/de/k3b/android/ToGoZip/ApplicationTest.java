@@ -16,33 +16,16 @@
  * You should have received a copy of the GNU General Public License along with 
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.zip;
+package de.k3b.android.toGoZip;
 
-import java.io.File;
+import android.app.Application;
+import android.test.ApplicationTestCase;
 
 /**
- * @author k3b
+ * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class CompressItem {
-    private File file;
-    private String zipFileName;
-
-    public File getFile() {
-        return file;
+public class ApplicationTest extends ApplicationTestCase<Application> {
+    public ApplicationTest() {
+        super(Application.class);
     }
-
-    public CompressItem setFile(File file) {
-        this.file = file;
-        return this;
-    }
-
-    public String getZipFileName() {
-        return zipFileName;
-    }
-
-    public CompressItem setZipFileName(String zipFileName) {
-        this.zipFileName = zipFileName;
-        return this;
-    }
-
 }

@@ -1,17 +1,22 @@
 todo.txt for k3b.add2Zip
 =========
 
+- online: rename git-repository to "toGoZip"
 v remove gui from add2zip
 v settings dialog
-- create readme
-- create wiki history
 > settings-about
 - error as dialog with clipboard containig debug-log
 - Settings-Intent-chooser zip viewer/chooser
 - ? workflow encrypt-sendTo
 - - ? mail with email recipient
 - - ? bluetooth with enable bt?
-- publish via fdroid
+> publish via fdroid
+v - spec file
+- doc
+    - create wiki history [https://github.com/k3b/toGoZip/wiki/History Changelog]
+    > create readme
+    > - update link in readme
+
 =========
 
 (1)

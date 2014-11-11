@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2014 k3b
+ * 
+ * This file is part of de.k3b.Add2GoZip (https://github.com/k3bAdd2GoZip/) .
+ * 
+ * This program is free software: you can redistribute it and/or modify it 
+ * under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License 
+ * for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License along with 
+ * this program. If not, see <http://www.gnu.org/licenses/>
+ */
 package de.k3b.zip;
 
 import org.junit.Assert;
@@ -13,8 +31,6 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-// import org.mockito.Mock;
-
 /**
  * unit-tests using mocked Zip*-api
  * Created by k3b on 02.11.2014.
@@ -27,8 +43,10 @@ public class CompressJobTests {
 
     @Before
     public void setup() {
-        zeA = new ZipEntry("a.txt");zeA.setTime(10000);
-        zeA1 = new ZipEntry("a(1).txt");zeA1.setTime(20000);
+        zeA = new ZipEntry("a.txt");
+        zeA.setTime(10000);
+        zeA1 = new ZipEntry("a(1).txt");
+        zeA1.setTime(20000);
         zipFile = mock(ZipFile.class);
         when(zipFile.getEntry(eq("a.txt"))).thenReturn(zeA);
         when(zipFile.getEntry(eq("a(1).txt"))).thenReturn(zeA1);
@@ -83,7 +101,7 @@ public class CompressJobTests {
 
         CompressJob sut = new CompressJob(null);
 
-        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime()+99900);
+        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime() + 99900);
 
         Assert.assertEquals("a(2).txt", result);
     }

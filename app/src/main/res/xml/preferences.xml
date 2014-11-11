@@ -8,7 +8,7 @@
         android:key="first_category">
 
         <!-- EditTextPreference -->
-        <de.k3b.widgets.EditTextPreferenceWithSummary
+        <de.k3b.android.widgets.EditTextPreferenceWithSummary
             android:key="zipfile"
             android:summary="Zip where Files are added to."
             android:title="Output Zip File" />
@@ -24,7 +24,7 @@
             android:title="Debug loggen"
             android:summary="LogCat Protokoll with Debug Messages." />
 
-        <de.k3b.widgets.AboutDialogPreference
+        <de.k3b.android.widgets.AboutDialogPreference
             android:key="about"
             android:title="@string/about_summary" />
 

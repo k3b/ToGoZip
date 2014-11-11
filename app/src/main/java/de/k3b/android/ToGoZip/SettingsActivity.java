@@ -16,33 +16,23 @@
  * You should have received a copy of the GNU General Public License along with 
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.zip;
+package de.k3b.android.toGoZip;
 
-import java.io.File;
+import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
-/**
- * @author k3b
- */
-public class CompressItem {
-    private File file;
-    private String zipFileName;
+public class SettingsActivity extends PreferenceActivity {
 
-    public File getFile() {
-        return file;
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SettingsImpl.init(this);
+        this.addPreferencesFromResource(R.xml.preferences);
     }
 
-    public CompressItem setFile(File file) {
-        this.file = file;
-        return this;
+    @Override
+    public void onResume() {
+        super.onResume();
+        SettingsImpl.init(this);
     }
-
-    public String getZipFileName() {
-        return zipFileName;
-    }
-
-    public CompressItem setZipFileName(String zipFileName) {
-        this.zipFileName = zipFileName;
-        return this;
-    }
-
 }
