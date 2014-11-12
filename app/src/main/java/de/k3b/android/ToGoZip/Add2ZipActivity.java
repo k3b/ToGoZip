@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 k3b
  * 
- * This file is part of de.k3b.Add2GoZip (https://github.com/k3bAdd2GoZip/) .
+ * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
  * This program is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by 

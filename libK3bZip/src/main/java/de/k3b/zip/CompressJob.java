@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 k3b
  * 
- * This file is part of de.k3b.Add2GoZip (https://github.com/k3bAdd2GoZip/) .
+ * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
  * This program is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by 
@@ -40,10 +40,9 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 public class CompressJob {
-    private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
-
     public static final int RESULT_NO_CHANGES = 0;
     public static final int RESULT_ERROR_ABOART = -1;
+    private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
 
     // global settings
     /**
@@ -73,6 +72,13 @@ public class CompressJob {
 
     public CompressJob(File destZip) {
         this.destZip = destZip;
+    }
+
+    static void copyStream(OutputStream outputStream, InputStream inputStream, byte[] buffer) throws IOException {
+        for (int read = inputStream.read(buffer); read > -1; read = inputStream
+                .read(buffer)) {
+            outputStream.write(buffer, 0, read);
+        }
     }
 
     /**
@@ -223,6 +229,12 @@ public class CompressJob {
         }
     }
 
+    // to make shure that orginal is not broken if there is an error:
+    // 1) Workflow add to somefile.zip.tmp, (a) old content, (b) new content
+    // 2) rename exising to somefile.zip.bak
+    // 3) rename somefile.zip.tmp to somefile.zip
+    // 4) delete exising to somefile.zip.bak
+
     private boolean sameDate(ZipEntry zipEntry, long fileLastModified) {
         // may varay in millisec
         long zipLastModified = zipEntry.getTime();
@@ -240,12 +252,6 @@ public class CompressJob {
 
         return timeDiff < 10000; // 10 seconds
     }
-
-    // to make shure that orginal is not broken if there is an error:
-    // 1) Workflow add to somefile.zip.tmp, (a) old content, (b) new content
-    // 2) rename exising to somefile.zip.bak
-    // 3) rename somefile.zip.tmp to somefile.zip
-    // 4) delete exising to somefile.zip.bak
 
     /**
      * @return number of items in the result zip or RESULT_XXX
@@ -410,13 +416,6 @@ public class CompressJob {
         outZipStream.putNextEntry(zipEntry);
         copyStream(outZipStream, inputStream, buffer);
         outZipStream.closeEntry();
-    }
-
-    static void copyStream(OutputStream outputStream, InputStream inputStream, byte[] buffer) throws IOException {
-        for (int read = inputStream.read(buffer); read > -1; read = inputStream
-                .read(buffer)) {
-            outputStream.write(buffer, 0, read);
-        }
     }
 
     public String getLastError() {

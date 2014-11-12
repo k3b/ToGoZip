@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Add2GoZip</string>
+    <string name="app_name">ToGoZip</string>
     <string name="default_zip_path">copy/2go.zip</string>
     <string name="ERR_ADD">Could not update  %1$s :\n%2$s</string>
     <string name="WARN_ADD_NO_CHANGES">Files are already included in\n%1$s</string>
     <string name="SUCCESS_ADD">added %2$d files to \n%1$s</string>
     <string name="WARN_ADD_NO_FILES">No files selected</string>
-    <string name="title_activity_add2_go_zip">Add To Zip</string>
-    <string name="about_summary">About Add2GoZip</string>
+    <string name="title_activity_add2zip">Add To Zip</string>
+    <string name="about_summary">About ToGoZip</string>
     <string name="about_content_about">"<![CDATA[
     <h2>About</h2><a href="https://github.com/k3b/EzTimeTracker/wiki">EZTime Tracker</a>&nbsp;is an Android app to
     record timespend&nbsp;on&nbsp;user definable activities/categories. <br /><br />
@@ -22,7 +22,7 @@
     ]]>"</string>
 
     		<string name="about_content"><![CDATA[ <html><body>
-<a href="https://github.com/k3bAdd2GoZip/wiki"><b>Add2GoZip</b></a><br/>Version $versionName$
+<a href="https://github.com/k3b/ToGoZip/wiki"><b>ToGoZip</b></a><br/>Version $versionName$
 <br />
 <hr />
 $about$
@@ -55,8 +55,8 @@ Improvements v0.1.1.20141109<br />
 <hr />
 <h2>Links</h2>
 <ul>
-  <li>Source code of current version of Add2GoZip at git repository@github.com<br />
-    <a href="https://github.com/k3bAdd2GoZip/">https://github.com/k3bAdd2GoZip/</a></li>
+  <li>Source code of current version of ToGoZip at git repository@github.com<br />
+    <a href="https://github.com/k3b/ToGoZip/">https://github.com/k3b/ToGoZip/</a></li>
   <li>slf4j logging driver for android eu.lp0.slf4j:slf4j-android<br />
     <a href="https://github.com/lp0/slf4j-android">https://github.com/lp0/slf4j-android</a>
   </li>
@@ -79,20 +79,10 @@ Improvements v0.1.1.20141109<br />
 <br />
 <hr />
 <h2>Legal stuff</h2>
-<b>EZ Time Tracker</b>&nbsp;<br />
+<b>ToGoZip</b>&nbsp;<br />
 &nbsp;<br />
-Copyright © 2010 by <a href="http://zettsetttech.blogspot.com/">Eric
-Z</a><br />
-Copyright © 2012 by k3b<br />
-Licensed under the Apache License, Version 2.0.<br />
-<br />
-<a href="#%20http://code.google.com/p/android-dateslider/">DateSlider</a>
-© 2011 Daniel Berndt - Codeus Ltd<br />
-Licensed under the Apache License, Version 2.0.<br />
-<br />
-You may obtain a copy of the License at<br />
-<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br />
-<br />
+Copyright © 2014 by k3b<br />
+Licensed under GPL, Version 3.0 or later.<br />
 <br />
 Android is a trademark of Google Inc. Use of this trademark is subject
 to Google Permissions.

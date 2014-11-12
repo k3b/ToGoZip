@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 k3b
  * 
- * This file is part of de.k3b.Add2GoZip (https://github.com/k3bAdd2GoZip/) .
+ * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
  * This program is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by 
@@ -64,6 +64,21 @@ public class CompressJobIntegrationTests {
         createTestFile(testContent4, format.parse("1982-12-24_123456-123"));
     }
 
+    private static void createTestFile(File testContent, Date fileDate) throws IOException {
+        OutputStream testContentFile = new FileOutputStream(testContent);
+
+        final String someContent = "some test data for " +
+                testZip;
+        InputStream someContentStream = new ByteArrayInputStream(someContent.getBytes("UTF-8"));
+
+        CompressJob.copyStream(
+                testContentFile,
+                someContentStream, new byte[1024]);
+        testContentFile.close();
+        someContentStream.close();
+        testContent.setLastModified(fileDate.getTime());
+    }
+
     @Before
     public void setup() throws IOException {
         testZip.delete();
@@ -105,20 +120,5 @@ public class CompressJobIntegrationTests {
         int itemCount = sut.compress();
         Assert.assertEquals(2, itemCount);
         Assert.assertEquals("testFile(1).txt", item.getZipFileName());
-    }
-
-    private static void createTestFile(File testContent, Date fileDate) throws IOException {
-        OutputStream testContentFile = new FileOutputStream(testContent);
-
-        final String someContent = "some test data for " +
-                testZip;
-        InputStream someContentStream = new ByteArrayInputStream(someContent.getBytes("UTF-8"));
-
-        CompressJob.copyStream(
-                testContentFile,
-                someContentStream, new byte[1024]);
-        testContentFile.close();
-        someContentStream.close();
-        testContent.setLastModified(fileDate.getTime());
     }
 }
