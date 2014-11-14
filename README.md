@@ -1,17 +1,20 @@
-#  ( k3b.add2Zip )
-# toGoZip: "Add2Zip" for android share/sendTo menu.
+''toGoZip: "Add2Zip" for android share/sendTo menu.''
 
-Collect files into one zip-files while you are "on the go" or offline.
+Easy collection of files from every supporting app into one zip-file while
+beeing 'on the go' or offline.
 
-ToGoZip adds a "Add to Zip" menue entry into android's "share" or "send to" menu that is available in many apps.
-Selecting "Add to Zip" will add the current Item(s)/File(s)/Folders into one zip.
+This collecting 2go.zip-file is like a suitcase where you can put things (files)
+into from nearly everywhere (from every app that supports 'share'/'send to')
+and that can travel everywhere (via email, bluetooth, nfc).
 
-This zip can be transfered later to an other computer using a
-filemanager (i.e. [[org.openintents.filemanager]]), emailclient (i.e. [[com.fsck.k9]]),
-nfc and/or bluetooth.
+The program's author uses ToGoZip to collect new android calendar entries
+([[https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter | ics-files]])
+that should be transfered to the desctop-pcs-s calendar.
 
-The program's author uses ToGoZip to collect new android calendar entries with [[de.k3b.android.calendar.ics.adapter]]
-that should be later imported into the desctop-pcs-s calender.
+# Features:
+
+* supports view/sendTo/SendMultible for file(s) and/or folder(s)
+* automatic file-renaming in the zip if the same name with different file-date already exists.
 
 '''Required Android Permissions:'''
 * WRITE_EXTERNAL_STORAGE used to store the created/updated zip-file.
