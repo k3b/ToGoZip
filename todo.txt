@@ -2,7 +2,7 @@
 
 todo.txt for k3b.add2Zip
 =========
-- outputdir  if there is no sdcard
+v first start: outputdir check if there is no sdcard
 
 v online: rename git-repository to "toGoZip"
 v remove gui from add2zip

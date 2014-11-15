@@ -38,8 +38,9 @@ public class SettingsImpl {
 
     public static void init(final Context context) {
         if ((SettingsImpl.zipfile == null) || (SettingsImpl.zipfile.trim().length() == 0)) {
-            final File sdcard = Environment.getExternalStorageDirectory();
-            SettingsImpl.zipfile = sdcard.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
+            Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+            final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getDataDirectory();
+            SettingsImpl.zipfile = rootDir.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
         }
 
         final SharedPreferences prefs = PreferenceManager
