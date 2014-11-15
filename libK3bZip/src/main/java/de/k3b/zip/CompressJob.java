@@ -69,9 +69,11 @@ public class CompressJob {
     // used to copy content
     private byte[] buffer = new byte[4096];
     private String lastError;
+    private StringBuilder log = null;
 
-    public CompressJob(File destZip) {
+    public CompressJob(File destZip, boolean useDebugLog) {
         this.destZip = destZip;
+        this.log = (useDebugLog) ? new StringBuilder() : null;
     }
 
     static void copyStream(OutputStream outputStream, InputStream inputStream, byte[] buffer) throws IOException {
@@ -400,6 +402,9 @@ public class CompressJob {
     private String getMessage(String format, Object... params) {
         String result = MessageFormat.format(format, params);
         logger.debug(result);
+        if (this.log != null) {
+            this.log.append(result).append("\n");
+        }
         // System.out.println(result);
         return result;
     }
@@ -418,8 +423,9 @@ public class CompressJob {
         outZipStream.closeEntry();
     }
 
-    public String getLastError() {
-        return lastError;
+    public String getLastError(boolean detailed) {
+        if ((!detailed) || (this.log == null)) return lastError;
+        return this.log + "\n\n" + lastError.toString();
     }
 
     public int getAddCount() {

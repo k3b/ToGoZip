@@ -2,12 +2,13 @@
 
 todo.txt for k3b.add2Zip
 =========
+- outputdir  if there is no sdcard
 
 v online: rename git-repository to "toGoZip"
 v remove gui from add2zip
 v settings dialog
-> settings-about
-- error as dialog with clipboard containig debug-log
+v settings-about
+- settings/DebugLoggen => logged to clipboard.
 - Settings-Intent-chooser zip viewer/chooser
 - ? workflow encrypt-sendTo
 - - ? mail with email recipient
@@ -16,12 +17,8 @@ v settings dialog
 v - spec file
 - doc
     - create wiki history [https://github.com/k3b/toGoZip/wiki/History Changelog]
-    > create readme
-    > - update link in readme
-			https://f-droid.org/wiki/page/org.openintents.filemanager
-			https://f-droid.org/wiki/page/com.fsck.k9
-			https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter
-
+    v create readme
+    v readme
 
 =========
 

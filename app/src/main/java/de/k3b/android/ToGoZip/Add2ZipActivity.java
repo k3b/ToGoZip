@@ -34,8 +34,6 @@ public class Add2ZipActivity extends Activity {
 
     private static final String TAG = "Add2ZipActivity";
 
-    private final int ACTIVITY_CHOOSE_FILE = 4711;
-
     //############## state ############
 
     private File[] fileToBeAdded = null;
@@ -92,19 +90,38 @@ public class Add2ZipActivity extends Activity {
 
         if (this.fileToBeAdded != null) {
             currentZipFile.getParentFile().mkdirs();
-            CompressJob job = new CompressJob(currentZipFile);
+            CompressJob job = new CompressJob(currentZipFile, Global.debugEnabled);
             job.add("", this.fileToBeAdded);
             int result = job.compress();
-            if (result == CompressJob.RESULT_ERROR_ABOART) {
-                Toast.makeText(this,
-                        String.format(getString(R.string.ERR_ADD),
-                                currentZipFile.getAbsolutePath(), job.getLastError()), Toast.LENGTH_LONG).show();
+
+            String currentZipFileAbsolutePath = currentZipFile.getAbsolutePath();
+            final String text = getResultMessage(result, currentZipFileAbsolutePath, job);
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+
+            if (Global.debugEnabled) {
+                addToClipboard(text+ "\n\n" + job.getLastError(true));
             }
-            if (result == CompressJob.RESULT_NO_CHANGES) {
-                Toast.makeText(this, String.format(getString(R.string.WARN_ADD_NO_CHANGES), currentZipFile.getAbsolutePath()), Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, String.format(getString(R.string.SUCCESS_ADD), currentZipFile.getAbsolutePath(), job.getAddCount()), Toast.LENGTH_SHORT).show();
-            }
+        }
+    }
+
+    private String getResultMessage(int convertResult, String currentZipFileAbsolutePath, CompressJob job) {
+        if (convertResult == CompressJob.RESULT_ERROR_ABOART) {
+            return String.format(getString(R.string.ERR_ADD),
+                    currentZipFileAbsolutePath, job.getLastError(false));
+        } else if (convertResult == CompressJob.RESULT_NO_CHANGES) {
+            return String.format(getString(R.string.WARN_ADD_NO_CHANGES), currentZipFileAbsolutePath);
+        } else {
+            return String.format(getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, job.getAddCount());
+        }
+    }
+
+    private void addToClipboard(String text) {
+        // for compatibility reaons using depricated clipboard api. the non depricateded clipboard was not available before api 11.
+        try {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

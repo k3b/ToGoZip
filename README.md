@@ -15,6 +15,7 @@ that should be transfered to the desctop-pcs-s calendar.
 
 * supports view/sendTo/SendMultible for file(s) and/or folder(s)
 * automatic file-renaming in the zip if the same name with different file-date already exists.
+* if settings/DebugLoggen is enabled processing is logged to logcat and to clipboard as text.
 
 '''Required Android Permissions:'''
 * WRITE_EXTERNAL_STORAGE used to store the created/updated zip-file.

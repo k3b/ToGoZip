@@ -2,10 +2,10 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="preferences">
+    android:key="preferences" android:icon="@drawable/ic_launcher">
     <PreferenceCategory
         android:key="first_category"
-        android:title="Settings">
+        android:title="Settings" >
 
         <!-- EditTextPreference -->
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
@@ -21,7 +21,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="isDebugEnabled"
-            android:summary="LogCat Protokoll with Debug Messages."
+            android:summary="LogCat Protokoll with Debug Messages copied to clipboard"
             android:title="Debug loggen" />
 
         <de.k3b.android.widgets.AboutDialogPreference

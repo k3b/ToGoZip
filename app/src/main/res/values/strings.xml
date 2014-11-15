@@ -5,7 +5,7 @@
     <string name="default_zip_path">copy/2go.zip</string>
     <string name="ERR_ADD">Could not update  %1$s :\n%2$s</string>
     <string name="WARN_ADD_NO_CHANGES">Files are already included in\n%1$s</string>
-    <string name="SUCCESS_ADD">added %2$d files to \n%1$s</string>
+    <string name="SUCCESS_ADD">added %2$d file(s) to \n%1$s</string>
     <string name="WARN_ADD_NO_FILES">No files selected</string>
     <string name="title_activity_add2zip">Add To Zip</string>
     <string name="about_summary">About ToGoZip</string>
