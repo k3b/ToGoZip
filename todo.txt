@@ -8,7 +8,7 @@ v online: rename git-repository to "toGoZip"
 v remove gui from add2zip
 v settings dialog
 v settings-about
-- settings/DebugLoggen => logged to clipboard.
+v settings/DebugLoggen => logged to clipboard.
 - Settings-Intent-chooser zip viewer/chooser
 - ? workflow encrypt-sendTo
 - - ? mail with email recipient

@@ -38,8 +38,12 @@ public class SettingsImpl {
 
     public static void init(final Context context) {
         if ((SettingsImpl.zipfile == null) || (SettingsImpl.zipfile.trim().length() == 0)) {
-            Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-            final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getDataDirectory();
+            Boolean isSDPresent = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+
+            // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory () 
+			// is protected by android-os :-(
+			// app will not work on devices with no external storage (sdcard)
+            final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
             SettingsImpl.zipfile = rootDir.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
         }
 

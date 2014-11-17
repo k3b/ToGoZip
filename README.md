@@ -19,5 +19,6 @@ that should be transfered to the desctop-pcs-s calendar.
 
 '''Required Android Permissions:'''
 * WRITE_EXTERNAL_STORAGE used to store the created/updated zip-file.
+* Since Adroid 4.4 an external storage (aka sdcard) is required. Older Versions of android allow writing to non-sdcard directoriers.
 
 [https://github.com/k3b/toGoZip/wiki/History Changelog]
