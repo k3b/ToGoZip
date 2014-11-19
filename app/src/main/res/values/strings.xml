@@ -2,12 +2,24 @@
 <resources>
 
     <string name="app_name">ToGoZip</string>
+    <string name="title_activity_add2zip">Add To Zip</string>
+
+    <string name="cmd_use_default">Use Default</string>
+    <string name="cmd_cancel">Cancel</string>
+    <string name="cmd_run">Use Default</string>
+    <string name="cmd_edit">Edit</string>
+
     <string name="default_zip_path">copy/2go.zip</string>
+
     <string name="ERR_ADD">Could not update  %1$s :\n%2$s</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">No Permissions to write to %1$s %2$s.
+(Is there sdcard-hardware and is the sdcard mounted?)</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">No Permissions to write to current zip \'%1$s\'.
+Do you want to use dafault \'%2$s\' instead? </string>
     <string name="WARN_ADD_NO_CHANGES">Files are already included in\n%1$s</string>
     <string name="SUCCESS_ADD">added %2$d file(s) to \n%1$s</string>
     <string name="WARN_ADD_NO_FILES">No files selected</string>
-    <string name="title_activity_add2zip">Add To Zip</string>
+
     <string name="about_summary">About ToGoZip</string>
     <string name="about_content_about">"<![CDATA[
 <a href='https://github.com/k3b/ToGoZip/wiki'>ToGoZip</a>

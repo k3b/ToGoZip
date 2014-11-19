@@ -27,38 +27,75 @@ import android.util.Log;
 import java.io.File;
 
 public class SettingsImpl {
-    /**
-     * data of the one and only SettingsImpl instance.
-     */
-    private static SettingsImpl ourInstance = new SettingsImpl();
-    private static String zipfile = "";
+    static final String KEY_ZIPFILE = "zipfile";
+    private static String zipfile = null;
 
     private SettingsImpl() {
     }
 
-    public static void init(final Context context) {
-        if ((SettingsImpl.zipfile == null) || (SettingsImpl.zipfile.trim().length() == 0)) {
-            Boolean isSDPresent = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-
-            // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory () 
-			// is protected by android-os :-(
-			// app will not work on devices with no external storage (sdcard)
-            final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
-            SettingsImpl.zipfile = rootDir.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
-        }
-
+    /** Load values from prefs. return true, if zip output dir is writable */
+    public static boolean init(final Context context) {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        SettingsImpl.zipfile = SettingsImpl
-                .getPrefValue(prefs, "zipfile",
-                        SettingsImpl.zipfile);
 
         Global.debugEnabled = SettingsImpl.getPrefValue(prefs,
                 "isDebugEnabled", Global.debugEnabled);
+
+        // in case first start(no where no zip is defined yet),
+        if (SettingsImpl.zipfile == null) {
+            SettingsImpl.zipfile = getDefaultZipPath(context);
+        }
+
+        SettingsImpl.zipfile = SettingsImpl
+                .getPrefValue(prefs, KEY_ZIPFILE,
+                        SettingsImpl.zipfile);
+
+        return canWrite(SettingsImpl.zipfile);
     }
 
-    public static SettingsImpl getInstance() {
-        return ourInstance;
+    /** calculates the dafault-path value for 2go.zip */
+    public static String getDefaultZipPath(Context context) {
+        Boolean isSDPresent = true; // Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+
+        // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory ()
+        // is protected by android-os :-(
+        // app will not work on devices with no external storage (sdcard)
+        final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
+        final String zipfile = rootDir.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
+        return zipfile;
+    }
+
+    /** return true if outputdirectory of zipfile is writable */
+    public static boolean canWrite(String zipfile) {
+        if ((zipfile == null) || (zipfile.trim().length() == 0)) {
+            return false; // empty is no valid path
+        }
+
+        File parentDir = new File(zipfile).getParentFile();
+        if (!parentDir.exists() && !parentDir.mkdirs()) {
+            return false; // parentdir does not exist and cannot be created
+        }
+
+        return (parentDir.canWrite());
+    }
+
+    public static void setZipfile(final Context context, String zipFile) {
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        setValue(prefs, KEY_ZIPFILE, zipFile);
+    }
+
+    public static String getZipfile() {
+        return SettingsImpl.zipfile;
+    }
+
+    /**  sets preference value */
+    private static void setValue(SharedPreferences prefs, String key, String value) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString(key, value);
+        edit.commit();
+        SettingsImpl.zipfile = value;
     }
 
     /**
@@ -93,20 +130,10 @@ public class SettingsImpl {
                                        final String key, final String notFoundValue) {
         String result = prefs.getString(key, null);
 
-        if (result == null) {
+        if ((result == null) || (result.trim().length() == 0)) {
             result = notFoundValue;
-            SharedPreferences.Editor prefEditor = prefs.edit();
-            prefEditor.putString(key, notFoundValue);
-            prefEditor.commit();
+            setValue(prefs, key, notFoundValue);
         }
         return result;
-    }
-
-    public static String getZipfile() {
-        return SettingsImpl.zipfile;
-    }
-
-    public static void setZipfile(final String value) {
-        SettingsImpl.zipfile = value;
     }
 }

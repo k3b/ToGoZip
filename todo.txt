@@ -2,6 +2,26 @@
 
 todo.txt for k3b.add2Zip
 =========
+
+add2Zip
+v   if !init settings
+
+settings
+    if !writable(cur)
+        if writable(default)
+            dialog not writable.
+                set to default (keep dialog open)
+                cancel (exit all)
+                edit (keep settings open)
+        else
+            dialog
+                edit
+                cancel
+
+toast if changing from invalid zipfile to default
+check after zipfile change that path is valid
+
+
 v first start: outputdir check if there is no sdcard
 
 v online: rename git-repository to "toGoZip"

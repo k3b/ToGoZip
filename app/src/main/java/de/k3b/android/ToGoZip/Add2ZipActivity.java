@@ -19,6 +19,7 @@
 package de.k3b.android.toGoZip;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
+import de.k3b.android.AndroidCompressJob;
+import de.k3b.android.widgets.Clipboard;
 import de.k3b.zip.CompressJob;
 
 public class Add2ZipActivity extends Activity {
@@ -42,13 +45,28 @@ public class Add2ZipActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SettingsImpl.init(this);
+        boolean canWrite = SettingsImpl.init(this);
 
         this.fileToBeAdded = getFileToBeAdded();
+
+        if (!canWrite) {
+            SettingsActivity.show(this, this.fileToBeAdded);
+            /*
+            String msg = String.format(
+                    getString(R.string.ERR_NO_WRITE_PERMISSIONS),
+                    SettingsImpl.getZipfile(),
+                    SettingsImpl.getDefaultZipPath(this));
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+            Clipboard.addToClipboard(this, msg);
+            */
+            finish();
+            return;
+        }
 
         if (this.fileToBeAdded == null) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
         } else {
-            addToZip();
+            AndroidCompressJob.addToZip(this, getCurrentZipFile(), this.fileToBeAdded);
         }
         this.finish();
     }
@@ -81,48 +99,6 @@ public class Add2ZipActivity extends Activity {
 
         if (len == 0) return null;
         return result.toArray(new File[len]);
-    }
-
-    //############ processing ########
-
-    private void addToZip() {
-        File currentZipFile = getCurrentZipFile();
-
-        if (this.fileToBeAdded != null) {
-            currentZipFile.getParentFile().mkdirs();
-            CompressJob job = new CompressJob(currentZipFile, Global.debugEnabled);
-            job.add("", this.fileToBeAdded);
-            int result = job.compress();
-
-            String currentZipFileAbsolutePath = currentZipFile.getAbsolutePath();
-            final String text = getResultMessage(result, currentZipFileAbsolutePath, job);
-            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-
-            if (Global.debugEnabled) {
-                addToClipboard(text+ "\n\n" + job.getLastError(true));
-            }
-        }
-    }
-
-    private String getResultMessage(int convertResult, String currentZipFileAbsolutePath, CompressJob job) {
-        if (convertResult == CompressJob.RESULT_ERROR_ABOART) {
-            return String.format(getString(R.string.ERR_ADD),
-                    currentZipFileAbsolutePath, job.getLastError(false));
-        } else if (convertResult == CompressJob.RESULT_NO_CHANGES) {
-            return String.format(getString(R.string.WARN_ADD_NO_CHANGES), currentZipFileAbsolutePath);
-        } else {
-            return String.format(getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, job.getAddCount());
-        }
-    }
-
-    private void addToClipboard(String text) {
-        // for compatibility reaons using depricated clipboard api. the non depricateded clipboard was not available before api 11.
-        try {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            clipboard.setText(text);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void addResult(ArrayList<File> result, Uri data) {
