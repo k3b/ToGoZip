@@ -3,6 +3,7 @@
 todo.txt for k3b.add2Zip
 =========
 
+warum geht send(Multible)To nicht unter a44?
 add2Zip
 v   if !init settings
 

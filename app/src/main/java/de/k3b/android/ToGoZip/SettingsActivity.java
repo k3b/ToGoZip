@@ -29,23 +29,45 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import de.k3b.android.widgets.Clipboard;
-import de.k3b.android.widgets.EditTextPreferenceWithSummary;
+import de.k3b.android.AndroidCompressJob;
 
+/** show settings/config activity. On Start and Exit checks if data is valid.  */
 public class SettingsActivity extends PreferenceActivity {
 
+    /** if not null: try to execute add2zip on finish */
     private static File[] fileToBeAdded;
+
+    /** public api to start settings-activity */
+    public static void show(Context context, File[] fileToBeAdded) {
+        final Intent i = new Intent(context,SettingsActivity.class);
+
+        if (Global.debugEnabled) {
+            Log.i(Global.LOG_CONTEXT, "SettingsActivity.show(startActivity='" + i
+                    + "')");
+        }
+
+        SettingsActivity.fileToBeAdded = fileToBeAdded;
+        context.startActivity(i);
+
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean canWriteCurrent = SettingsImpl.init(this);
+        SettingsImpl.init(this);
 
         this.addPreferencesFromResource(R.xml.preferences);
 
+        showAlertOnError();
+    }
+
+    /** return false if no error */
+    private boolean showAlertOnError() {
+        boolean canWriteCurrent = SettingsImpl.init(this);
+
         if (!canWriteCurrent) {
-            String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
             String currentZipPath = SettingsImpl.getZipfile();
+            String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
             boolean canWriteDefault = SettingsImpl.canWrite(defaultZipPath);
 
             String format = (canWriteDefault)
@@ -79,75 +101,63 @@ public class SettingsActivity extends PreferenceActivity {
             builder.setNegativeButton(R.string.cmd_cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    finish();
+                    cancel();
+                }
+            });
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    cancel();
                 }
             });
 
-            if (fileToBeAdded != null) {
-                builder.setPositiveButton(R.string.cmd_run, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        run();
-                    }
-                });
-            } else {
-                builder.setPositiveButton(R.string.cmd_edit, null);
-            }
+            builder.setPositiveButton(R.string.cmd_edit, null);
 
             builder.show();
         }
-
+        return !canWriteCurrent;
     }
 
-    /** executes add2zip */
-    private void run() {
+    /** android os function to end this activity. Hooked to verify that data is valid. */
+    @Override
+    public void finish() {
+        if (Global.debugEnabled) {
+            Log.i(Global.LOG_CONTEXT, "SettingsActivity.finish");
+        }
+
+        if (!showAlertOnError()) {
+            finishWithoutCheck();
+        }
     }
 
-    /** resets zip to default */
+    private void finishWithoutCheck() {
+        if (SettingsActivity.fileToBeAdded != null) {
+            SettingsImpl.init(this);
+            AndroidCompressJob.addToZip(this, new File(SettingsImpl.getZipfile()), SettingsActivity.fileToBeAdded);
+            SettingsActivity.fileToBeAdded = null;
+        }
+        super.finish();
+    }
+
+    /** resets zip to default and restart settings activity. */
     private void setDefault() {
         String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
         SettingsImpl.setZipfile(this, defaultZipPath);
-        finish();
+        File[] fileToBeAdded = SettingsActivity.fileToBeAdded;
+        SettingsActivity.fileToBeAdded = null; // do not start add2zip
+        finishWithoutCheck();
+        // restart with new settings
         show(this,fileToBeAdded);
-/*
-        EditTextPreferenceWithSummary preference = (EditTextPreferenceWithSummary)getPreferenceScreen().findPreference(
-                SettingsImpl.KEY_ZIPFILE);
-
-        if (preference != null) {
-            preference.setSummary(defaultZipPath);
-        }
-        */
     }
 
-    /*
-    @Override
-    public void onResume() {
-        super.onResume();
-        boolean canWrite = SettingsImpl.init(this);
-
-        if (!canWrite) {
-            String msg = String.format(
-                    getString(R.string.ERR_NO_WRITE_PERMISSIONS),
-                    SettingsImpl.getZipfile(),
-                    SettingsImpl.getDefaultZipPath(this));
-            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-            Clipboard.addToClipboard(this, msg);
-
+    private void cancel() {
+        if (SettingsActivity.fileToBeAdded != null) {
+            Toast.makeText(this, getString(R.string.WARN_ADD_CANCELED), Toast.LENGTH_LONG).show();
+            SettingsActivity.fileToBeAdded = null;
         }
 
+        finishWithoutCheck();
     }
-    */
 
-    public static void show(Context context, File[] fileToBeAdded) {
-        final Intent i = new Intent(context,SettingsActivity.class);
 
-        if (Global.debugEnabled) {
-            Log.i(Global.LOG_CONTEXT, "start(startActivity='" + i
-                    + "')");
-        }
-
-        SettingsActivity.fileToBeAdded = fileToBeAdded;
-        context.startActivity(i);
-
-    }
 }
