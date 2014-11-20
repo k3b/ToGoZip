@@ -19,7 +19,6 @@
 package de.k3b.android.toGoZip;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,43 +29,37 @@ import java.io.File;
 import java.util.ArrayList;
 
 import de.k3b.android.AndroidCompressJob;
-import de.k3b.android.widgets.Clipboard;
-import de.k3b.zip.CompressJob;
 
+/**
+ * This pseudo activity has no gui. It starts add2zip from intent-data
+ * or starts the settings-activity if the zip-output-dir is write-protected
+ */
 public class Add2ZipActivity extends Activity {
 
+    /**
+     * caption for logging
+     */
     private static final String TAG = "Add2ZipActivity";
-
-    //############## state ############
-
-    private File[] fileToBeAdded = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SettingsImpl.init(this);
         boolean canWrite = SettingsImpl.init(this);
 
-        this.fileToBeAdded = getFileToBeAdded();
+        File[] filesToBeAdded = getFilesToBeAdded();
 
+        // on error show settings
         if (!canWrite) {
-            SettingsActivity.show(this, this.fileToBeAdded);
-            /*
-            String msg = String.format(
-                    getString(R.string.ERR_NO_WRITE_PERMISSIONS),
-                    SettingsImpl.getZipfile(),
-                    SettingsImpl.getDefaultZipPath(this));
-            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-            Clipboard.addToClipboard(this, msg);
-            */
+            SettingsActivity.show(this, filesToBeAdded);
             finish();
             return;
         }
 
-        if (this.fileToBeAdded == null) {
+        // no error yet
+        if (filesToBeAdded == null) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
         } else {
-            AndroidCompressJob.addToZip(this, getCurrentZipFile(), this.fileToBeAdded);
+            AndroidCompressJob.addToZip(this, getCurrentZipFile(), filesToBeAdded);
         }
         this.finish();
     }
@@ -75,7 +68,7 @@ public class Add2ZipActivity extends Activity {
         return new File(SettingsImpl.getZipfile());
     }
 
-    private File[] getFileToBeAdded() {
+    private File[] getFilesToBeAdded() {
         ArrayList<File> result = new ArrayList<File>();
         Intent intent = getIntent();
 
@@ -94,7 +87,7 @@ public class Add2ZipActivity extends Activity {
 
         int len = result.size();
         if (Global.debugEnabled) {
-            Log.d(TAG, "getFileToBeAdded " + len + ":" + result);
+            Log.d(TAG, "getFilesToBeAdded " + len + ":" + result);
         }
 
         if (len == 0) return null;

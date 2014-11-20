@@ -21,7 +21,9 @@ package de.k3b.zip;
 import java.io.File;
 
 /**
- * @author k3b
+ * One dto-item that should be compressed.<br/>
+ * <p/>
+ * Author k3b
  */
 public class CompressItem {
     private File file;

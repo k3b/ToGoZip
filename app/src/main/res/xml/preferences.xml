@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="preferences" android:icon="@drawable/ic_launcher">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@drawable/ic_launcher"
+    android:key="preferences">
     <PreferenceCategory
         android:key="first_category"
-        android:title="Settings" >
+        android:title="Settings">
 
         <!-- EditTextPreference -->
         <de.k3b.android.widgets.EditTextPreferenceWithSummary

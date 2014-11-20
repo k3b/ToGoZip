@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2014 k3b
+ * 
+ * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
+ * 
+ * This program is free software: you can redistribute it and/or modify it 
+ * under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * (at your option) any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License 
+ * for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License along with 
+ * this program. If not, see <http://www.gnu.org/licenses/>
+ */
 package de.k3b.android;
 
 import android.content.Context;
@@ -11,7 +29,9 @@ import de.k3b.android.widgets.Clipboard;
 import de.k3b.zip.CompressJob;
 
 /**
- * Created by EVE on 17.11.2014.
+ * Android specific version of zip-CompressJob.<br/>
+ * <p/>
+ * Created by k3b on 17.11.2014.
  */
 public class AndroidCompressJob {
     //############ processing ########
@@ -20,7 +40,7 @@ public class AndroidCompressJob {
         if (fileToBeAdded != null) {
             currentZipFile.getParentFile().mkdirs();
             CompressJob job = new CompressJob(currentZipFile, Global.debugEnabled);
-            job.add("", fileToBeAdded);
+            job.addToCompressQue("", fileToBeAdded);
             int result = job.compress();
 
             String currentZipFileAbsolutePath = currentZipFile.getAbsolutePath();

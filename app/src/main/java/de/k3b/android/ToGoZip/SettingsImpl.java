@@ -26,6 +26,9 @@ import android.util.Log;
 
 import java.io.File;
 
+/**
+ * implements SettingsData from android preferences
+ */
 public class SettingsImpl {
     static final String KEY_ZIPFILE = "zipfile";
     private static String zipfile = null;
@@ -33,7 +36,9 @@ public class SettingsImpl {
     private SettingsImpl() {
     }
 
-    /** Load values from prefs. return true, if zip output dir is writable */
+    /**
+     * Load values from prefs. return true, if zip output dir is writable
+     */
     public static boolean init(final Context context) {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -53,7 +58,9 @@ public class SettingsImpl {
         return canWrite(SettingsImpl.zipfile);
     }
 
-    /** calculates the dafault-path value for 2go.zip */
+    /**
+     * calculates the dafault-path value for 2go.zip
+     */
     public static String getDefaultZipPath(Context context) {
         Boolean isSDPresent = true; // Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
 
@@ -65,7 +72,9 @@ public class SettingsImpl {
         return zipfile;
     }
 
-    /** return true if outputdirectory of zipfile is writable */
+    /**
+     * return true if outputdirectory of zipfile is writable
+     */
     public static boolean canWrite(String zipfile) {
         if ((zipfile == null) || (zipfile.trim().length() == 0)) {
             return false; // empty is no valid path
@@ -79,6 +88,9 @@ public class SettingsImpl {
         return (parentDir.canWrite());
     }
 
+    /**
+     * updates zipFile property in preferences
+     */
     public static void setZipfile(final Context context, String zipFile) {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -90,7 +102,9 @@ public class SettingsImpl {
         return SettingsImpl.zipfile;
     }
 
-    /**  sets preference value */
+    /**
+     * sets preference value
+     */
     private static void setValue(SharedPreferences prefs, String key, String value) {
         SharedPreferences.Editor edit = prefs.edit();
         edit.putString(key, value);

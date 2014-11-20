@@ -24,8 +24,9 @@ package de.k3b.android.toGoZip;
 public class Global {
     public static final String LOG_CONTEXT = "toGoZip";
     /**
-     * true: add several Log.d(...) to show what is going on
+     * true: addToCompressQue several Log.d(...) to show what is going on.
+     * debugEnabled is updated by the SettingsActivity
      */
-    public static boolean debugEnabled = true;
+    public static boolean debugEnabled = false;
 
 }

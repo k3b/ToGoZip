@@ -28,6 +28,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * EditTextPreference that displays it's string-value in the Preference-summary line.
+ */
 public class EditTextPreferenceWithSummary extends EditTextPreference {
     private final static String TAG = EditTextPreferenceWithSummary.class
             .getName();
@@ -44,7 +47,7 @@ public class EditTextPreferenceWithSummary extends EditTextPreference {
     }
 
     private void init() {
-        Log.e(EditTextPreferenceWithSummary.TAG, "init");
+        Log.i(EditTextPreferenceWithSummary.TAG, "init");
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(this.getContext());
         final String currentText = prefs.getString("test", this.getText());
@@ -56,7 +59,7 @@ public class EditTextPreferenceWithSummary extends EditTextPreference {
             @Override
             public boolean onPreferenceChange(final Preference preference,
                                               final Object newValue) {
-                Log.w(EditTextPreferenceWithSummary.TAG,
+                Log.i(EditTextPreferenceWithSummary.TAG,
                         "display score changed to " + newValue);
                 preference.setSummary(newValue.toString()); // getSummary());
                 return true;

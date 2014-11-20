@@ -31,22 +31,28 @@ import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
 
-/** show settings/config activity. On Start and Exit checks if data is valid.  */
+/**
+ * show settings/config activity. On Start and Exit checks if data is valid.
+ */
 public class SettingsActivity extends PreferenceActivity {
 
-    /** if not null: try to execute add2zip on finish */
-    private static File[] fileToBeAdded;
+    /**
+     * if not null: try to execute add2zip on finish
+     */
+    private static File[] filesToBeAdded;
 
-    /** public api to start settings-activity */
-    public static void show(Context context, File[] fileToBeAdded) {
-        final Intent i = new Intent(context,SettingsActivity.class);
+    /**
+     * public api to start settings-activity
+     */
+    public static void show(Context context, File[] filesToBeAdded) {
+        final Intent i = new Intent(context, SettingsActivity.class);
 
         if (Global.debugEnabled) {
-            Log.i(Global.LOG_CONTEXT, "SettingsActivity.show(startActivity='" + i
+            Log.d(Global.LOG_CONTEXT, "SettingsActivity.show(startActivity='" + i
                     + "')");
         }
 
-        SettingsActivity.fileToBeAdded = fileToBeAdded;
+        SettingsActivity.filesToBeAdded = filesToBeAdded;
         context.startActivity(i);
 
     }
@@ -61,7 +67,9 @@ public class SettingsActivity extends PreferenceActivity {
         showAlertOnError();
     }
 
-    /** return false if no error */
+    /**
+     * return false if no error. else Show Dialog cancel/setToDefault/Edit
+     */
     private boolean showAlertOnError() {
         boolean canWriteCurrent = SettingsImpl.init(this);
 
@@ -118,11 +126,13 @@ public class SettingsActivity extends PreferenceActivity {
         return !canWriteCurrent;
     }
 
-    /** android os function to end this activity. Hooked to verify that data is valid. */
+    /**
+     * android os function to end this activity. Hooked to verify that data is valid.
+     */
     @Override
     public void finish() {
         if (Global.debugEnabled) {
-            Log.i(Global.LOG_CONTEXT, "SettingsActivity.finish");
+            Log.d(Global.LOG_CONTEXT, "SettingsActivity.finish");
         }
 
         if (!showAlertOnError()) {
@@ -130,34 +140,40 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
+    /**
+     * executes finish without checking validity. Executes add2Zip source-files are available.
+     */
     private void finishWithoutCheck() {
-        if (SettingsActivity.fileToBeAdded != null) {
+        if (SettingsActivity.filesToBeAdded != null) {
             SettingsImpl.init(this);
-            AndroidCompressJob.addToZip(this, new File(SettingsImpl.getZipfile()), SettingsActivity.fileToBeAdded);
-            SettingsActivity.fileToBeAdded = null;
+            AndroidCompressJob.addToZip(this, new File(SettingsImpl.getZipfile()), SettingsActivity.filesToBeAdded);
+            SettingsActivity.filesToBeAdded = null;
         }
         super.finish();
     }
 
-    /** resets zip to default and restart settings activity. */
+    /**
+     * resets zip to default and restart settings activity.
+     */
     private void setDefault() {
         String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
         SettingsImpl.setZipfile(this, defaultZipPath);
-        File[] fileToBeAdded = SettingsActivity.fileToBeAdded;
-        SettingsActivity.fileToBeAdded = null; // do not start add2zip
+        File[] fileToBeAdded = SettingsActivity.filesToBeAdded;
+        SettingsActivity.filesToBeAdded = null; // do not start add2zip
         finishWithoutCheck();
         // restart with new settings
-        show(this,fileToBeAdded);
+        show(this, fileToBeAdded);
     }
 
+    /**
+     * cancel from Dialog cancels SettingsActivity
+     */
     private void cancel() {
-        if (SettingsActivity.fileToBeAdded != null) {
+        if (SettingsActivity.filesToBeAdded != null) {
             Toast.makeText(this, getString(R.string.WARN_ADD_CANCELED), Toast.LENGTH_LONG).show();
-            SettingsActivity.fileToBeAdded = null;
+            SettingsActivity.filesToBeAdded = null;
         }
 
         finishWithoutCheck();
     }
-
-
 }

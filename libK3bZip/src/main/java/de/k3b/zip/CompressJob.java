@@ -39,27 +39,30 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * Android independant enginge that adds files to a zip file via a compressQue.
+ */
 public class CompressJob {
     public static final int RESULT_NO_CHANGES = 0;
     public static final int RESULT_ERROR_ABOART = -1;
     private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
 
-    // global settings
+    // global processing options
     /**
-     * remove obsoled bak file when done
+     * true: remove obsoled bak file when done
      */
-    private boolean optDeleteBakFileWhenFinished = true;
+    private final boolean optDeleteBakFileWhenFinished = true;
 
     /**
-     * if filename already existed in old zip rename it. Else Do not copy old
+     * true: if filename already existed in old zip rename it. Else Do not copy old
      * zipItem into new.
      */
-    private boolean optRenameExistingOldEntry = true;
+    private final boolean optRenameExistingOldEntry = true;
 
     /**
-     * items to be processed in the job.
+     * items To Be Added to be processed in the job.
      */
-    private List<CompressItem> items = new ArrayList<CompressItem>();
+    private List<CompressItem> compressQue = new ArrayList<CompressItem>();
 
     /**
      * where old entries come from and new entries go to
@@ -68,14 +71,31 @@ public class CompressJob {
 
     // used to copy content
     private byte[] buffer = new byte[4096];
-    private String lastError;
-    private StringBuilder log = null;
 
+    /**
+     * last errormessage or null
+     */
+    private String lastError;
+
+    /**
+     * debug Log Messages if enabled or null
+     */
+    private StringBuilder debugLogMessages = null;
+
+    /**
+     * Creates a job.
+     *
+     * @param destZip     full path to the zipfile where the new files should be added to
+     * @param useDebugLog if true collect diagnostics/debug messages to debugLogMessages.
+     */
     public CompressJob(File destZip, boolean useDebugLog) {
         this.destZip = destZip;
-        this.log = (useDebugLog) ? new StringBuilder() : null;
+        this.debugLogMessages = (useDebugLog) ? new StringBuilder() : null;
     }
 
+    /**
+     * local helper to copy stream-data to zip
+     */
     static void copyStream(OutputStream outputStream, InputStream inputStream, byte[] buffer) throws IOException {
         for (int read = inputStream.read(buffer); read > -1; read = inputStream
                 .read(buffer)) {
@@ -84,47 +104,56 @@ public class CompressJob {
     }
 
     /**
-     * these files are added to the zip
+     * Remeber files that should be added to the zip.
+     *
+     * @param destZipPath where the files will go to
+     * @param srcFiles    path where new-toBeZipped-compressQue come from
      */
-    public void add(String destZipPath, String... srcFiles) {
+    public void addToCompressQue(String destZipPath, String... srcFiles) {
         if (srcFiles != null) {
             for (String srcFile : srcFiles) {
-                add(destZipPath, new File(srcFile));
+                addToCompressQue(destZipPath, new File(srcFile));
             }
         }
 
     }
 
     /**
-     * these files will be added to the zip.
+     * Remeber files that should be added to the zip.
      */
-    public CompressItem add(String destZipPath, File... srcFiles) {
+    public CompressItem addToCompressQue(String destZipPath, File... srcFiles) {
         CompressItem item = null;
         if (srcFiles != null) {
             for (File srcFile : srcFiles) {
                 if (srcFile.isDirectory()) {
                     String subDir = (destZipPath.length() > 0) ? destZipPath + "/" + srcFile.getName() + "/" : srcFile.getName() + "/";
-                    add(subDir, srcFile.listFiles());
+                    addToCompressQue(subDir, srcFile.listFiles());
                 } else if (srcFile.isFile()) {
-                    item = addItem(destZipPath, srcFile);
+                    item = addItemToCompressQue(destZipPath, srcFile);
                 }
             }
         }
         return item;
     }
 
-    CompressItem addItem(String destZipPath, File srcFile) {
-        if (find(srcFile) != null) return null;
+    /**
+     * adds one file to the CompressQue
+     */
+    CompressItem addItemToCompressQue(String destZipPath, File srcFile) {
+        if (findInCompressQue(srcFile) != null) return null;
 
         CompressItem item;
         item = new CompressItem().setFile(srcFile).setZipFileName(
                 destZipPath + srcFile.getName());
-        items.add(item);
+        compressQue.add(item);
         return item;
     }
 
-    private CompressItem find(File file) {
-        for (CompressItem item : this.items) {
+    /**
+     * return null, if file is not in the CompressQue yet.
+     */
+    private CompressItem findInCompressQue(File file) {
+        for (CompressItem item : this.compressQue) {
             if (file.equals(item.getFile())) return item;
         }
         return null;
@@ -132,6 +161,8 @@ public class CompressJob {
 
     /**
      * depending on global options: duprlicate zip entries are either ignored or renamed
+     *
+     * @return collection of items that where renamed.
      */
     public List<CompressItem> handleDuplicates() {
         if ((this.destZip != null) && (this.destZip.exists())) {
@@ -162,10 +193,13 @@ public class CompressJob {
     /**
      * a unittest friendly version of handleDuplicates:<br/>
      * depending on global options: duprlicate zip entries are either ignored or renamed
+     *
+     * @param zipFile
+     * @return collection of items that where renamed.
      */
     List<CompressItem> handleDuplicates(ZipFile zipFile) {
         List<CompressItem> result = new ArrayList<CompressItem>();
-        for (CompressItem item : this.items) {
+        for (CompressItem item : this.compressQue) {
             String zipFileName = (item != null) ? item.getZipFileName() : null;
             ZipEntry zipEntry = (zipFileName != null) ? zipFile.getEntry(zipFileName) : null;
 
@@ -175,9 +209,9 @@ public class CompressJob {
                 result.add(item);
             }
         }
-        for (int i = this.items.size() - 1; i >= 0; i--) {
-            if (this.items.get(i).getZipFileName() == null) {
-                this.items.remove(i);
+        for (int i = this.compressQue.size() - 1; i >= 0; i--) {
+            if (this.compressQue.get(i).getZipFileName() == null) {
+                this.compressQue.remove(i);
             }
         }
 
@@ -188,7 +222,8 @@ public class CompressJob {
     }
 
     /**
-     * package to allow unittesting: <br/> gets a fixed name for the zip entry or null if file
+     * package to allow unittesting: <br/>
+     * gets a fixed (renamed) name for the zip entry or null if file
      * should not be added to zip.
      */
     String getFixedZipFileName(ZipFile zipFile, ZipEntry zipEntry,
@@ -231,12 +266,9 @@ public class CompressJob {
         }
     }
 
-    // to make shure that orginal is not broken if there is an error:
-    // 1) Workflow add to somefile.zip.tmp, (a) old content, (b) new content
-    // 2) rename exising to somefile.zip.bak
-    // 3) rename somefile.zip.tmp to somefile.zip
-    // 4) delete exising to somefile.zip.bak
-
+    /**
+     * return true, if zipEntry has same date as fileLastModified
+     */
     private boolean sameDate(ZipEntry zipEntry, long fileLastModified) {
         // may varay in millisec
         long zipLastModified = zipEntry.getTime();
@@ -252,18 +284,25 @@ public class CompressJob {
             );
         }
 
-        return timeDiff < 10000; // 10 seconds
+        return timeDiff < 10000; // are same if diff < 10 seconds
     }
 
     /**
-     * @return number of items in the result zip or RESULT_XXX
+     * Processes the compressQue: renaming duplicates and add items to zip.
+     *
+     * @return number of compressQue in the result zip or RESULT_XXX
      */
     public int compress() {
+        // to make shure that orginal is not broken if there is an error:
+        // 1) Workflow addToCompressQue to somefile.zip.tmp, (a) old content, (b) new content
+        // 2) rename exising to somefile.zip.bak
+        // 3) rename somefile.zip.tmp to somefile.zip
+        // 4) delete exising to somefile.zip.bak
         lastError = "";
         handleDuplicates();
 
-        if (items.size() == 0) {
-            logger.debug("aboard: no (more) files to add to zip");
+        if (compressQue.size() == 0) {
+            logger.debug("aboard: no (more) files to addToCompressQue to zip");
             return RESULT_NO_CHANGES;
         }
 
@@ -284,7 +323,7 @@ public class CompressJob {
             out = new ZipOutputStream(new FileOutputStream(newZip));
 
             if (this.destZip.exists()) {
-                context = getMessage("(1a) copy existing items from {0} to {1}",
+                context = getMessage("(1a) copy existing compressQue from {0} to {1}",
                         this.destZip, newZip);
                 zipInputStream = new ZipInputStream(new FileInputStream(
                         this.destZip));
@@ -305,8 +344,8 @@ public class CompressJob {
                 oldZip = new File(this.destZip.getAbsolutePath() + ".bak");
             }
 
-            // (1b) copy new items
-            for (CompressItem item : this.items) {
+            // (1b) copy new compressQue
+            for (CompressItem item : this.compressQue) {
                 String newFullDestZipItemName = item.getZipFileName();
                 File file = item.getFile();
                 context = getMessage("(1b) copy new item {0} as {1} to {2}",
@@ -385,6 +424,9 @@ public class CompressJob {
         return itemCount;
     }
 
+    /**
+     * local helper to generate a ZipEntry.
+     */
     private ZipEntry createZipEntry(String renamedFile, long time,
                                     String comment) {
         ZipEntry result = new ZipEntry(renamedFile);
@@ -402,8 +444,8 @@ public class CompressJob {
     private String getMessage(String format, Object... params) {
         String result = MessageFormat.format(format, params);
         logger.debug(result);
-        if (this.log != null) {
-            this.log.append(result).append("\n");
+        if (this.debugLogMessages != null) {
+            this.debugLogMessages.append(result).append("\n");
         }
         // System.out.println(result);
         return result;
@@ -423,12 +465,18 @@ public class CompressJob {
         outZipStream.closeEntry();
     }
 
+    /**
+     * get last error plus debugLogMessages if available
+     */
     public String getLastError(boolean detailed) {
-        if ((!detailed) || (this.log == null)) return lastError;
-        return this.log + "\n\n" + lastError.toString();
+        if ((!detailed) || (this.debugLogMessages == null)) return lastError;
+        return this.debugLogMessages + "\n\n" + lastError.toString();
     }
 
+    /**
+     * return number of remaining itemes that should be added to zip
+     */
     public int getAddCount() {
-        return this.items.size();
+        return this.compressQue.size();
     }
 }

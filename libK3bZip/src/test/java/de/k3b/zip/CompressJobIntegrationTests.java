@@ -83,7 +83,7 @@ public class CompressJobIntegrationTests {
     public void setup() throws IOException {
         testZip.delete();
         CompressJob sut = new CompressJob(testZip, false);
-        sut.add("", testContent.getAbsolutePath());
+        sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress();
         Assert.assertEquals(1, itemCount);
     }
@@ -91,7 +91,7 @@ public class CompressJobIntegrationTests {
     @Test
     public void shouldNotAddDouplicate() {
         CompressJob sut = new CompressJob(testZip, false);
-        sut.add("", testContent.getAbsolutePath());
+        sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress();
         Assert.assertEquals(CompressJob.RESULT_NO_CHANGES, itemCount);
     }
@@ -99,7 +99,7 @@ public class CompressJobIntegrationTests {
     @Test
     public void shouldAppendDifferentFile() {
         CompressJob sut = new CompressJob(testZip, false);
-        sut.add("", testContent2.getAbsolutePath());
+        sut.addToCompressQue("", testContent2.getAbsolutePath());
         int itemCount = sut.compress();
         Assert.assertEquals(2, itemCount);
     }
@@ -107,7 +107,7 @@ public class CompressJobIntegrationTests {
     @Test
     public void shouldAppendDir() {
         CompressJob sut = new CompressJob(testZip, false);
-        sut.add("", testDirWith2SubItems);
+        sut.addToCompressQue("", testDirWith2SubItems);
         int itemCount = sut.compress();
         Assert.assertEquals(3, itemCount);
     }
@@ -115,7 +115,7 @@ public class CompressJobIntegrationTests {
     @Test
     public void shouldRenameSameFileNameWithDifferentDate() {
         CompressJob sut = new CompressJob(testZip, false);
-        CompressItem item = sut.add("", testContent2);
+        CompressItem item = sut.addToCompressQue("", testContent2);
         item.setZipFileName(testContent.getName());
         int itemCount = sut.compress();
         Assert.assertEquals(2, itemCount);
