@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2014 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
 <resources>
 
     <string name="app_name">ToGoZip</string>
@@ -22,55 +40,44 @@ Do you want to use default \'%2$s\' instead? </string>
 
     <string name="about_summary">About ToGoZip</string>
     <string name="about_content_about">"<![CDATA[
-<a href='https://github.com/k3b/ToGoZip/wiki'>ToGoZip</a>
--&nbsp;<b><i>Add to Zip</i></b>
- for android's <i>'share'/'send to'</i> menu: <br>
+<b><i>"Add to Zip"</i></b>
+ for android's <i>'share'/'send'</i> menu: <br/>
+ <br/>
  Easy collection of files from every supporting app into
- one zip-file while beeing '<i>on the go</i>' or offline.<br>
-<br>
+ one zip-file while beeing '<i>on the go</i>' or offline.<br/>
+<br/>
 This collecting <i>2go.zip</i>-file is like a suitcase
  where you can put things (files) into from nearly everywhere (from
- every app that supports <i>'share'/'send to'</i>) and that
+ every app that supports <i>'share'/'send'</i>) and that
  can travel&nbsp; everywhere (via email,
- bluetooth,&nbsp;nfc).<br>
-<br>
+ bluetooth,&nbsp;nfc).<br/>
+<br/>
  The program's author uses ToGoZip to collect new android calendar
  entries (<a
  href='https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- that should be transfered to the desctop-pcs-s calendar. <br>
-<br>
+ that should be transfered to the desctop-pcs-s calendar. <br/>
+<br/>
     ]]>"</string>
 
-    		<string name="about_content"><![CDATA[ <html><body>
+    <string name="about_content"><![CDATA[ <html><body>
 <a href="https://github.com/k3b/ToGoZip/wiki"><b>ToGoZip</b></a><br/>Version $versionName$
 <br />
 <hr />
 $about$
 <hr />
 <h2>History</h2>
-Improvements v0.1.2.20141111<br />
+Improvements v0.2.2.20141120<br />
 <ul>
   <li>Added Settings Activity to define zip-file.</li>
+  <li>Added Settings Debug Mode: Debug Messages copied to clipboard and added to LogCat.</li>
   <li>Added this About-Box in Settings.</li>
 </ul>
 <br />
-Improvements v0.1.1.20141109<br />
+Initial Version v0.1.1.20141109<br />
 <ul>
   <li>Created share handler for Add To Zip without a gui.</li>
   <li>Hardcoded zipfile /sdcard/copy/2go.zip.</li>
   <li>Implemented view/send/sendto/send_multible for file and folder.</li>
-  <li>slf4j-android support.</li>
-  <li>.</li>
-  <li>.</li>
-  <li>Android independant zip enginge
-      <ul>
-          <li>Create folder/zip if it does not exist yet.</li>
-          <li>Rename file in zip if already exists.</li>
-          <li>slf4j support.</li>
-          <li>With j2se Unit- and Integration-Tests.</li>
-      </ul>
-  </li>
-  <li></li>
 </ul>
 <hr />
 <h2>Links</h2>
@@ -101,7 +108,7 @@ Improvements v0.1.1.20141109<br />
 <h2>Legal stuff</h2>
 <b>ToGoZip</b>&nbsp;<br />
 &nbsp;<br />
-Copyright © 2014 by k3b<br />
+Copyright (c) 2014 by k3b<br />
 Licensed under GPL, Version 3.0 or later.<br />
 <br />
 Android is a trademark of Google Inc. Use of this trademark is subject
