@@ -49,18 +49,6 @@ this program. If not, see <http://www.gnu.org/licenses/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="*/*" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:mimeType="text/*" />
-                <!-- todo
-                <data android:mimeType="application/octet-stream" />
-                 -->
-            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -73,9 +61,8 @@ this program. If not, see <http://www.gnu.org/licenses/>
                 <data android:mimeType="image/*" />
                 <data android:mimeType="media/*" />
                 <data android:mimeType="video/*" />
-                <data android:scheme="content" />
+                <data android:mimeType="text/*" />
             </intent-filter>
-
 
         </activity>
         <activity
