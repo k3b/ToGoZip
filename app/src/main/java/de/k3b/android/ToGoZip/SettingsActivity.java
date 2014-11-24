@@ -63,9 +63,8 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), Global.debugEnabled);
-
         SettingsImpl.init(this);
+        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), Global.debugEnabled);
 
         this.addPreferencesFromResource(R.xml.preferences);
 

@@ -74,9 +74,9 @@ public class CompressJob {
     private byte[] buffer = new byte[4096];
 
     /**
-     * last errormessage or null
+     * last errormessage
      */
-    private String lastError;
+    private StringBuilder lastError = new StringBuilder();
 
     /**
      * debug Log Messages if enabled or null
@@ -316,7 +316,6 @@ public class CompressJob {
         // 2) rename exising to somefile.zip.bak
         // 3) rename somefile.zip.tmp to somefile.zip
         // 4) delete exising to somefile.zip.bak
-        lastError = "";
         handleDuplicates();
 
         if (compressQue.size() == 0) {
@@ -337,11 +336,11 @@ public class CompressJob {
             File oldZip = null;
 
             newZip.delete();
-            context = getMessage("(0) create new result file {0}", newZip);
+            context = traceMessage("(0) create new result file {0}", newZip);
             out = new ZipOutputStream(new FileOutputStream(newZip));
 
             if (this.destZip.exists()) {
-                context = getMessage("(1a) copy existing compressQue from {0} to {1}",
+                context = traceMessage("(1a) copy existing compressQue from {0} to {1}",
                         this.destZip, newZip);
                 zipInputStream = new ZipInputStream(new FileInputStream(
                         this.destZip));
@@ -349,7 +348,7 @@ public class CompressJob {
                 for (ZipEntry zipOldEntry = zipInputStream.getNextEntry(); zipOldEntry != null; zipOldEntry = zipInputStream
                         .getNextEntry()) {
                     if (null != zipOldEntry) {
-                        context = getMessage(
+                        context = traceMessage(
                                 "- (1a) copy existing item from {0} to {1} : {2}",
                                 this.destZip, newZip, zipOldEntry);
                         add(out, zipOldEntry, zipInputStream);
@@ -366,7 +365,7 @@ public class CompressJob {
             for (CompressItem item : this.compressQue) {
                 String newFullDestZipItemName = item.getZipFileName();
                 File file = item.getFile();
-                context = getMessage("(1b) copy new item {0} as {1} to {2}",
+                context = traceMessage("(1b) copy new item {0} as {1} to {2}",
                         file, newFullDestZipItemName, newZip);
                 inputStream = item.getFileInputStream();
                 ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
@@ -385,7 +384,7 @@ public class CompressJob {
             if (oldZip != null) {
                 oldZip.delete(); // should ignore error
 
-                context = getMessage(
+                context = traceMessage(
                         "(2) rename old zip file from {0}  to {1}",
                         this.destZip, oldZip);
                 // i.e. /path/to/somefile.zip => /path/to/somefile.zip.bak
@@ -395,7 +394,7 @@ public class CompressJob {
             }
 
             // 3) rename new created somefile.zip.tmp to somefile.zip
-            context = getMessage("(3) rename new created zip file {0} to {1}",
+            context = traceMessage("(3) rename new created zip file {0} to {1}",
                     newZip, this.destZip);
             if (!newZip.renameTo(this.destZip)) {
                 // something went wrong. try to restore old zip
@@ -409,11 +408,11 @@ public class CompressJob {
 
             // 4) delete exising renamed old somefile.zip.bak
             if ((optDeleteBakFileWhenFinished) && (oldZip != null)) {
-                context = getMessage(
+                context = traceMessage(
                         "(4) delete exising renamed old zip file {0}", oldZip);
                 oldZip.delete();
             }
-            context = getMessage("(5a) successfull updated zip file {0}",
+            context = traceMessage("(5a) successfull updated zip file {0}",
                     this.destZip);
 
         } catch (Exception e) {
@@ -422,11 +421,11 @@ public class CompressJob {
                 errorMessage = "Error in " + context + ":" + errorMessage;
             }
             logger.error(errorMessage, e);
-            this.lastError = errorMessage;
+            addError(errorMessage);
             return RESULT_ERROR_ABOART;
         } finally {
             // 3) rename new created somefile.zip.tmp to somefile.zip
-            context = getMessage("(5b) free resources");
+            context = traceMessage("(5b) free resources");
 
             try {
                 if (inputStream != null)
@@ -459,7 +458,7 @@ public class CompressJob {
     /**
      * formats context message and does low level logging
      */
-    private String getMessage(String format, Object... params) {
+    public String traceMessage(String format, Object... params) {
         String result = MessageFormat.format(format, params);
         logger.debug(result);
         if (this.debugLogMessages != null) {
@@ -483,11 +482,16 @@ public class CompressJob {
         outZipStream.closeEntry();
     }
 
+    /** adds an errormessage to error-result */
+    public void addError(String errorMessage) {
+        this.lastError.append(errorMessage).append("\n");
+    }
+
     /**
      * get last error plus debugLogMessages if available
      */
     public String getLastError(boolean detailed) {
-        if ((!detailed) || (this.debugLogMessages == null)) return lastError;
+        if ((!detailed) || (this.debugLogMessages == null)) return lastError.toString();
         return this.debugLogMessages + "\n\n" + lastError.toString();
     }
 

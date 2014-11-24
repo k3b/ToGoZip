@@ -79,6 +79,4 @@ public class AndroidCompressJob extends CompressJob {
             return String.format(context.getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, getAddCount());
         }
     }
-
-
 }
