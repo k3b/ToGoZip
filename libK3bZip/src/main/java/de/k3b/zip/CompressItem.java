@@ -18,7 +18,7 @@
  */
 package de.k3b.zip;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * One dto-item that should be compressed.<br/>
@@ -47,4 +47,7 @@ public class CompressItem {
         return this;
     }
 
+    public InputStream getFileInputStream() throws IOException {
+        return new FileInputStream(file);
+    }
 }

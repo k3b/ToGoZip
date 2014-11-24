@@ -30,6 +30,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:key="zipfile"
             android:summary="Zip where Files are added to."
             android:title="Output Zip File" />
+        <!-- EditTextPreference -->
+        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+            android:key="textfile"
+            android:summary="File in zip where text is added to."
+            android:title="Text File in zip" />
         <!--
             </PreferenceCategory>
             <PreferenceCategory

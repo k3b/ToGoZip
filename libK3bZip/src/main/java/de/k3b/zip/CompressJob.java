@@ -31,6 +31,7 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
@@ -145,6 +146,23 @@ public class CompressJob {
         CompressItem item;
         item = new CompressItem().setFile(srcFile).setZipFileName(
                 destZipPath + srcFile.getName());
+        compressQue.add(item);
+        return item;
+    }
+
+    public CompressItem addTextToCompressQue(String textfile, String textToBeAdded) {
+        File srcFile = new File("/" + textfile);
+        srcFile.setLastModified(new Date().getTime());
+        CompressItem existingItem = findInCompressQue(srcFile);
+        if (existingItem != null) {
+            TextCompressItem textItem = ((TextCompressItem) existingItem);
+            textItem.setText(textItem.getText() + "\n\n" + textToBeAdded);
+            return null;
+        }
+
+        CompressItem item;
+        item = new TextCompressItem().setText(textToBeAdded).setFile(srcFile).setZipFileName(
+                textfile);
         compressQue.add(item);
         return item;
     }
@@ -350,7 +368,7 @@ public class CompressJob {
                 File file = item.getFile();
                 context = getMessage("(1b) copy new item {0} as {1} to {2}",
                         file, newFullDestZipItemName, newZip);
-                inputStream = new FileInputStream(file);
+                inputStream = item.getFileInputStream();
                 ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
                         file.lastModified(), null);
                 add(out, zipEntry, inputStream);

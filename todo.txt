@@ -1,59 +1,73 @@
-
-
 todo.txt for k3b.add2Zip
 =========
-
-warum geht send(Multible)To nicht unter a44?
-add2Zip
-v   if !init settings
-
-settings
-    if !writable(cur)
-        if writable(default)
-            dialog not writable.
-                set to default (keep dialog open)
-                cancel (exit all)
-                edit (keep settings open)
-        else
-            dialog
-                edit
-                cancel
-
-toast if changing from invalid zipfile to default
-check after zipfile change that path is valid
+- (2) non file types
+    - content urls
+        check if it it working
+    - Text
+        - settings: file name
+        - short append to texts
+        - long append to seperate text file
 
 
-v first start: outputdir check if there is no sdcard
-
-v online: rename git-repository to "toGoZip"
-v remove gui from add2zip
-v settings dialog
-v settings-about
-v settings/DebugLoggen => logged to clipboard.
 - Settings-Intent-chooser zip viewer/chooser
 - ? workflow encrypt-sendTo
 - - ? mail with email recipient
 - - ? bluetooth with enable bt?
-> publish via fdroid
-v - spec file
-- doc
-    - create wiki history [https://github.com/k3b/toGoZip/wiki/History Changelog]
-    v create readme
-    v readme
 
 =========
 
-(1)
-in order to collect files to be transfered to a different computer
-as an offline mobile android user
-i want have a "share/sendTo" function "add2zip that adds the current selected folder/file(s)
-to be added to a zip file. This zip can be later transfered to the other computer
-via bluetooth, nfc or email.
 
-History
+intent.hasExtra(Intent.EXTRA_STREAM) ||
+intent.hasExtra(Intent.EXTRA_TEXT);
 
-v0.1.1.20141109
-    - gui disabled because not implemented yet
-    - share menue "add2zip" for file(s) and/or folder without additional gui
-    - use hardcoded filename .../copy/2go.zip
+    public IntentFile[] getFiles() throws IntentFileException {
+        List<IntentFile> result = new ArrayList<IntentFile>();
+        try {
+            if (this.intent.hasExtra(Intent.EXTRA_TEXT)) {
+                List<String> texts = this.intent.getStringArrayListExtra(Intent.EXTRA_TEXT);
+                if (texts != null) {
+                    for (String text : texts) {
+                        try {
+                            result.add(new TextFile(text));
+                        } catch (Exception e) {
+                            Log.w(TAG, e);
+                        }
+                    }
+                }
+            }
+            if (this.intent.hasExtra(Intent.EXTRA_STREAM)) {
+                List<Uri> uris = this.intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+                if (uris != null) {
+                    for (Uri uri : uris) {
+                        try {
+                            result.add(IntentFile.getInstance(context, uri));
+                        } catch (Exception e) {
+                            Log.w(TAG, e);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new IntentFileException(e);
+        }
+        return result.toArray(new IntentFile[] {});
+    }
+
+-------------
+    private static final String TEXT_FILE_NAME = "text.txt";
+    private static final String TEXT_MIME_TYPE = "text/plain";
+
+    /** The text content of the file */
+    CharSequence text = "";
+
+    TextFile(Intent intent) throws IntentFileException {
+        this.text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
+--------
+    /**
+     *  Returns the Uri of the stream of the intent.
+     */
+    static Uri getStreamUri(Intent intent) {
+        return (Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM);
+    }
+
 

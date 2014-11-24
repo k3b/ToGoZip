@@ -39,12 +39,12 @@ public class SettingsActivity extends PreferenceActivity {
     /**
      * if not null: try to execute add2zip on finish
      */
-    private static File[] filesToBeAdded;
-
+    private static File[] filesToBeAdded = null;
+    private static String textToBeAdded = null;
     /**
      * public api to start settings-activity
      */
-    public static void show(Context context, File[] filesToBeAdded) {
+    public static void show(Context context, File[] filesToBeAdded, String textToBeAdded) {
         final Intent i = new Intent(context, SettingsActivity.class);
 
         if (Global.debugEnabled) {
@@ -53,6 +53,7 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         SettingsActivity.filesToBeAdded = filesToBeAdded;
+        SettingsActivity.textToBeAdded = textToBeAdded;
         context.startActivity(i);
 
     }
@@ -144,9 +145,9 @@ public class SettingsActivity extends PreferenceActivity {
      * executes finish without checking validity. Executes add2Zip source-files are available.
      */
     private void finishWithoutCheck() {
-        if (SettingsActivity.filesToBeAdded != null) {
+        if ((SettingsActivity.textToBeAdded != null) || (SettingsActivity.filesToBeAdded != null)) {
             SettingsImpl.init(this);
-            AndroidCompressJob.addToZip(this, new File(SettingsImpl.getZipfile()), SettingsActivity.filesToBeAdded);
+            AndroidCompressJob.addToZip(this, new File(SettingsImpl.getZipfile()), textToBeAdded, SettingsActivity.filesToBeAdded);
             SettingsActivity.filesToBeAdded = null;
         }
         super.finish();
@@ -159,19 +160,22 @@ public class SettingsActivity extends PreferenceActivity {
         String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
         SettingsImpl.setZipfile(this, defaultZipPath);
         File[] fileToBeAdded = SettingsActivity.filesToBeAdded;
+        String textToBeAdded = SettingsActivity.textToBeAdded;
         SettingsActivity.filesToBeAdded = null; // do not start add2zip
+        SettingsActivity.textToBeAdded = null;
         finishWithoutCheck();
         // restart with new settings
-        show(this, fileToBeAdded);
+        show(this, fileToBeAdded, textToBeAdded);
     }
 
     /**
      * cancel from Dialog cancels SettingsActivity
      */
     private void cancel() {
-        if (SettingsActivity.filesToBeAdded != null) {
+        if ((SettingsActivity.textToBeAdded != null) || (SettingsActivity.filesToBeAdded != null)) {
             Toast.makeText(this, getString(R.string.WARN_ADD_CANCELED), Toast.LENGTH_LONG).show();
             SettingsActivity.filesToBeAdded = null;
+            SettingsActivity.textToBeAdded = null;
         }
 
         finishWithoutCheck();

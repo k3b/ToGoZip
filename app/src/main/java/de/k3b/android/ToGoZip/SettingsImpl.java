@@ -33,6 +33,9 @@ public class SettingsImpl {
     static final String KEY_ZIPFILE = "zipfile";
     private static String zipfile = null;
 
+    static final String KEY_TEXTFILE = "textfile";
+    private static String textfile = "texts.txt";
+
     private SettingsImpl() {
     }
 
@@ -50,6 +53,10 @@ public class SettingsImpl {
         if (SettingsImpl.zipfile == null) {
             SettingsImpl.zipfile = getDefaultZipPath(context);
         }
+
+        SettingsImpl.textfile = SettingsImpl
+                .getPrefValue(prefs, KEY_TEXTFILE,
+                        SettingsImpl.textfile);
 
         SettingsImpl.zipfile = SettingsImpl
                 .getPrefValue(prefs, KEY_ZIPFILE,
@@ -100,6 +107,10 @@ public class SettingsImpl {
 
     public static String getZipfile() {
         return SettingsImpl.zipfile;
+    }
+
+    public static String getTextfile() {
+        return SettingsImpl.textfile;
     }
 
     /**

@@ -25,6 +25,7 @@ import java.io.File;
 
 import de.k3b.android.toGoZip.Global;
 import de.k3b.android.toGoZip.R;
+import de.k3b.android.toGoZip.SettingsImpl;
 import de.k3b.android.widgets.Clipboard;
 import de.k3b.zip.CompressJob;
 
@@ -36,11 +37,14 @@ import de.k3b.zip.CompressJob;
 public class AndroidCompressJob {
     //############ processing ########
 
-    public static void addToZip(Context context, File currentZipFile, File[] fileToBeAdded) {
-        if (fileToBeAdded != null) {
+    public static void addToZip(Context context, File currentZipFile, String textToBeAdded, File[] fileToBeAdded) {
+        if ((textToBeAdded != null) || (fileToBeAdded != null)) {
             currentZipFile.getParentFile().mkdirs();
             CompressJob job = new CompressJob(currentZipFile, Global.debugEnabled);
             job.addToCompressQue("", fileToBeAdded);
+            if (textToBeAdded != null) {
+                job.addTextToCompressQue(SettingsImpl.getTextfile(), textToBeAdded);
+            }
             int result = job.compress();
 
             String currentZipFileAbsolutePath = currentZipFile.getAbsolutePath();

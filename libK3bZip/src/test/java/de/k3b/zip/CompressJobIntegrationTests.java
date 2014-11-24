@@ -121,4 +121,21 @@ public class CompressJobIntegrationTests {
         Assert.assertEquals(2, itemCount);
         Assert.assertEquals("testFile(1).txt", item.getZipFileName());
     }
+
+    @Test
+    public void shouldAppendTextAsFile() {
+        CompressJob sut = new CompressJob(testZip, false);
+        sut.addTextToCompressQue("hello.txt", "hello world");
+        int itemCount = sut.compress();
+        Assert.assertEquals(2, itemCount);
+    }
+
+    @Test
+    public void shouldAppendTextAsFileToExisting() {
+        CompressJob sut = new CompressJob(testZip, false);
+        sut.addTextToCompressQue("hello.txt", "hello world");
+        sut.addTextToCompressQue("hello.txt", "once again: hello world");
+        int itemCount = sut.compress();
+        Assert.assertEquals(2, itemCount);
+    }
 }

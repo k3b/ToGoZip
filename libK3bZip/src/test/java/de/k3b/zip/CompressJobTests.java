@@ -95,7 +95,6 @@ public class CompressJobTests {
         Assert.assertEquals(null, result);
     }
 
-
     @Test
     public void shouldRenameIfDifferentDate() {
 

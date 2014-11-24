@@ -27,8 +27,10 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.k3b.android.AndroidCompressJob;
+import de.k3b.android.MediaUtil;
 
 /**
  * This pseudo activity has no gui. It starts add2zip from intent-data
@@ -47,19 +49,20 @@ public class Add2ZipActivity extends Activity {
         boolean canWrite = SettingsImpl.init(this);
 
         File[] filesToBeAdded = getFilesToBeAdded();
+        String textToBeAdded = getTextToBeAdded();
 
         // on error show settings
         if (!canWrite) {
-            SettingsActivity.show(this, filesToBeAdded);
+            SettingsActivity.show(this, filesToBeAdded, textToBeAdded);
             finish();
             return;
         }
 
         // no error yet
-        if (filesToBeAdded == null) {
+        if ((textToBeAdded == null) && (filesToBeAdded == null)) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
         } else {
-            AndroidCompressJob.addToZip(this, getCurrentZipFile(), filesToBeAdded);
+            AndroidCompressJob.addToZip(this, getCurrentZipFile(), textToBeAdded, filesToBeAdded);
         }
         this.finish();
     }
@@ -68,19 +71,40 @@ public class Add2ZipActivity extends Activity {
         return new File(SettingsImpl.getZipfile());
     }
 
+    private String getTextToBeAdded() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+            if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
+                List<String> strings = intent.getStringArrayListExtra(Intent.EXTRA_TEXT);
+                if (strings != null) {
+                    StringBuilder result = new StringBuilder();
+                    for (String item : strings) {
+                        result.append(item).append("\n\n");
+                    }
+                    if (result.length() > 0) return result.toString();
+                }
+            } else {
+                return intent.getStringExtra(Intent.EXTRA_TEXT);
+            }
+        }
+        return null;
+    }
+
     private File[] getFilesToBeAdded() {
         ArrayList<File> result = new ArrayList<File>();
         Intent intent = getIntent();
 
-        if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
-            ArrayList<Uri> uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-            if (uris != null) {
-                for (Uri item : uris) {
-                    addResult(result, item);
+        if (intent.hasExtra(Intent.EXTRA_STREAM)) {
+            if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
+                ArrayList<Uri> uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+                if (uris != null) {
+                    for (Uri item : uris) {
+                        addResult(result, item);
+                    }
                 }
+            } else {
+                addResult(result, (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
             }
-        } else {
-            addResult(result, (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
         }
 
         addResult(result, intent.getData());
@@ -94,9 +118,27 @@ public class Add2ZipActivity extends Activity {
         return result.toArray(new File[len]);
     }
 
-    private void addResult(ArrayList<File> result, Uri data) {
-        if ((data != null) && ("file".equalsIgnoreCase(data.getScheme()))) {
-            result.add(new File(data.getPath()));
+    private void addResult(ArrayList<File> result, Uri uri) {
+        File file = getLocalFile(uri);
+        if (file != null) {
+            result.add(file);
         }
     }
+
+    private File getLocalFile(Uri uri) {
+        if (uri != null) {
+            String scheme = uri.getScheme();
+
+            if ("file".equalsIgnoreCase(scheme)) {
+                return new File(uri.getPath());
+            } else if ("content".equalsIgnoreCase(scheme)) {
+                String path = MediaUtil.convertMediaUriToPath(this, uri);
+                if (path != null) {
+                    return new File(path);
+                }
+            }
+        }
+        return null;
+    }
+
 }
