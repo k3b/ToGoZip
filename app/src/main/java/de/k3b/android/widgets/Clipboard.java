@@ -26,7 +26,7 @@ import android.content.Context;
  * Created by k3b on 17.11.2014.
  */
 public class Clipboard {
-    public static void addToClipboard(Context context, String text) {
+    public static void addToClipboard(Context context, CharSequence text) {
         // for compatibility reaons using depricated clipboard api. the non depricateded clipboard was not available before api 11.
         try {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);

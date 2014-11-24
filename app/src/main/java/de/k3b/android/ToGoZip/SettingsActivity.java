@@ -41,6 +41,8 @@ public class SettingsActivity extends PreferenceActivity {
      */
     private static File[] filesToBeAdded = null;
     private static String textToBeAdded = null;
+    private AndroidCompressJob job = null;
+
     /**
      * public api to start settings-activity
      */
@@ -61,6 +63,8 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), Global.debugEnabled);
+
         SettingsImpl.init(this);
 
         this.addPreferencesFromResource(R.xml.preferences);
@@ -147,7 +151,7 @@ public class SettingsActivity extends PreferenceActivity {
     private void finishWithoutCheck() {
         if ((SettingsActivity.textToBeAdded != null) || (SettingsActivity.filesToBeAdded != null)) {
             SettingsImpl.init(this);
-            AndroidCompressJob.addToZip(this, new File(SettingsImpl.getZipfile()), textToBeAdded, SettingsActivity.filesToBeAdded);
+            job.addToZip(textToBeAdded, SettingsActivity.filesToBeAdded);
             SettingsActivity.filesToBeAdded = null;
         }
         super.finish();

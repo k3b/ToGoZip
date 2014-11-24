@@ -31,6 +31,7 @@ import java.util.List;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.MediaUtil;
+import de.k3b.android.widgets.Clipboard;
 
 /**
  * This pseudo activity has no gui. It starts add2zip from intent-data
@@ -38,6 +39,7 @@ import de.k3b.android.MediaUtil;
  */
 public class Add2ZipActivity extends Activity {
 
+    private AndroidCompressJob job = null;
     /**
      * caption for logging
      */
@@ -48,6 +50,7 @@ public class Add2ZipActivity extends Activity {
         super.onCreate(savedInstanceState);
         boolean canWrite = SettingsImpl.init(this);
 
+        this.job = new AndroidCompressJob(this, getCurrentZipFile(), Global.debugEnabled);
         File[] filesToBeAdded = getFilesToBeAdded();
         String textToBeAdded = getTextToBeAdded();
 
@@ -62,7 +65,7 @@ public class Add2ZipActivity extends Activity {
         if ((textToBeAdded == null) && (filesToBeAdded == null)) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
         } else {
-            AndroidCompressJob.addToZip(this, getCurrentZipFile(), textToBeAdded, filesToBeAdded);
+            this.job.addToZip(textToBeAdded, filesToBeAdded);
         }
         this.finish();
     }
@@ -73,9 +76,11 @@ public class Add2ZipActivity extends Activity {
 
     private String getTextToBeAdded() {
         Intent intent = getIntent();
-        if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+        Bundle extras = (intent != null) ? intent.getExtras() : null;
+        Object extra = (extras != null) ? extras.get(Intent.EXTRA_TEXT) : null;
+        if (extra != null) {
             if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
-                List<String> strings = intent.getStringArrayListExtra(Intent.EXTRA_TEXT);
+                List<String> strings = extras.getStringArrayList(Intent.EXTRA_TEXT);
                 if (strings != null) {
                     StringBuilder result = new StringBuilder();
                     for (String item : strings) {
@@ -84,38 +89,76 @@ public class Add2ZipActivity extends Activity {
                     if (result.length() > 0) return result.toString();
                 }
             } else {
-                return intent.getStringExtra(Intent.EXTRA_TEXT);
+                String s = extras.getString(Intent.EXTRA_TEXT);
+                if (s != null)
+                    return s;
             }
+
+            // fallback for unknown extra-extra type
+            if (extra != null)
+                return extra.getClass().getCanonicalName() + ":" + extra.toString();
         }
         return null;
     }
 
     private File[] getFilesToBeAdded() {
+        StringBuilder errorMessage = new StringBuilder();
         ArrayList<File> result = new ArrayList<File>();
-        Intent intent = getIntent();
-
-        if (intent.hasExtra(Intent.EXTRA_STREAM)) {
-            if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
-                ArrayList<Uri> uris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-                if (uris != null) {
-                    for (Uri item : uris) {
-                        addResult(result, item);
+        Object extra = null;
+        try {
+            Intent intent = getIntent();
+            Bundle extras = (intent != null) ? intent.getExtras() : null;
+            extra = (extras != null) ? extras.get(Intent.EXTRA_STREAM) : null;
+            if (extra != null) {
+                if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
+                    ArrayList<Uri> uris = extras.getParcelableArrayList(Intent.EXTRA_STREAM);
+                    if (uris != null) {
+                        for (Uri item : uris) {
+                            addResult(result, item);
+                        }
+                    } else {
+                        errorMessage.append("unknown format for Intent.EXTRA_STREAM : "
+                                + getLogMessageString(extra) + "\n");
                     }
+                } else {
+                    addResult(result, (Uri) extras.getParcelable(Intent.EXTRA_STREAM));
                 }
-            } else {
-                addResult(result, (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
+                extra = null;
             }
+
+            addResult(result, intent.getData());
+        } catch (Exception ex) {
+            errorMessage.append("error : " + ex.getMessage() +"\nlast extra = " + getLogMessageString(extra) + "\n");
         }
-
-        addResult(result, intent.getData());
-
         int len = result.size();
         if (Global.debugEnabled) {
-            Log.d(TAG, "getFilesToBeAdded " + len + ":" + result);
+            if (errorMessage.length() > 0) {
+
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+
+                if (Global.debugEnabled) {
+                    Clipboard.addToClipboard(this, errorMessage);
+                }
+
+
+
+
+
+                errorMessage.insert(0,"\n=");
+            }
+            Log.d(TAG, "getFilesToBeAdded " + len + ":" + result + errorMessage);
         }
 
         if (len == 0) return null;
         return result.toArray(new File[len]);
+    }
+
+    private String getLogMessageString(Object extra) {
+        if (extra != null) {
+            return extra.getClass().getCanonicalName()
+                    + ": " + extra;
+        }
+        return "";
     }
 
     private void addResult(ArrayList<File> result, Uri uri) {

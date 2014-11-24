@@ -68,7 +68,7 @@ public class CompressJob {
     /**
      * where old entries come from and new entries go to
      */
-    private File destZip;
+    protected File destZip;
 
     // used to copy content
     private byte[] buffer = new byte[4096];

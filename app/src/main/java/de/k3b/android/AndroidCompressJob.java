@@ -34,37 +34,49 @@ import de.k3b.zip.CompressJob;
  * <p/>
  * Created by k3b on 17.11.2014.
  */
-public class AndroidCompressJob {
+public class AndroidCompressJob extends CompressJob {
+    private final Context context;
+
+    /**
+     * Creates a job.
+     *
+     * @param destZip     full path to the zipfile where the new files should be added to
+     * @param useDebugLog if true collect diagnostics/debug messages to debugLogMessages.
+     */
+    public AndroidCompressJob(Context context, File destZip, boolean useDebugLog) {
+        super(destZip, useDebugLog);
+        this.context = context;
+    }
     //############ processing ########
 
-    public static void addToZip(Context context, File currentZipFile, String textToBeAdded, File[] fileToBeAdded) {
+    public void addToZip(String textToBeAdded, File[] fileToBeAdded) {
         if ((textToBeAdded != null) || (fileToBeAdded != null)) {
-            currentZipFile.getParentFile().mkdirs();
-            CompressJob job = new CompressJob(currentZipFile, Global.debugEnabled);
-            job.addToCompressQue("", fileToBeAdded);
+            destZip.getParentFile().mkdirs();
+            addToCompressQue("", fileToBeAdded);
             if (textToBeAdded != null) {
-                job.addTextToCompressQue(SettingsImpl.getTextfile(), textToBeAdded);
+                addTextToCompressQue(SettingsImpl.getTextfile(), textToBeAdded);
             }
-            int result = job.compress();
+            int result = compress();
 
-            String currentZipFileAbsolutePath = currentZipFile.getAbsolutePath();
-            final String text = getResultMessage(context, result, currentZipFileAbsolutePath, job);
+            String currentZipFileAbsolutePath = destZip.getAbsolutePath();
+            final String text = getResultMessage(result);
             Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 
             if (Global.debugEnabled) {
-                Clipboard.addToClipboard(context, text + "\n\n" + job.getLastError(true));
+                Clipboard.addToClipboard(context, text + "\n\n" + getLastError(true));
             }
         }
     }
 
-    private static String getResultMessage(Context context, int convertResult, String currentZipFileAbsolutePath, CompressJob job) {
+    private String getResultMessage(int convertResult) {
+        String currentZipFileAbsolutePath = this.destZip.getAbsolutePath();
         if (convertResult == CompressJob.RESULT_ERROR_ABOART) {
             return String.format(context.getString(R.string.ERR_ADD),
-                    currentZipFileAbsolutePath, job.getLastError(false));
+                    currentZipFileAbsolutePath, getLastError(false));
         } else if (convertResult == CompressJob.RESULT_NO_CHANGES) {
             return String.format(context.getString(R.string.WARN_ADD_NO_CHANGES), currentZipFileAbsolutePath);
         } else {
-            return String.format(context.getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, job.getAddCount());
+            return String.format(context.getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, getAddCount());
         }
     }
 
