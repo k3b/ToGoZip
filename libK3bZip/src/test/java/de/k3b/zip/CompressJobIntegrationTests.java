@@ -52,8 +52,6 @@ public class CompressJobIntegrationTests {
     static private File testContent3 = new File(testDirWith2SubItems, "testFile3.txt");
     static private File testContent4 = new File(testDirWith2SubItems, "testFile4.txt");
 
-    private CompressJob sut;
-
     @BeforeClass
     static public void createTestData() throws IOException, ParseException {
         root.mkdirs();
@@ -82,15 +80,19 @@ public class CompressJobIntegrationTests {
     @Before
     public void setup() throws IOException {
         testZip.delete();
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress();
         Assert.assertEquals(1, itemCount);
     }
 
+    private CompressJob createCompressJob(File testZip) {
+        return new CompressJob(testZip, null);
+    }
+
     @Test
     public void shouldNotAddDouplicate() {
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress();
         Assert.assertEquals(CompressJob.RESULT_NO_CHANGES, itemCount);
@@ -98,7 +100,7 @@ public class CompressJobIntegrationTests {
 
     @Test
     public void shouldAppendDifferentFile() {
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent2.getAbsolutePath());
         int itemCount = sut.compress();
         Assert.assertEquals(2, itemCount);
@@ -106,7 +108,7 @@ public class CompressJobIntegrationTests {
 
     @Test
     public void shouldAppendDir() {
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testDirWith2SubItems);
         int itemCount = sut.compress();
         Assert.assertEquals(3, itemCount);
@@ -114,7 +116,7 @@ public class CompressJobIntegrationTests {
 
     @Test
     public void shouldRenameSameFileNameWithDifferentDate() {
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         CompressItem item = sut.addToCompressQue("", testContent2);
         item.setZipFileName(testContent.getName());
         int itemCount = sut.compress();
@@ -124,7 +126,7 @@ public class CompressJobIntegrationTests {
 
     @Test
     public void shouldAppendTextAsFile() {
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         sut.addTextToCompressQue("hello.txt", "hello world");
         int itemCount = sut.compress();
         Assert.assertEquals(2, itemCount);
@@ -132,7 +134,7 @@ public class CompressJobIntegrationTests {
 
     @Test
     public void shouldAppendTextAsFileToExisting() {
-        CompressJob sut = new CompressJob(testZip, false);
+        CompressJob sut = createCompressJob(testZip);
         sut.addTextToCompressQue("hello.txt", "hello world");
         sut.addTextToCompressQue("hello.txt", "once again: hello world");
         int itemCount = sut.compress();

@@ -28,6 +28,7 @@ import de.k3b.android.toGoZip.R;
 import de.k3b.android.toGoZip.SettingsImpl;
 import de.k3b.android.widgets.Clipboard;
 import de.k3b.zip.CompressJob;
+import de.k3b.zip.ZipLogImpl;
 
 /**
  * Android specific version of zip-CompressJob.<br/>
@@ -44,7 +45,7 @@ public class AndroidCompressJob extends CompressJob {
      * @param useDebugLog if true collect diagnostics/debug messages to debugLogMessages.
      */
     public AndroidCompressJob(Context context, File destZip, boolean useDebugLog) {
-        super(destZip, useDebugLog);
+        super(destZip, new ZipLogImpl(useDebugLog));
         this.context = context;
     }
     //############ processing ########

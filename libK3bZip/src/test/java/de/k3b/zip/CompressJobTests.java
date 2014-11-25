@@ -52,10 +52,14 @@ public class CompressJobTests {
         when(zipFile.getEntry(eq("a(1).txt"))).thenReturn(zeA1);
     }
 
+    private CompressJob createCompressJob(File testZip) {
+        return new CompressJob(testZip, null);
+    }
+
     @Test
     public void shouldRenameExisting() {
 
-        CompressJob sut = new CompressJob(null, false);
+        CompressJob sut = createCompressJob(null);
         sut.addItemToCompressQue("", new File("a.txt"));
 
         List<CompressItem> result = sut.handleDuplicates(zipFile);
@@ -66,7 +70,7 @@ public class CompressJobTests {
     @Test
     public void shouldNotAddDuplicate() {
 
-        CompressJob sut = new CompressJob(null, false);
+        CompressJob sut = createCompressJob(null);
         sut.addItemToCompressQue("", new File("a.txt"));
         CompressItem result = sut.addItemToCompressQue("", new File("a.txt"));
 
@@ -76,7 +80,7 @@ public class CompressJobTests {
     @Test
     public void shouldNotRenameNew() {
 
-        CompressJob sut = new CompressJob(null, false);
+        CompressJob sut = createCompressJob(null);
         sut.addToCompressQue("", "b.txt");
 
         List<CompressItem> result = sut.handleDuplicates(zipFile);
@@ -87,7 +91,7 @@ public class CompressJobTests {
     @Test
     public void shouldIgnoreSame() {
 
-        CompressJob sut = new CompressJob(null, false);
+        CompressJob sut = createCompressJob(null);
         sut.addToCompressQue("", "a.txt");
 
         String result = sut.getFixedZipFileName(zipFile, zeA1, zeA1.getTime());
@@ -98,7 +102,7 @@ public class CompressJobTests {
     @Test
     public void shouldRenameIfDifferentDate() {
 
-        CompressJob sut = new CompressJob(null, false);
+        CompressJob sut = createCompressJob(null);
 
         String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime() + 99900);
 

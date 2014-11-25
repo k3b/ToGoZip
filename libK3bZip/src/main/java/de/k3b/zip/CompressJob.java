@@ -43,7 +43,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * Android independant enginge that adds files to a zip file via a compressQue.
  */
-public class CompressJob {
+public class CompressJob implements ZipLog {
     public static final int RESULT_NO_CHANGES = 0;
     public static final int RESULT_ERROR_ABOART = -1;
     private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
@@ -60,6 +60,9 @@ public class CompressJob {
      */
     private final boolean optRenameExistingOldEntry = true;
 
+    /** logger used for compressing or null  */
+    private final ZipLog zipLog;
+
     /**
      * items To Be Added to be processed in the job.
      */
@@ -74,24 +77,14 @@ public class CompressJob {
     private byte[] buffer = new byte[4096];
 
     /**
-     * last errormessage
-     */
-    private StringBuilder lastError = new StringBuilder();
-
-    /**
-     * debug Log Messages if enabled or null
-     */
-    private StringBuilder debugLogMessages = null;
-
-    /**
      * Creates a job.
      *
      * @param destZip     full path to the zipfile where the new files should be added to
-     * @param useDebugLog if true collect diagnostics/debug messages to debugLogMessages.
+     * @param zipLog      if not null use this for logging.
      */
-    public CompressJob(File destZip, boolean useDebugLog) {
+    public CompressJob(File destZip, ZipLog zipLog) {
         this.destZip = destZip;
-        this.debugLogMessages = (useDebugLog) ? new StringBuilder() : null;
+        this.zipLog = zipLog;
     }
 
     /**
@@ -455,19 +448,6 @@ public class CompressJob {
         return result;
     }
 
-    /**
-     * formats context message and does low level logging
-     */
-    public String traceMessage(String format, Object... params) {
-        String result = MessageFormat.format(format, params);
-        logger.debug(result);
-        if (this.debugLogMessages != null) {
-            this.debugLogMessages.append(result).append("\n");
-        }
-        // System.out.println(result);
-        return result;
-    }
-
     private void thowrError(String message) throws Exception {
         throw new Exception("failed in " + message);
     }
@@ -482,23 +462,27 @@ public class CompressJob {
         outZipStream.closeEntry();
     }
 
-    /** adds an errormessage to error-result */
-    public void addError(String errorMessage) {
-        this.lastError.append(errorMessage).append("\n");
-    }
-
-    /**
-     * get last error plus debugLogMessages if available
-     */
-    public String getLastError(boolean detailed) {
-        if ((!detailed) || (this.debugLogMessages == null)) return lastError.toString();
-        return this.debugLogMessages + "\n\n" + lastError.toString();
-    }
-
     /**
      * return number of remaining itemes that should be added to zip
      */
     public int getAddCount() {
         return this.compressQue.size();
+    }
+
+    @Override
+    public String traceMessage(String format, Object... params) {
+        if (zipLog != null) return zipLog.traceMessage(format, params);
+        return format;
+    }
+
+    @Override
+    public void addError(String errorMessage) {
+        if (zipLog != null) zipLog.addError(errorMessage);
+    }
+
+    @Override
+    public String getLastError(boolean detailed) {
+        if (zipLog != null) return zipLog.getLastError(detailed);
+        return "";
     }
 }
