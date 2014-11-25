@@ -46,70 +46,55 @@ public class IntentParser {
         this.intent = intent;
         this.zipLog = zipLog;
     }
-    public String getTextToBeAdded() {
+
+    private void getTextToBeAdded(StringBuffer result) {
+        int oldItems = result.length();
         Bundle extras = (intent != null) ? intent.getExtras() : null;
         Object extra = (extras != null) ? extras.get(Intent.EXTRA_TEXT) : null;
         if (extra != null) {
             if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
                 List<String> strings = extras.getStringArrayList(Intent.EXTRA_TEXT);
                 if (strings != null) {
-                    StringBuilder result = new StringBuilder();
                     for (String item : strings) {
                         zipLog.traceMessage("Extras[TEXT][] strings: adding {0}", item);
                         result.append(item).append("\n\n");
                     }
-                    if (result.length() > 0) return result.toString();
+                    extra = null;
                 }
             } else {
                 String s = extras.getString(Intent.EXTRA_TEXT);
                 if (s != null) {
                     zipLog.traceMessage("Extras[TEXT] string: adding {0}", s);
-                    return s;
+                    result.append(s).append("\n\n");
+                    extra = null;
                 }
             }
 
             // fallback for unknown extra-extra type
             if (extra != null) {
                 zipLog.traceMessage("Extras[TEXT] {1}: adding {0}", extra, extra.getClass().getCanonicalName());
-                return extra.getClass().getCanonicalName() + ":" + extra.toString();
+                result.append(extra.getClass().getCanonicalName()).append(":").append(extra.toString()).append("\n\n");
             }
         }
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return getClipDataText(intent);
-        }
-
-        return null;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private String getClipDataText(Intent intent) {
+    private void addClipUris(ArrayList<File> result, Intent intent, StringBuffer texts) {
         ClipData clipData = intent.getClipData();
-        if (clipData != null) {
-            StringBuilder result = new StringBuilder();
+        int count = (clipData != null) ? clipData.getItemCount() : 0;
+        for (int i = 0; i < count; i++) {
+            ClipData.Item clipItem = clipData.getItemAt(i);
 
-            int count = clipData.getItemCount();
-            for(int i=0; i < count; i++) {
-                ClipData.Item clipItem = clipData.getItemAt(i);
-                if (!addClipData(result, clipItem.getHtmlText(), "html")
-                        && !addClipData(result, clipItem.getText(), "text")) {
-                    Uri uri = clipItem.getUri();
-                    String scheme = (uri != null) ? uri.getScheme() : "";
-
-                    if ((!"file".equalsIgnoreCase(scheme) && (!"content".equalsIgnoreCase(scheme)))) {
-                        addClipData(result, uri, "uri");
-                    }
-
-                }
-            }
-            if (result.length() > 0) return result.toString();
+            Uri uri = (clipData != null) ? clipItem.getUri() : null;
+            addResult("clipData[i] uri", result, uri, null, null);
+            if (!addClipData(texts, clipItem.getHtmlText(), "html"))
+                addClipData(texts, clipItem.getText(), "text");
         }
-
-        return null;
     }
 
-    public File[] getFilesToBeAdded() {
-        StringBuilder errorMessage = new StringBuilder();
+
+    public File[] getFilesToBeAdded(StringBuffer texts) {
+        StringBuffer errorMessage = new StringBuffer();
         ArrayList<File> result = new ArrayList<File>();
         Object extra = null;
         try {
@@ -120,46 +105,33 @@ public class IntentParser {
                     ArrayList<Uri> uris = extras.getParcelableArrayList(Intent.EXTRA_STREAM);
                     if (uris != null) {
                         for (Uri item : uris) {
-                            addResult("Extras[Stream][] uris", result, item, true);
+                            addResult("Extras[Stream][] uris", result, item, extra, texts);
                         }
-                    } else {
-                        zipLog.addError("Unknown format for Intent.Extras[Stream] : "
-                                + getLogMessageString(extra));
-                    }
+                    } // else unknown format.
                 } else {
-                    addResult("Extras[Stream] uri", result, (Uri) extras.getParcelable(Intent.EXTRA_STREAM), true);
+                    addResult("Extras[Stream] uri", result, (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra, texts);
                 }
                 extra = null;
             }
 
-            addResult("getData uri ", result, intent.getData(), true);
+            addResult("getData uri ", result, intent.getData(), null, texts);
+            getTextToBeAdded(texts);
 
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                addClipUris(result, intent);
+            if ((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (result.size() == 0) && (texts.length() == 0)) {
+                addClipUris(result, intent, texts);
             }
 
 
         } catch (Exception ex) {
             zipLog.addError("error : " + ex.getMessage() + "\nlast extra = " + getLogMessageString(extra));
         }
+
         int len = result.size();
         if (len == 0) return null;
         return result.toArray(new File[len]);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void addClipUris(ArrayList<File> result, Intent intent) {
-        ClipData clipData = intent.getClipData();
-        int count = (clipData != null) ? clipData.getItemCount() : 0;
-        for(int i=0; i < count; i++) {
-            ClipData.Item clipItem = clipData.getItemAt(i);
-
-            Uri uri = (clipData != null) ? clipItem.getUri() : null;
-            addResult("clipData[i] uri", result, uri, false);
-        }
-    }
-
-    private boolean addClipData(StringBuilder result, Object item, String type) {
+    private boolean addClipData(StringBuffer result, Object item, String type) {
         if (item != null) {
             zipLog.traceMessage("ClipData[] {1}: adding {0}", item, type);
             result.append(item).append("\n\n");
@@ -169,30 +141,37 @@ public class IntentParser {
         return false;
     }
 
-    private void addResult(String context, ArrayList<File> result, Uri uri, boolean addErrorIfUnresolved) {
+    private void addResult(String context, ArrayList<File> result, Uri uri, Object nonUriValue, StringBuffer texts) {
         if (uri != null) {
             zipLog.traceMessage("{0}: adding file {1}", context, uri);
 
-            File file = getLocalFile(uri, addErrorIfUnresolved);
+            File file = getLocalFile(uri);
             if (file != null) {
                 result.add(file);
+                return;
             }
+        }
+        if (nonUriValue != null) {
+            zipLog.traceMessage("{1} : adding text {0}", nonUriValue);
+            texts.append(nonUriValue).append("\n\n");
         }
     }
 
-    private File getLocalFile(Uri uri, boolean addErrorIfUnresolved) {
+    private File getLocalFile(Uri uri) {
         if (uri != null) {
             String scheme = uri.getScheme();
 
             if ("file".equalsIgnoreCase(scheme)) {
-                return new File(uri.getPath());
+                File file = new File(uri.getPath());
+                if (file.exists()) {
+                    return file;
+                }
             } else if ("content".equalsIgnoreCase(scheme)) {
                 String path = MediaUtil.convertMediaUriToPath(context, uri);
                 if (path != null) {
                     return new File(path);
                 }
             }
-            if (addErrorIfUnresolved) zipLog.addError("Not implemented url: " + uri);
         }
         return null;
     }

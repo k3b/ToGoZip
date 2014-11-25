@@ -88,7 +88,7 @@ public class SettingsImpl {
         }
 
         File parentDir = new File(zipfile).getParentFile();
-        if (!parentDir.exists() && !parentDir.mkdirs()) {
+        if ((parentDir == null) || (!parentDir.exists() && !parentDir.mkdirs())) {
             return false; // parentdir does not exist and cannot be created
         }
 
