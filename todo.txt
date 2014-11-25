@@ -1,11 +1,20 @@
 todo.txt for k3b.add2Zip
 =========
+ZipJob-=LogInterface+class logger
+Add2ZipActivity-=IntentParser
+	getIntendData(File[], StringBuilder)
+
+
+
+
+
 - (2) non file types
     - content urls
         check if it it working
     - Text
         - settings: file name
         - short append to texts
+			- copy/append
         - long append to seperate text file
 
 

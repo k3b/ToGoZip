@@ -30,6 +30,8 @@ import android.widget.Toast;
 import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
+import de.k3b.zip.ZipLog;
+import de.k3b.zip.ZipLogImpl;
 
 /**
  * show settings/config activity. On Start and Exit checks if data is valid.
@@ -64,7 +66,9 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SettingsImpl.init(this);
-        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), Global.debugEnabled);
+        ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
+
+        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), zipLog);
 
         this.addPreferencesFromResource(R.xml.preferences);
 
