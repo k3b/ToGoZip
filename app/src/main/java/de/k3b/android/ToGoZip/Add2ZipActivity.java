@@ -58,8 +58,8 @@ public class Add2ZipActivity extends Activity {
 
         AndroidCompressJob job = new AndroidCompressJob(this, getCurrentZipFile(), zipLog);
         StringBuffer texts = new StringBuffer();
-        File[] filesToBeAdded = intentParser.getFilesToBeAdded(texts);
-        String textToBeAdded = (texts.length() > 0) ? texts.toString() : null;
+        File[] filesToBeAdded = intentParser.getFilesToBeAdded();
+        String textToBeAdded = intentParser.getTextToBeAdded();
 
         // on error show settings
         if (!canWrite) {

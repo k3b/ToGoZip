@@ -41,6 +41,8 @@ public class IntentParser {
     private final ZipLog zipLog;
     private final Context context;
 
+    private ArrayList<File> resultFiles = null;
+    private StringBuffer resultText = null;
     public IntentParser(Context context, Intent intent, ZipLog zipLog) {
         this.context = context;
         this.intent = intent;
@@ -78,24 +80,26 @@ public class IntentParser {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void addClipUris(ArrayList<File> resultFiles, Intent intent, StringBuffer resultText) {
-        ClipData clipData = intent.getClipData();
-        int count = (clipData != null) ? clipData.getItemCount() : 0;
-        for (int i = 0; i < count; i++) {
-            ClipData.Item clipItem = clipData.getItemAt(i);
-
-            Uri uri = (clipData != null) ? clipItem.getUri() : null;
-            addResult("clipData[i] uri", resultFiles, uri, null, null);
-            if (!addClipData(resultText, clipItem.getHtmlText(), "html"))
-                addClipData(resultText, clipItem.getText(), "text");
-        }
+    public File[] getFilesToBeAdded() {
+        parse();
+        int len = resultFiles.size();
+        if (len == 0) return null;
+        return resultFiles.toArray(new File[len]);
     }
 
+    public String getTextToBeAdded() {
+        parse();
+        if (resultText.length() == 0) return null;
+        return resultText.toString();
+    }
 
-    public File[] getFilesToBeAdded(StringBuffer resultText) {
-        StringBuffer errorMessage = new StringBuffer();
-        ArrayList<File> resultFiles = new ArrayList<File>();
+    private void parse() {
+        if ((resultFiles != null) && (resultText != null)) {
+            return;
+        }
+        resultFiles = new ArrayList<File>();
+        resultText = new StringBuffer();
+
         Object extra = null;
         try {
             Bundle extras = (intent != null) ? intent.getExtras() : null;
@@ -105,20 +109,20 @@ public class IntentParser {
                     ArrayList<Uri> uris = extras.getParcelableArrayList(Intent.EXTRA_STREAM);
                     if (uris != null) {
                         for (Uri item : uris) {
-                            addResult("Extras[Stream][] uris", resultFiles, item, extra, resultText);
+                            addResult("Extras[Stream][] uris", item, extra);
                         }
                     } // else unknown format.
                 } else {
-                    addResult("Extras[Stream] uri", resultFiles, (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra, resultText);
+                    addResult("Extras[Stream] uri", (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra);
                 }
                 extra = null;
             }
 
-            addResult("getData uri ", resultFiles, intent.getData(), null, resultText);
+            addResult("getData uri ", intent.getData(), null);
             getTextToBeAdded(resultText);
 
             if ((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (resultFiles.size() == 0) && (resultText.length() == 0)) {
-                addClipUris(resultFiles, intent, resultText);
+                addClipUris();
             }
 
 
@@ -126,12 +130,23 @@ public class IntentParser {
             zipLog.addError("error : " + ex.getMessage() + "\nlast extra = " + getLogMessageString(extra));
         }
 
-        int len = resultFiles.size();
-        if (len == 0) return null;
-        return resultFiles.toArray(new File[len]);
     }
 
-    private boolean addClipData(StringBuffer resultText, Object item, String type) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void addClipUris() {
+        ClipData clipData = intent.getClipData();
+        int count = (clipData != null) ? clipData.getItemCount() : 0;
+        for (int i = 0; i < count; i++) {
+            ClipData.Item clipItem = clipData.getItemAt(i);
+
+            Uri uri = (clipData != null) ? clipItem.getUri() : null;
+            addResult("clipData[i] uri", uri, null);
+            if (!addClipData(clipItem.getHtmlText(), "html"))
+                addClipData(clipItem.getText(), "text");
+        }
+    }
+
+    private boolean addClipData(Object item, String type) {
         if (item != null) {
             zipLog.traceMessage("ClipData[] {1}: adding {0}", item, type);
             resultText.append(item).append("\n\n");
@@ -141,7 +156,7 @@ public class IntentParser {
         return false;
     }
 
-    private void addResult(String context, ArrayList<File> resultFiles, Uri uri, Object nonUriValue, StringBuffer resultText) {
+    private void addResult(String context, Uri uri, Object nonUriValue) {
         if (uri != null) {
             zipLog.traceMessage("{0}: adding file {1}", context, uri);
 
