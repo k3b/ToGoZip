@@ -47,8 +47,8 @@ public class IntentParser {
         this.zipLog = zipLog;
     }
 
-    private void getTextToBeAdded(StringBuffer result) {
-        int oldItems = result.length();
+    private void getTextToBeAdded(StringBuffer resultText) {
+        int oldItems = resultText.length();
         Bundle extras = (intent != null) ? intent.getExtras() : null;
         Object extra = (extras != null) ? extras.get(Intent.EXTRA_TEXT) : null;
         if (extra != null) {
@@ -57,7 +57,7 @@ public class IntentParser {
                 if (strings != null) {
                     for (String item : strings) {
                         zipLog.traceMessage("Extras[TEXT][] strings: adding {0}", item);
-                        result.append(item).append("\n\n");
+                        resultText.append(item).append("\n\n");
                     }
                     extra = null;
                 }
@@ -65,7 +65,7 @@ public class IntentParser {
                 String s = extras.getString(Intent.EXTRA_TEXT);
                 if (s != null) {
                     zipLog.traceMessage("Extras[TEXT] string: adding {0}", s);
-                    result.append(s).append("\n\n");
+                    resultText.append(s).append("\n\n");
                     extra = null;
                 }
             }
@@ -73,29 +73,29 @@ public class IntentParser {
             // fallback for unknown extra-extra type
             if (extra != null) {
                 zipLog.traceMessage("Extras[TEXT] {1}: adding {0}", extra, extra.getClass().getCanonicalName());
-                result.append(extra.getClass().getCanonicalName()).append(":").append(extra.toString()).append("\n\n");
+                resultText.append(extra.getClass().getCanonicalName()).append(":").append(extra.toString()).append("\n\n");
             }
         }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void addClipUris(ArrayList<File> result, Intent intent, StringBuffer texts) {
+    private void addClipUris(ArrayList<File> resultFiles, Intent intent, StringBuffer resultText) {
         ClipData clipData = intent.getClipData();
         int count = (clipData != null) ? clipData.getItemCount() : 0;
         for (int i = 0; i < count; i++) {
             ClipData.Item clipItem = clipData.getItemAt(i);
 
             Uri uri = (clipData != null) ? clipItem.getUri() : null;
-            addResult("clipData[i] uri", result, uri, null, null);
-            if (!addClipData(texts, clipItem.getHtmlText(), "html"))
-                addClipData(texts, clipItem.getText(), "text");
+            addResult("clipData[i] uri", resultFiles, uri, null, null);
+            if (!addClipData(resultText, clipItem.getHtmlText(), "html"))
+                addClipData(resultText, clipItem.getText(), "text");
         }
     }
 
 
-    public File[] getFilesToBeAdded(StringBuffer texts) {
+    public File[] getFilesToBeAdded(StringBuffer resultText) {
         StringBuffer errorMessage = new StringBuffer();
-        ArrayList<File> result = new ArrayList<File>();
+        ArrayList<File> resultFiles = new ArrayList<File>();
         Object extra = null;
         try {
             Bundle extras = (intent != null) ? intent.getExtras() : null;
@@ -105,20 +105,20 @@ public class IntentParser {
                     ArrayList<Uri> uris = extras.getParcelableArrayList(Intent.EXTRA_STREAM);
                     if (uris != null) {
                         for (Uri item : uris) {
-                            addResult("Extras[Stream][] uris", result, item, extra, texts);
+                            addResult("Extras[Stream][] uris", resultFiles, item, extra, resultText);
                         }
                     } // else unknown format.
                 } else {
-                    addResult("Extras[Stream] uri", result, (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra, texts);
+                    addResult("Extras[Stream] uri", resultFiles, (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra, resultText);
                 }
                 extra = null;
             }
 
-            addResult("getData uri ", result, intent.getData(), null, texts);
-            getTextToBeAdded(texts);
+            addResult("getData uri ", resultFiles, intent.getData(), null, resultText);
+            getTextToBeAdded(resultText);
 
-            if ((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (result.size() == 0) && (texts.length() == 0)) {
-                addClipUris(result, intent, texts);
+            if ((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (resultFiles.size() == 0) && (resultText.length() == 0)) {
+                addClipUris(resultFiles, intent, resultText);
             }
 
 
@@ -126,34 +126,37 @@ public class IntentParser {
             zipLog.addError("error : " + ex.getMessage() + "\nlast extra = " + getLogMessageString(extra));
         }
 
-        int len = result.size();
+        int len = resultFiles.size();
         if (len == 0) return null;
-        return result.toArray(new File[len]);
+        return resultFiles.toArray(new File[len]);
     }
 
-    private boolean addClipData(StringBuffer result, Object item, String type) {
+    private boolean addClipData(StringBuffer resultText, Object item, String type) {
         if (item != null) {
             zipLog.traceMessage("ClipData[] {1}: adding {0}", item, type);
-            result.append(item).append("\n\n");
+            resultText.append(item).append("\n\n");
 
             return true;
         }
         return false;
     }
 
-    private void addResult(String context, ArrayList<File> result, Uri uri, Object nonUriValue, StringBuffer texts) {
+    private void addResult(String context, ArrayList<File> resultFiles, Uri uri, Object nonUriValue, StringBuffer resultText) {
         if (uri != null) {
             zipLog.traceMessage("{0}: adding file {1}", context, uri);
 
             File file = getLocalFile(uri);
             if (file != null) {
-                result.add(file);
+                resultFiles.add(file);
                 return;
             }
+            zipLog.traceMessage("{1} : adding uri {0}", uri);
+            resultText.append(uri).append("\n\n");
+            nonUriValue = null;
         }
         if (nonUriValue != null) {
             zipLog.traceMessage("{1} : adding text {0}", nonUriValue);
-            texts.append(nonUriValue).append("\n\n");
+            resultText.append(nonUriValue).append("\n\n");
         }
     }
 

@@ -40,12 +40,21 @@ this program. If not, see <http://www.gnu.org/licenses/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <!-- file must have mimeType to match -->
                 <data android:mimeType="*/*" />
-                <data android:host="*" />
                 <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- http/https/ftp must not have mimeType to match -->
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data android:scheme="ftp" />
+
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
