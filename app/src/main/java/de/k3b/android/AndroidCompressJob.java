@@ -80,4 +80,18 @@ public class AndroidCompressJob extends CompressJob {
             return String.format(context.getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, getAddCount());
         }
     }
+
+    /** footer added to text collector. null means no text. */
+    @Override protected String getTextFooter() {
+        String result = this.context.getResources().getString(R.string.banner); // "Collected with ToGoZip version ...";
+
+        final String versionName = GuiUtil.getAppVersionName(context);
+        if (versionName != null) {
+            result = result.replace("$versionName$", versionName);
+        }
+
+        return result;
+    }
+
+
 }

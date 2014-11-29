@@ -39,6 +39,8 @@ Do you want to use default \'%2$s\' instead? </string>
     <string name="WARN_ADD_CANCELED">Cancel: No files added</string>
 
     <string name="about_summary">About ToGoZip</string>
+    <string name="banner">Collected with ToGoZip Version $versionName$</string>
+
     <string name="about_content_about">"<![CDATA[
 <b><i>"Add to Zip"</i></b>
  for android's <i>'share'/'send'</i> menu: <br/>
@@ -54,13 +56,13 @@ This collecting <i>2go.zip</i>-file is like a suitcase
 <br/>
  The program's author uses ToGoZip to collect new android calendar
  entries (<a
- href='https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
  that should be transfered to the desctop-pcs-s calendar. <br/>
 <br/>
     ]]>"</string>
 
     <string name="about_content"><![CDATA[ <html><body>
-<a href="https://github.com/k3b/ToGoZip/wiki"><b>ToGoZip</b></a><br/>Version $versionName$
+<a href="http://github.com/k3b/ToGoZip/wiki"><b>ToGoZip</b></a><br/>Version $versionName$
 <br />
 <hr />
 $about$
@@ -83,9 +85,9 @@ Initial Version v0.1.1.20141109<br />
 <h2>Links</h2>
 <ul>
   <li>Source code of current version of ToGoZip at git repository@github.com<br />
-    <a href="https://github.com/k3b/ToGoZip/">https://github.com/k3b/ToGoZip/</a></li>
+    <a href="http://github.com/k3b/ToGoZip/">https://github.com/k3b/ToGoZip/</a></li>
   <li>slf4j logging driver for android eu.lp0.slf4j:slf4j-android<br />
-    <a href="https://github.com/lp0/slf4j-android">https://github.com/lp0/slf4j-android</a>
+    <a href="http://github.com/lp0/slf4j-android">https://github.com/lp0/slf4j-android</a>
   </li>
   <li>slf4j logging for java org.slf4j:slf4j-api<br />
     <a href="http://www.slf4j.org/">http://www.slf4j.org/</a>
@@ -94,8 +96,8 @@ Initial Version v0.1.1.20141109<br />
     <a href="http://junit.org/">http://junit.org/</a>
   </li>
   <li>powermock-mockito Testing support powermock-api-mockito<br />
-    <a href="https://code.google.com/p/powermock/">https://code.google.com/p/powermock/</a><br />
-    <a href="https://github.com/mockito/mockito">https://github.com/mockito/mockito</a>
+    <a href="http://code.google.com/p/powermock/">https://code.google.com/p/powermock/</a><br />
+    <a href="http://github.com/mockito/mockito">http://github.com/mockito/mockito</a>
   </li>
   <li><br />
     <a href=""></a>

@@ -28,6 +28,7 @@ import java.io.*;
 public class CompressItem {
     private File file;
     private String zipFileName;
+    private boolean processed;
 
     public File getFile() {
         return file;
@@ -35,6 +36,7 @@ public class CompressItem {
 
     public CompressItem setFile(File file) {
         this.file = file;
+        this.processed = false;
         return this;
     }
 
@@ -50,4 +52,17 @@ public class CompressItem {
     public InputStream getFileInputStream() throws IOException {
         return new FileInputStream(file);
     }
+
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
+    }
+
+    public long getLastModified() {
+        return this.getFile().lastModified();
+    }
+
 }

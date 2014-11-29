@@ -8,11 +8,11 @@ Add2ZipActivity-=IntentParser
 
 
 
-- (2) non file types
+v (2) non file types
     - content urls
         check if it it working
     - Text
-        - settings: file name
+        v settings: file name
         - short append to texts
 			- copy/append
         - long append to seperate text file

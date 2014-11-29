@@ -30,18 +30,29 @@ import java.io.InputStream;
  */
 public class TextCompressItem extends CompressItem {
 
-    private String text = null;
+    private StringBuilder text = new StringBuilder();
+    private long lastModified;
 
     public InputStream getFileInputStream() throws IOException {
-        return new ByteArrayInputStream(text.getBytes("UTF-8"));
+        return new ByteArrayInputStream(getText().getBytes("UTF-8"));
     }
 
-    public TextCompressItem setText(String text) {
-        this.text = text;
+    public TextCompressItem addText(String text) {
+        if ((text != null) && (text.length() > 0)) {
+            this.text.append(text).append("\n\n");
+        }
         return this;
     }
 
     public String getText() {
-        return text;
+        return text.toString();
+    }
+
+    public void setLastModified(long lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public long getLastModified() {
+        return lastModified;
     }
 }

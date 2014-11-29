@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,13 +59,17 @@ public class CompressJob implements ZipLog {
      */
     private final boolean optRenameExistingOldEntry = true;
 
-    /** logger used for compressing or null  */
+    /**
+     * logger used for compressing or null
+     */
     private final ZipLog zipLog;
 
     /**
      * items To Be Added to be processed in the job.
      */
     private List<CompressItem> compressQue = new ArrayList<CompressItem>();
+
+    private TextCompressItem compressTextItem = null;
 
     /**
      * where old entries come from and new entries go to
@@ -79,8 +82,8 @@ public class CompressJob implements ZipLog {
     /**
      * Creates a job.
      *
-     * @param destZip     full path to the zipfile where the new files should be added to
-     * @param zipLog      if not null use this for logging.
+     * @param destZip full path to the zipfile where the new files should be added to
+     * @param zipLog  if not null use this for logging.
      */
     public CompressJob(File destZip, ZipLog zipLog) {
         this.destZip = destZip;
@@ -143,21 +146,19 @@ public class CompressJob implements ZipLog {
         return item;
     }
 
-    public CompressItem addTextToCompressQue(String textfile, String textToBeAdded) {
-        File srcFile = new File("/" + textfile);
-        srcFile.setLastModified(new Date().getTime());
-        CompressItem existingItem = findInCompressQue(srcFile);
-        if (existingItem != null) {
-            TextCompressItem textItem = ((TextCompressItem) existingItem);
-            textItem.setText(textItem.getText() + "\n\n" + textToBeAdded);
-            return null;
+    public TextCompressItem addTextToCompressQue(String textfile, String textToBeAdded) {
+        if ((textToBeAdded!=null) && (textToBeAdded.length() > 0)) {
+            if (this.compressTextItem == null) {
+                this.compressTextItem = new TextCompressItem();
+                File srcFile = new File("/" + textfile);
+                this.compressTextItem.setFile(srcFile);
+                this.compressTextItem.setZipFileName(textfile);
+                this.compressTextItem.setLastModified(new Date().getTime());
+                compressQue.add(this.compressTextItem);
+            }
+            this.compressTextItem.addText(textToBeAdded);
         }
-
-        CompressItem item;
-        item = new TextCompressItem().setText(textToBeAdded).setFile(srcFile).setZipFileName(
-                textfile);
-        compressQue.add(item);
-        return item;
+        return this.compressTextItem;
     }
 
     /**
@@ -183,17 +184,14 @@ public class CompressJob implements ZipLog {
                 zipFile = new ZipFile(this.destZip);
                 return handleDuplicates(zipFile);
             } catch (ZipException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } finally {
                 if (zipFile != null)
                     try {
                         zipFile.close();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
             }
@@ -211,13 +209,15 @@ public class CompressJob implements ZipLog {
     List<CompressItem> handleDuplicates(ZipFile zipFile) {
         List<CompressItem> result = new ArrayList<CompressItem>();
         for (CompressItem item : this.compressQue) {
-            String zipFileName = (item != null) ? item.getZipFileName() : null;
-            ZipEntry zipEntry = (zipFileName != null) ? zipFile.getEntry(zipFileName) : null;
+            if (!item.isProcessed()) {
+                String zipFileName = (item != null) ? item.getZipFileName() : null;
+                ZipEntry zipEntry = (zipFileName != null) ? zipFile.getEntry(zipFileName) : null;
 
-            if (zipEntry != null) {
-                item.setZipFileName(getFixedZipFileName(zipFile, zipEntry,
-                        item.getFile().lastModified()));
-                result.add(item);
+                if (zipEntry != null) {
+                    item.setZipFileName(getFixedZipFileName(zipFile, zipEntry,
+                            item.getLastModified()));
+                    result.add(item);
+                }
             }
         }
         for (int i = this.compressQue.size() - 1; i >= 0; i--) {
@@ -309,7 +309,13 @@ public class CompressJob implements ZipLog {
         // 2) rename exising to somefile.zip.bak
         // 3) rename somefile.zip.tmp to somefile.zip
         // 4) delete exising to somefile.zip.bak
+
+        // if text is to be appended to "last text-entry" do not use handleDuplicates for that
+        boolean preventTextFromRenaming = (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
+
+        if (preventTextFromRenaming) this.compressTextItem.setProcessed(true);
         handleDuplicates();
+        if (preventTextFromRenaming) this.compressTextItem.setProcessed(false);
 
         if (compressQue.size() == 0) {
             logger.debug("aboard: no (more) files to addToCompressQue to zip");
@@ -341,10 +347,17 @@ public class CompressJob implements ZipLog {
                 for (ZipEntry zipOldEntry = zipInputStream.getNextEntry(); zipOldEntry != null; zipOldEntry = zipInputStream
                         .getNextEntry()) {
                     if (null != zipOldEntry) {
-                        context = traceMessage(
-                                "- (1a) copy existing item from {0} to {1} : {2}",
-                                this.destZip, newZip, zipOldEntry);
-                        add(out, zipOldEntry, zipInputStream);
+                        InputStream prependInputStream = this.getPrependInputStream(zipOldEntry, this.compressTextItem);
+                        if (prependInputStream != null) {
+                            context = traceMessage(
+                                    "- (1a+) add text to existing item from {0} to {1} : {2}",
+                                    this.destZip, newZip, zipOldEntry);
+                        } else {
+                            context = traceMessage(
+                                    "- (1a) copy existing item from {0} to {1} : {2}",
+                                    this.destZip, newZip, zipOldEntry);
+                        }
+                        add(out, zipOldEntry, prependInputStream, zipInputStream);
                         itemCount++;
                     }
                 }
@@ -354,19 +367,26 @@ public class CompressJob implements ZipLog {
                 oldZip = new File(this.destZip.getAbsolutePath() + ".bak");
             }
 
+            if ((this.compressTextItem != null) && !this.compressTextItem.isProcessed()) {
+                this.compressTextItem.addText(this.getTextFooter());
+            }
+
             // (1b) copy new compressQue
             for (CompressItem item : this.compressQue) {
-                String newFullDestZipItemName = item.getZipFileName();
-                File file = item.getFile();
-                context = traceMessage("(1b) copy new item {0} as {1} to {2}",
-                        file, newFullDestZipItemName, newZip);
-                inputStream = item.getFileInputStream();
-                ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
-                        file.lastModified(), null);
-                add(out, zipEntry, inputStream);
-                inputStream.close();
-                inputStream = null;
-                itemCount++;
+                if (!item.isProcessed()) {
+                    String newFullDestZipItemName = item.getZipFileName();
+                    File file = item.getFile();
+                    context = traceMessage("(1b) copy new item {0} as {1} to {2}",
+                            file, newFullDestZipItemName, newZip);
+                    inputStream = item.getFileInputStream();
+                    ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
+                            item.getLastModified(), null);
+                    add(out, zipEntry, null, inputStream);
+                    inputStream.close();
+                    inputStream = null;
+                    itemCount++;
+                    item.setProcessed(true);
+                }
             }
 
             out.close();
@@ -434,6 +454,46 @@ public class CompressJob implements ZipLog {
         return itemCount;
     }
 
+    /** footer added to text collector. null means no text. */
+    protected String getTextFooter() {
+        return null;
+    }
+
+    /** get stream to be prepended before zip-content or null if there is nothing to prepend. */
+    private static InputStream getPrependInputStream(ZipEntry zipEntry, TextCompressItem compressTextItem) throws IOException {
+        if ((compressTextItem == null) ||
+                (!zipEntry.getName().equalsIgnoreCase(compressTextItem.getZipFileName()))) {
+            // not matching current zip: do not prepend.
+            return null;
+        }
+
+        long newLastModified = compressTextItem.getLastModified();
+
+        compressTextItem.setProcessed(true); // do not add later
+        zipEntry.setTime(newLastModified);
+
+        // "------ date ----" between new content and old content
+        compressTextItem.addText(getTextDelimiter(newLastModified, zipEntry.getTime()));
+
+        InputStream prependInputStream = compressTextItem.getFileInputStream();
+
+        return prependInputStream;
+    }
+
+    /**
+     * @return append text delimiter if last text file write had different date than current. Else null.
+     */
+    private static String getTextDelimiter(long newLastModified, long oldLastModified) {
+        DateFormat f = new SimpleDateFormat(" -------- yyyy-MM-dd --------", Locale.US);
+        String currentDelimiter = f.format(new java.util.Date(newLastModified));
+        String previousDelimiter = f.format(new java.util.Date(oldLastModified));
+        if (!currentDelimiter.equalsIgnoreCase(previousDelimiter)) {
+            return previousDelimiter;
+        }
+
+        return null;
+    }
+
     /**
      * local helper to generate a ZipEntry.
      */
@@ -453,11 +513,16 @@ public class CompressJob implements ZipLog {
     }
 
     /**
-     * add one item to zip
+     * add one item to zip. closing outZipStream when done.
      */
     private void add(ZipOutputStream outZipStream, ZipEntry zipEntry,
-                     InputStream inputStream) throws IOException {
+                     InputStream prependInputStream, InputStream inputStream) throws IOException {
         outZipStream.putNextEntry(zipEntry);
+
+        if (prependInputStream != null) {
+            copyStream(outZipStream, prependInputStream, buffer);
+            prependInputStream.close();
+        }
         copyStream(outZipStream, inputStream, buffer);
         outZipStream.closeEntry();
     }
