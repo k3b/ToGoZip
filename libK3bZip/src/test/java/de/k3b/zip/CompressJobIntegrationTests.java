@@ -82,7 +82,7 @@ public class CompressJobIntegrationTests {
         testZip.delete();
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(1, itemCount);
     }
 
@@ -94,7 +94,7 @@ public class CompressJobIntegrationTests {
     public void shouldNotAddDouplicate() {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(CompressJob.RESULT_NO_CHANGES, itemCount);
     }
 
@@ -102,7 +102,7 @@ public class CompressJobIntegrationTests {
     public void shouldAppendDifferentFile() {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent2.getAbsolutePath());
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(2, itemCount);
     }
 
@@ -110,7 +110,7 @@ public class CompressJobIntegrationTests {
     public void shouldAppendDir() {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testDirWith2SubItems);
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(3, itemCount);
     }
 
@@ -119,7 +119,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         CompressItem item = sut.addToCompressQue("", testContent2);
         item.setZipFileName(testContent.getName());
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(2, itemCount);
         Assert.assertEquals("testFile(1).txt", item.getZipFileName());
     }
@@ -128,7 +128,7 @@ public class CompressJobIntegrationTests {
     public void shouldAppendTextAsFile() {
         CompressJob sut = createCompressJob(testZip);
         sut.addTextToCompressQue("hello.txt", "hello world");
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(2, itemCount);
     }
 
@@ -137,7 +137,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addTextToCompressQue("hello.txt", "hello world");
         sut.addTextToCompressQue("hello.txt", "once again: hello world");
-        int itemCount = sut.compress();
+        int itemCount = sut.compress(false);
         Assert.assertEquals(2, itemCount);
     }
 }

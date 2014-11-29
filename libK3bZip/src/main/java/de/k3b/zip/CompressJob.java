@@ -302,8 +302,9 @@ public class CompressJob implements ZipLog {
      * Processes the compressQue: renaming duplicates and add items to zip.
      *
      * @return number of compressQue in the result zip or RESULT_XXX
+     * @param renameDouplicateTextFile
      */
-    public int compress() {
+    public int compress(boolean renameDouplicateTextFile) {
         // to make shure that orginal is not broken if there is an error:
         // 1) Workflow addToCompressQue to somefile.zip.tmp, (a) old content, (b) new content
         // 2) rename exising to somefile.zip.bak
@@ -311,7 +312,7 @@ public class CompressJob implements ZipLog {
         // 4) delete exising to somefile.zip.bak
 
         // if text is to be appended to "last text-entry" do not use handleDuplicates for that
-        boolean preventTextFromRenaming = (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
+        boolean preventTextFromRenaming = (!renameDouplicateTextFile) && (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
 
         if (preventTextFromRenaming) this.compressTextItem.setProcessed(true);
         handleDuplicates();

@@ -30,11 +30,21 @@ import java.io.File;
  * implements SettingsData from android preferences
  */
 public class SettingsImpl {
-    static final String KEY_ZIPFILE = "zipfile";
+    /** full path of the zipfile where "Add To Zip" goes to. */
     private static String zipfile = null;
+    static final String KEY_ZIPFILE = "zipfile";
 
-    static final String KEY_TEXTFILE = "textfile";
-    private static String textfile = "texts.txt";
+    /** short texts like urls are prepended to this zip entry */
+    private static String textfile_short = "texts.txt";
+    static final String KEY_TEXTFILE_SHORT = "textfile_short";
+
+    /** longe texts like editor-content are added as this new zip entry */
+    private static String textfile_long = "text.txt";
+    static final String KEY_TEXTFILE_LONG = "textfile_long";
+
+    /** texts longer than this value go into the zipentry for long texts. */
+    private static int textfile_long_min = 150;
+    static final String KEY_TEXTFILE_LONG_MIN = "textfile_long_min";
 
     private SettingsImpl() {
     }
@@ -54,9 +64,17 @@ public class SettingsImpl {
             SettingsImpl.zipfile = getDefaultZipPath(context);
         }
 
-        SettingsImpl.textfile = SettingsImpl
-                .getPrefValue(prefs, KEY_TEXTFILE,
-                        SettingsImpl.textfile);
+        SettingsImpl.textfile_short = SettingsImpl
+                .getPrefValue(prefs, KEY_TEXTFILE_SHORT,
+                        SettingsImpl.textfile_short);
+
+        SettingsImpl.textfile_long = SettingsImpl
+                .getPrefValue(prefs, KEY_TEXTFILE_LONG,
+                        SettingsImpl.textfile_long);
+
+        SettingsImpl.textfile_long_min = SettingsImpl
+                .getPrefValue(prefs, KEY_TEXTFILE_LONG_MIN,
+                        SettingsImpl.textfile_long_min);
 
         SettingsImpl.zipfile = SettingsImpl
                 .getPrefValue(prefs, KEY_ZIPFILE,
@@ -105,12 +123,33 @@ public class SettingsImpl {
         setValue(prefs, KEY_ZIPFILE, zipFile);
     }
 
+    /** full path of the zipfile where "Add To Zip" goes to. */
     public static String getZipfile() {
         return SettingsImpl.zipfile;
     }
 
-    public static String getTextfile() {
-        return SettingsImpl.textfile;
+    public static String getTextfile(boolean useLongTextFile) {
+        if (useLongTextFile) return getTextfile_long();
+        return getTextfile_short();
+    }
+
+    public static boolean useLongTextFile(int length) {
+        return length >= getTextfile_long_min();
+    }
+
+    /** short texts like urls are prepended to this zip entry */
+    public static String getTextfile_short() {
+        return SettingsImpl.textfile_short;
+    }
+
+    /** longe texts like editor-content are added as this new zip entry */
+    public static String getTextfile_long() {
+        return SettingsImpl.textfile_long;
+    }
+
+    /** texts longer than this value go into the zipentry for long texts. */
+    public static int getTextfile_long_min() {
+        return SettingsImpl.textfile_long_min;
     }
 
     /**
@@ -161,4 +200,5 @@ public class SettingsImpl {
         }
         return result;
     }
+
 }

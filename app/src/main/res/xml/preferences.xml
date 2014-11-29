@@ -28,13 +28,21 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <!-- EditTextPreference -->
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
             android:key="zipfile"
-            android:summary="Zip where Files are added to."
+            android:summary="Zip where Files are added to: '$value$'"
             android:title="Output Zip File" />
         <!-- EditTextPreference -->
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
-            android:key="textfile"
-            android:summary="File in zip where text is added to."
-            android:title="Text File in zip" />
+            android:key="textfile_short"
+            android:summary="File in zip where short texts are prepended to: '$value$'"
+            android:title="Short Text File in zip" />
+        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+            android:key="textfile_long"
+            android:summary="File in zip where long texts are added to: '$value$'."
+            android:title="Long Text File in zip" />
+        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+            android:key="textfile_long_min"
+            android:summary="Texts longer than '$value$' are added to 'Long Text File'."
+            android:title="Short Text File in zip" />
         <!--
             </PreferenceCategory>
             <PreferenceCategory

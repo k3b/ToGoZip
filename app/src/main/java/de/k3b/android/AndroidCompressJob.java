@@ -29,7 +29,6 @@ import de.k3b.android.toGoZip.SettingsImpl;
 import de.k3b.android.widgets.Clipboard;
 import de.k3b.zip.CompressJob;
 import de.k3b.zip.ZipLog;
-import de.k3b.zip.ZipLogImpl;
 
 /**
  * Android specific version of zip-CompressJob.<br/>
@@ -54,10 +53,12 @@ public class AndroidCompressJob extends CompressJob {
         if ((textToBeAdded != null) || (fileToBeAdded != null)) {
             destZip.getParentFile().mkdirs();
             addToCompressQue("", fileToBeAdded);
+            boolean useLongTextFile = false;
             if (textToBeAdded != null) {
-                addTextToCompressQue(SettingsImpl.getTextfile(), textToBeAdded);
+                useLongTextFile = SettingsImpl.useLongTextFile(textToBeAdded.length());
+                addTextToCompressQue(SettingsImpl.getTextfile(useLongTextFile), textToBeAdded);
             }
-            int result = compress();
+            int result = compress(useLongTextFile);
 
             String currentZipFileAbsolutePath = destZip.getAbsolutePath();
             final String text = getResultMessage(result);
