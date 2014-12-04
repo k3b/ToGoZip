@@ -7,9 +7,9 @@ This collecting "2go.zip"-file is like a suitcase where you can put things (file
 into from nearly everywhere (from every app that supports 'share'/'send')
 and that can travel everywhere (via email, bluetooth, nfc).
 
-The program's author uses ToGoZip to collect new android calendar entries
-([[https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter | ics-files]])
-that should be transfered to the desctop-pcs-s calendar.
+ In the beginning this program was developed to collect new android calendar
+ entries ([[https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter | ics-files]])
+ that should be transfered to the desctop-pcs-s calendar. <br/>
 
 ## Features:
 

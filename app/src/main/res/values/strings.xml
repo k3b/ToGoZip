@@ -51,10 +51,11 @@ This collecting <i>2go.zip</i>-file is like a suitcase
  can travel&nbsp; everywhere (via email,
  bluetooth,&nbsp;nfc).<br/>
 <br/>
- The program's author uses ToGoZip to collect new android calendar
+ In the beginning this program was developed to collect new android calendar
  entries (<a
  href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
  that should be transfered to the desctop-pcs-s calendar. <br/>
+<br/>
 <br/>
     ]]>"</string>
     <string name="pref_debug_title">Debug Mode</string>

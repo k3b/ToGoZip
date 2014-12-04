@@ -21,9 +21,9 @@ this program. If not, see <http://www.gnu.org/licenses/>
 
     <string name="title_activity_add2zip">==&gt; Zip</string>
 
-    <string name="cmd_use_default">Standardwert</string>
+    <string name="cmd_use_default">Standard</string>
     <string name="cmd_cancel">Abbruch</string>
-    <string name="cmd_edit">Bearbeiten</string>
+    <string name="cmd_edit">Bearb.</string>
 
     <string name="ERR_ADD">Konnte %1$s nicht aktualisieren :\n%2$s</string>
     <string name="ERR_NO_WRITE_PERMISSIONS">Keine Schreibberechtigung für %1$s %2$s.
@@ -52,16 +52,16 @@ Möchten Sie statt dessen den Standardwert \'%2$s\' verwenden? </string>
  verschiedene Dinge (Dateien) legen kann und der &uuml;berall hin reisen kann (per email,
  bluetooth,&nbsp;nfc).<br/>
 <br/>
- Diese App wurde urspr&uuml;nglich entwickelt, um neue Android Kalendar Eintr&auml;ge
+ Diese App wurde urspr&uuml;nglich entwickelt, um neue Android Kalender Eintr&auml;ge
   (<a
  href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- zu sammeln, die sp&auml;ter in den Desctop-Pcs-s Kalendar &uuml;bertragen werden sollen. <br/>
+ zu sammeln, die sp&auml;ter in den Desctop-Pcs-s Kalender &uuml;bertragen werden sollen. <br/>
 <br/>
     ]]>"</string>
     <string name="pref_debug_title">Debug Modus</string>
     <string name="pref_debug_summary">Debug Meldung in die Zwischenablage und ins Fehlerprotokoll.</string>
     <string name="pref_long_text_file_title"  >Dateiname langer Text.</string>
-    <string name="pref_long_text_file_len_min">Mindestgröße Langer Text</string>
+    <string name="pref_long_text_file_len_min">Min. größe langer Text</string>
     <string name="pref_short_text_file_title" >Dateiname kurzer Text.</string>
     <string name="pref_zipfile_title">Zip-Datei</string>
     <string name="pref_settings_title">Einstellungen</string>

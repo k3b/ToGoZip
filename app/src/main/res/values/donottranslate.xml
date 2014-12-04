@@ -57,6 +57,8 @@ Initial Version v0.1.1.20141109<br />
 <ul>
   <li>Source code of current version of ToGoZip at git repository@github.com<br />
     <a href="http://github.com/k3b/ToGoZip/">https://github.com/k3b/ToGoZip/</a></li>
+  <li><a href="https://github.com/k3b/toGoZip/wiki/History">ToGoZip Changelog</a></li>
+  <li><a href="https://github.com/k3b/toGoZip/wiki/Features">ToGoZip Technical Features</a></li>
   <li>slf4j logging driver for android eu.lp0.slf4j:slf4j-android<br />
     <a href="http://github.com/lp0/slf4j-android">https://github.com/lp0/slf4j-android</a>
   </li>
