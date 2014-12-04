@@ -23,27 +23,23 @@ this program. If not, see <http://www.gnu.org/licenses/>
     android:key="preferences">
     <PreferenceCategory
         android:key="first_category"
-        android:title="Settings">
+        android:title="@string/pref_settings_title">
 
         <!-- EditTextPreference -->
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
             android:key="zipfile"
-            android:summary="Zip where Files are added to: '$value$'"
-            android:title="Output Zip File" />
+            android:title="@string/pref_zipfile_title" />
         <!-- EditTextPreference -->
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
             android:key="textfile_short"
-            android:summary="File in zip where short texts are prepended to: '$value$'"
-            android:title="Short Text File in zip" />
+            android:title="@string/pref_short_text_file_title" />
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
             android:key="textfile_long_min"
-            android:summary="Texts longer than '$value$' are added to 'Long Text File'."
             android:defaultValue="150"
-            android:title="Long File: Min Text Len" />
+            android:title="@string/pref_long_text_file_len_min" />
         <de.k3b.android.widgets.EditTextPreferenceWithSummary
             android:key="textfile_long"
-            android:summary="File in zip where long texts are added to: '$value$'."
-            android:title="Long Text File in zip" />
+            android:title="@string/pref_long_text_file_title" />
         <!--
             </PreferenceCategory>
             <PreferenceCategory
@@ -53,8 +49,8 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="isDebugEnabled"
-            android:summary="Debug Messages copied to clipboard and added to LogCat"
-            android:title="Debug Mode" />
+            android:summary="@string/pref_debug_summary"
+            android:title="@string/pref_debug_title" />
 
         <de.k3b.android.widgets.AboutDialogPreference
             android:key="about"

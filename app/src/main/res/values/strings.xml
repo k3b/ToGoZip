@@ -19,14 +19,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
 -->
 <resources>
 
-    <string name="app_name">ToGoZip</string>
     <string name="title_activity_add2zip">Add To Zip</string>
 
     <string name="cmd_use_default">Use Default</string>
     <string name="cmd_cancel">Cancel</string>
     <string name="cmd_edit">Edit</string>
-
-    <string name="default_zip_path">copy/2go.zip</string>
 
     <string name="ERR_ADD">Could not update  %1$s :\n%2$s</string>
     <string name="ERR_NO_WRITE_PERMISSIONS">No Permissions to write to %1$s %2$s.
@@ -60,66 +57,11 @@ This collecting <i>2go.zip</i>-file is like a suitcase
  that should be transfered to the desctop-pcs-s calendar. <br/>
 <br/>
     ]]>"</string>
-
-    <string name="about_content"><![CDATA[ <html><body>
-<a href="http://github.com/k3b/ToGoZip/wiki"><b>ToGoZip</b></a><br/>Version $versionName$
-<br />
-<hr />
-$about$
-<hr />
-<h2>History</h2>
-Improvements v0.2.2.20141120<br />
-<ul>
-  <li>Added Settings Activity to define zip-file.</li>
-  <li>Added Settings Debug Mode: Debug Messages copied to clipboard and added to LogCat.</li>
-  <li>Added this About-Box in Settings.</li>
-</ul>
-<br />
-Initial Version v0.1.1.20141109<br />
-<ul>
-  <li>Created share handler for Add To Zip without a gui.</li>
-  <li>Hardcoded zipfile /sdcard/copy/2go.zip.</li>
-  <li>Implemented view/send/sendto/send_multible for file and folder.</li>
-</ul>
-<hr />
-<h2>Links</h2>
-<ul>
-  <li>Source code of current version of ToGoZip at git repository@github.com<br />
-    <a href="http://github.com/k3b/ToGoZip/">https://github.com/k3b/ToGoZip/</a></li>
-  <li>slf4j logging driver for android eu.lp0.slf4j:slf4j-android<br />
-    <a href="http://github.com/lp0/slf4j-android">https://github.com/lp0/slf4j-android</a>
-  </li>
-  <li>slf4j logging for java org.slf4j:slf4j-api<br />
-    <a href="http://www.slf4j.org/">http://www.slf4j.org/</a>
-  </li>
-  <li>junit Testing support junit:junit<br />
-    <a href="http://junit.org/">http://junit.org/</a>
-  </li>
-  <li>powermock-mockito Testing support powermock-api-mockito<br />
-    <a href="http://code.google.com/p/powermock/">https://code.google.com/p/powermock/</a><br />
-    <a href="http://github.com/mockito/mockito">http://github.com/mockito/mockito</a>
-  </li>
-  <li><br />
-    <a href=""></a>
-  </li>
-
-
-</ul>
-<br />
-<hr />
-<h2>Legal stuff</h2>
-<b>ToGoZip</b>&nbsp;<br />
-&nbsp;<br />
-Copyright (c) 2014 by k3b<br />
-Licensed under GPL, Version 3.0 or later.<br />
-<br />
-Android is a trademark of Google Inc. Use of this trademark is subject
-to Google Permissions.
-<br />
-<hr /><br />
-
-</body></html>
-]]>
-</string>
-
+    <string name="pref_debug_title">Debug Mode</string>
+    <string name="pref_debug_summary">Debug Messages copied to clipboard and added to LogCat</string>
+    <string name="pref_long_text_file_title">Long Text File in zip</string>
+    <string name="pref_long_text_file_len_min">Long File: Min Text Len</string>
+    <string name="pref_short_text_file_title">Short Text File in zip</string>
+    <string name="pref_zipfile_title">Output Zip File</string>
+    <string name="pref_settings_title">Settings</string>
 </resources>

@@ -1,82 +1,50 @@
 todo.txt for k3b.add2Zip
 =========
-ZipJob-=LogInterface+class logger
-Add2ZipActivity-=IntentParser
-	getIntendData(File[], StringBuilder)
+
+ToGOZip adds "Add To Zip" for the android system-events View/Send/SendTo/SendMultible
+
+- files will only be added to "2go.zip" if there is not already a file with same name and same last-modified-date inside "2go.zip"
+- if there is a file with the same name but a different last-modified-date inside "2go.zip" the file will be renamed in the zip
+-- example: if adding file://sdcard/hello.txt and there is already a /hello.txt inside "2go.zip" with a differend last-modified-date the file will be added as /hello(1).txt
+- Texts with 150 or more chars will be aded to a seperate file /text.txt or a renamed /text(1).txt, /text(2).txt, /text(3).txt, ....
+-- example: 
+--- after adding "some loo.....ng text" "2go.zip" contains /text.txt which contains "some loo.....ng text"
+--- after adding "some ohter loo.....ng text" 2go.zip contains /text.txt with "some loo.....ng text" and /text(1).txt with "some other loo.....ng text"
+- Texts shorter than 150 chars will be prepended to exactly one file /texts.txt. new texts come before old texts.
+-- example: 
+--- after adding "http://www.url.net/hello.htm" and then adding "this is some text" 2go.zip contains /texts.txt with 
+----- this is some text
+----- http://www.url.net/hello.htm
+- if short texts are added on different calendar-dates there will be a separation line with date in the /texts.txt so you can see when the text was added.
+-- example:
+--- this is some text
+--- ------------------- 2014-12-02 --------------------------
+--- http://www.url.net/hello.htm" 2go.zip contains /texts.txt which contains http://www.url.net/hello.htm
+- every generated file for text gets a banner "Collected with ToGoZip Version w.x.y.z"
+
+The defaultvalues "file://sdcard/copy/2go.zip", text.txt, texts.txt and "150 chars" can be modified in the settings page.
+
+ToGOZip "Add To Zip" iterpretes these types of eventdata
+- if the eventdata is a local file with a file://-uri this local file is added to the rootdirectory of the zip.
+- if the eventdata is a local folder with a file://-uri the content of the folder and all sub-folders are added to the zip with a correspondig zip-directory.
+- if the eventdata is a content://-uri that can be translated to a local file, this file is added to the rootdirectory of the zip. This works for media data of type picture, video or audio.
+- if the eventdata is a contet:// or file://-uri of a local file or folder that does not exist or that is not global readable, this uri is added as text-content to a text-file
+- if the eventdata is some non-local uri (http:, https:, ftp:), this uri is added as text-content to a text-file
+- if the eventdata is text or can be interpretet as text, this text is added as content to a text-file
 
 
-
-
-
+for
 v (2) non file types
     - content urls
-        check if it it working
     - Text
         v settings: file name
-        - short append to texts
-			- copy/append
-        - long append to seperate text file
+        v short append to texts
+			v copy/append
+        v long append to seperate text file
 
 
 - Settings-Intent-chooser zip viewer/chooser
 - ? workflow encrypt-sendTo
 - - ? mail with email recipient
 - - ? bluetooth with enable bt?
-
-=========
-
-
-intent.hasExtra(Intent.EXTRA_STREAM) ||
-intent.hasExtra(Intent.EXTRA_TEXT);
-
-    public IntentFile[] getFiles() throws IntentFileException {
-        List<IntentFile> result = new ArrayList<IntentFile>();
-        try {
-            if (this.intent.hasExtra(Intent.EXTRA_TEXT)) {
-                List<String> texts = this.intent.getStringArrayListExtra(Intent.EXTRA_TEXT);
-                if (texts != null) {
-                    for (String text : texts) {
-                        try {
-                            result.add(new TextFile(text));
-                        } catch (Exception e) {
-                            Log.w(TAG, e);
-                        }
-                    }
-                }
-            }
-            if (this.intent.hasExtra(Intent.EXTRA_STREAM)) {
-                List<Uri> uris = this.intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-                if (uris != null) {
-                    for (Uri uri : uris) {
-                        try {
-                            result.add(IntentFile.getInstance(context, uri));
-                        } catch (Exception e) {
-                            Log.w(TAG, e);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new IntentFileException(e);
-        }
-        return result.toArray(new IntentFile[] {});
-    }
-
--------------
-    private static final String TEXT_FILE_NAME = "text.txt";
-    private static final String TEXT_MIME_TYPE = "text/plain";
-
-    /** The text content of the file */
-    CharSequence text = "";
-
-    TextFile(Intent intent) throws IntentFileException {
-        this.text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
---------
-    /**
-     *  Returns the Uri of the stream of the intent.
-     */
-    static Uri getStreamUri(Intent intent) {
-        return (Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM);
-    }
-
 

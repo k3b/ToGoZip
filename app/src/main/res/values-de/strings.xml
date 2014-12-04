@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2014 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+
+    <string name="title_activity_add2zip">==&gt; Zip</string>
+
+    <string name="cmd_use_default">Standardwert</string>
+    <string name="cmd_cancel">Abbruch</string>
+    <string name="cmd_edit">Bearbeiten</string>
+
+    <string name="ERR_ADD">Konnte %1$s nicht aktualisieren :\n%2$s</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">Keine Schreibberechtigung für %1$s %2$s.
+(Unterstützt das Gerät externe Speicherkarten und ist eine eingelegt?)</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">Keine Schreibberechtigung für die aktuelle Zip-Datei \'%1$s\'.
+Möchten Sie statt dessen den Standardwert \'%2$s\' verwenden? </string>
+    <string name="WARN_ADD_NO_CHANGES">Die Dateien sind bereit in der Zip-Datei enthalten\n%1$s</string>
+    <string name="SUCCESS_ADD">%2$d Dateien hinzugefügt zu \n%1$s</string>
+    <string name="WARN_ADD_NO_FILES">Keine Dateien ausgewählt</string>
+    <string name="WARN_ADD_CANCELED">Cancel: Keine Datei hinzugefügt.</string>
+
+    <string name="about_summary">Info über ToGoZip</string>
+    <string name="banner">Gesammelt mit ToGoZip Version $versionName$</string>
+
+    <string name="about_content_about">"<![CDATA[
+<b><i>"==&gt; Zip"</i></b>
+ for android's <i>'share'/'send'</i> menu: <br/>
+ <br/>
+ Easy collection of files from every supporting app into
+ one zip-file while beeing '<i>on the go</i>' or offline.<br/>
+<br/>
+This collecting <i>2go.zip</i>-file is like a suitcase
+ where you can put things (files) into from nearly everywhere (from
+ every app that supports <i>'share'/'send'</i>) and that
+ can travel&nbsp; everywhere (via email,
+ bluetooth,&nbsp;nfc).<br/>
+<br/>
+ The program's author uses ToGoZip to collect new android calendar
+ entries (<a
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
+ that should be transfered to the desctop-pcs-s calendar. <br/>
+<br/>
+    ]]>"</string>
+    <string name="pref_debug_title">Debug Mode</string>
+    <string name="pref_debug_summary">Debug Meldung in die Zwischenablage und ins Fehlerprotokoll.</string>
+    <string name="pref_long_text_file_title">Dateiname für lange Texte.</string>
+    <string name="pref_long_text_file_len_min">Langer Text Mindestgröße</string>
+    <string name="pref_short_text_file_title">Dateiname für kurze Texte.</string>
+    <string name="pref_zipfile_title">Ziel Zip-Datei</string>
+    <string name="pref_settings_title">Einstellungen</string>
+</resources>

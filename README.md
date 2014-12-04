@@ -13,7 +13,7 @@ that should be transfered to the desctop-pcs-s calendar.
 
 ## Features:
 
-* supports view/send/SendMultible for file(s) and/or folder(s)
+* supports view/send/SendMultible for file(s), folder(s), urls and texts.
 * automatic file-renaming in the zip if the same name with different file-date already exists.
 * if settings/DebugMode is enabled processing is logged to logcat and to clipboard as text.
 * Settings automatically pops up, if the zip folder is not writable.
@@ -23,3 +23,5 @@ that should be transfered to the desctop-pcs-s calendar.
 * The Adroid must have external storage (aka sdcard) where the zip file is written to.
 
 [Changelog](https://github.com/k3b/toGoZip/wiki/History)
+
+[Technical Features](https://github.com/k3b/toGoZip/wiki/Features)
