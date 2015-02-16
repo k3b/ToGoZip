@@ -19,7 +19,7 @@
 package de.k3b.zip;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,10 +28,14 @@ import java.io.InputStream;
  *
  * Created by k3b on 24.11.2014.
  */
-public class TextCompressItem extends CompressItem {
+public class TextCompressItem extends FileCompressItem {
 
     private StringBuilder text = new StringBuilder();
     private long lastModified;
+
+    public TextCompressItem(String destZipPath, File srcFile) {
+        super(destZipPath, srcFile);
+    }
 
     public InputStream getFileInputStream() throws IOException {
         return new ByteArrayInputStream(getText().getBytes("UTF-8"));

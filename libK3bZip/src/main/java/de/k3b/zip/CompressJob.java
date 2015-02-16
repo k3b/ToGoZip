@@ -102,11 +102,12 @@ public class CompressJob implements ZipLog {
 
     /**
      * Remeber files that should be added to the zip.
+     * Used in unittests.
      *
      * @param destZipPath where the files will go to
      * @param srcFiles    path where new-toBeZipped-compressQue come from
      */
-    public void addToCompressQue(String destZipPath, String... srcFiles) {
+    void addToCompressQue(String destZipPath, String... srcFiles) {
         if (srcFiles != null) {
             for (String srcFile : srcFiles) {
                 addToCompressQue(destZipPath, new File(srcFile));
@@ -137,24 +138,24 @@ public class CompressJob implements ZipLog {
      * adds one file to the CompressQue
      */
     CompressItem addItemToCompressQue(String destZipPath, File srcFile) {
-        if (findInCompressQue(srcFile) != null) return null;
+        CompressItem item = new FileCompressItem(destZipPath, srcFile);
+        if (findInCompressQue(item) != null) return null;
 
-        CompressItem item;
-        item = new CompressItem().setFile(srcFile).setZipFileName(
-                destZipPath + srcFile.getName());
-        compressQue.add(item);
+        addToCompressQueue(item);
         return item;
+    }
+
+    public boolean addToCompressQueue(CompressItem item) {
+        return compressQue.add(item);
     }
 
     public TextCompressItem addTextToCompressQue(String textfile, String textToBeAdded) {
         if ((textToBeAdded!=null) && (textToBeAdded.length() > 0)) {
             if (this.compressTextItem == null) {
-                this.compressTextItem = new TextCompressItem();
                 File srcFile = new File("/" + textfile);
-                this.compressTextItem.setFile(srcFile);
-                this.compressTextItem.setZipFileName(textfile);
+                this.compressTextItem = new TextCompressItem(textfile, srcFile);
                 this.compressTextItem.setLastModified(new Date().getTime());
-                compressQue.add(this.compressTextItem);
+                addToCompressQueue(this.compressTextItem);
             }
             this.compressTextItem.addText(textToBeAdded);
         }
@@ -164,9 +165,9 @@ public class CompressJob implements ZipLog {
     /**
      * return null, if file is not in the CompressQue yet.
      */
-    private CompressItem findInCompressQue(File file) {
+    private CompressItem findInCompressQue(CompressItem file) {
         for (CompressItem item : this.compressQue) {
-            if (file.equals(item.getFile())) return item;
+            if (file.isSame(item)) return item;
         }
         return null;
     }
@@ -376,9 +377,8 @@ public class CompressJob implements ZipLog {
             for (CompressItem item : this.compressQue) {
                 if (!item.isProcessed()) {
                     String newFullDestZipItemName = item.getZipFileName();
-                    File file = item.getFile();
                     context = traceMessage("(1b) copy new item {0} as {1} to {2}",
-                            file, newFullDestZipItemName, newZip);
+                            item, newFullDestZipItemName, newZip);
                     inputStream = item.getFileInputStream();
                     ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
                             item.getLastModified(), null);

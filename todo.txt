@@ -1,6 +1,31 @@
 todo.txt for k3b.add2Zip
 =========
 
+Running ProGuard
+ProGuard is supported through the Gradle plugin for ProGuard version 4.10. The ProGuard plugin is applied automatically, and the tasks are created automatically if the Build Type is configured to run ProGuard through the minifyEnabled property.
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    productFlavors {
+        flavor1 {
+        }
+        flavor2 {
+            proguardFile 'some-other-rules.txt'
+        }
+
+    }
+}
+
+
+
+
+
 ToGOZip adds "Add To Zip" for the android system-events View/Send/SendTo/SendMultible
 
 - files will only be added to "2go.zip" if there is not already a file with same name and same last-modified-date inside "2go.zip"
