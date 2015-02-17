@@ -22,8 +22,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.webkit.MimeTypeMap;
 
 import java.util.List;
+
+import de.k3b.io.FileNameUtil;
 
 /**
  * Android-Media related helper functions
@@ -85,26 +88,17 @@ public class MediaUtil {
     Input: URI -- something like content://com.example.app.provider/table2/dataset1
     Output: null or date
     */
-    public static String getFileName(Context context, Uri uri) {
+    public static String getFileName(Context context, Uri uri, String mimeType) {
         StringBuilder result = new StringBuilder();
 
-        String displayName = getString(context, uri, MediaStore.Images.Media.DISPLAY_NAME);
-        if ((displayName == null) || (displayName.length() == 0)) {
-            List<String> segs = uri.getPathSegments();
-            final int segsZize = segs.size();
-            if (segsZize > 1) {
-                String prefix = segs.get(segsZize - 2);
-                int lastPoint = prefix.lastIndexOf('.');
-                result.append(prefix).append("_");
-            }
-            if (segsZize > 0) {
-                result.append(segs.get(segsZize - 1));
-            }
-            // "content://com.mediatek.calendarimporter/1282" becomes "calendarimporter_1282"
-        } else {
-            result.append(displayName);
-        }
+        String baseName = getString(context, uri, MediaStore.Images.Media.DISPLAY_NAME);
+        if ((baseName == null) || (baseName.length() == 0)) {
+            baseName = uri.getLastPathSegment();
 
-        return result.toString();
+            // "content://com.mediatek.calendarimporter/1282" becomes "calendarimporter_1282"
+        }
+        String defaultFileExtension = (mimeType != null) ? MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) : null;
+
+        return FileNameUtil.createFileName(baseName, defaultFileExtension);
     }
 }

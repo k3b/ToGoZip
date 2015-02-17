@@ -107,22 +107,23 @@ public class IntentParser {
         Object extra = null;
         try {
             Bundle extras = (intent != null) ? intent.getExtras() : null;
+            String mimeType =  (intent != null) ? intent.getType() : null;
             extra = (extras != null) ? extras.get(Intent.EXTRA_STREAM) : null;
             if (extra != null) {
                 if (Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())) {
                     ArrayList<Uri> uris = extras.getParcelableArrayList(Intent.EXTRA_STREAM);
                     if (uris != null) {
                         for (Uri item : uris) {
-                            addResult("Extras[Stream][] uris", item, extra);
+                            addResult("Extras[Stream][] uris", item, extra, mimeType);
                         }
                     } // else unknown format.
                 } else {
-                    addResult("Extras[Stream] uri", (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra);
+                    addResult("Extras[Stream] uri", (Uri) extras.getParcelable(Intent.EXTRA_STREAM), extra, mimeType);
                 }
                 extra = null;
             }
 
-            addResult("getData uri ", intent.getData(), null);
+            addResult("getData uri ", intent.getData(), null, mimeType);
             getTextToBeAdded(resultText);
 
             if ((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (resultFiles.size() == 0) && (resultText.length() == 0)) {
@@ -144,7 +145,7 @@ public class IntentParser {
             ClipData.Item clipItem = clipData.getItemAt(i);
 
             Uri uri = (clipData != null) ? clipItem.getUri() : null;
-            addResult("clipData[i] uri", uri, null);
+            addResult("clipData[i] uri", uri, null, null);
             if (!addClipData(clipItem.getHtmlText(), "html"))
                 addClipData(clipItem.getText(), "text");
         }
@@ -160,11 +161,11 @@ public class IntentParser {
         return false;
     }
 
-    private void addResult(String context, Uri uri, Object nonUriValue) {
+    private void addResult(String context, Uri uri, Object nonUriValue, String mimeType) {
         if (uri != null) {
             zipLog.traceMessage("{0}: adding file {1}", context, uri);
 
-            CompressItem file = getCompressItem(uri);
+            CompressItem file = getCompressItem(uri, mimeType);
             if (file != null) {
                 resultFiles.add(file);
                 return;
@@ -179,7 +180,7 @@ public class IntentParser {
         }
     }
 
-    private CompressItem getCompressItem(Uri uri) {
+    private CompressItem getCompressItem(Uri uri, String mimeType) {
         if (uri != null) {
             String scheme = uri.getScheme();
 
@@ -196,7 +197,7 @@ public class IntentParser {
                     return new FileCompressItem(null, new File(path));
                 }
 
-                final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri);
+                final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri, mimeType);
                 try {
                     InputStream is = item.getFileInputStream();
                     if (is != null) {

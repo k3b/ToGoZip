@@ -16,10 +16,10 @@ public class AndroidUriCompressItem extends CompressItem {
     private final Uri uri;
     private final Context context;
 
-    public AndroidUriCompressItem(Context context, Uri uri) {
+    public AndroidUriCompressItem(Context context, Uri uri, String mimeType) {
         this.context = context;
         this.uri = uri;
-        String name = MediaUtil.getFileName(context, uri);
+        String name = MediaUtil.getFileName(context, uri, mimeType);
         setZipFileName(name);
 
     }

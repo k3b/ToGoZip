@@ -27,10 +27,10 @@ import java.io.*;
  */
 public class FileCompressItem extends CompressItem {
     private File file;
-    private String zipFileName;
+
 
     public FileCompressItem(String destZipPath, File srcFile) {
-        if (destZipPath == null) destZipPath = "/";
+        if (destZipPath == null) destZipPath = "";
         setFile(srcFile);
         setZipFileName(destZipPath + srcFile.getName());
     }
@@ -52,14 +52,6 @@ public class FileCompressItem extends CompressItem {
     @Override
     public long getLastModified() {
         return this.getFile().lastModified();
-    }
-
-    public String getZipFileName() {
-        return zipFileName;
-    }
-
-    public CompressItem setZipFileName(String zipFileName) {
-        return this;
     }
 
     @Override
