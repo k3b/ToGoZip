@@ -27,27 +27,39 @@ import java.io.*;
  */
 public class FileCompressItem extends CompressItem {
     private File file;
-
-    public File getFile() {
-        return file;
-    }
+    private String zipFileName;
 
     public FileCompressItem(String destZipPath, File srcFile) {
+        if (destZipPath == null) destZipPath = "/";
         setFile(srcFile);
         setZipFileName(destZipPath + srcFile.getName());
     }
+
     public FileCompressItem setFile(File file) {
         this.file = file;
         this.processed = false;
         return this;
     }
 
+    public File getFile() {
+        return file;
+    }
+
     public InputStream getFileInputStream() throws IOException {
         return new FileInputStream(file);
     }
 
+    @Override
     public long getLastModified() {
         return this.getFile().lastModified();
+    }
+
+    public String getZipFileName() {
+        return zipFileName;
+    }
+
+    public CompressItem setZipFileName(String zipFileName) {
+        return this;
     }
 
     @Override

@@ -30,6 +30,7 @@ import android.widget.Toast;
 import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
+import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
 
@@ -41,14 +42,14 @@ public class SettingsActivity extends PreferenceActivity {
     /**
      * if not null: try to execute add2zip on finish
      */
-    private static File[] filesToBeAdded = null;
+    private static CompressItem[] filesToBeAdded = null;
     private static String textToBeAdded = null;
     private AndroidCompressJob job = null;
 
     /**
      * public api to start settings-activity
      */
-    public static void show(Context context, File[] filesToBeAdded, String textToBeAdded) {
+    public static void show(Context context, CompressItem[] filesToBeAdded, String textToBeAdded) {
         final Intent i = new Intent(context, SettingsActivity.class);
 
         if (Global.debugEnabled) {
@@ -166,7 +167,7 @@ public class SettingsActivity extends PreferenceActivity {
     private void setDefault() {
         String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
         SettingsImpl.setZipfile(this, defaultZipPath);
-        File[] fileToBeAdded = SettingsActivity.filesToBeAdded;
+        CompressItem[] fileToBeAdded = SettingsActivity.filesToBeAdded;
         String textToBeAdded = SettingsActivity.textToBeAdded;
         SettingsActivity.filesToBeAdded = null; // do not start add2zip
         SettingsActivity.textToBeAdded = null;

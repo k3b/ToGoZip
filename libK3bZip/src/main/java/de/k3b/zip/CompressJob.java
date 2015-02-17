@@ -134,19 +134,31 @@ public class CompressJob implements ZipLog {
         return item;
     }
 
+    public boolean addToCompressQueue(CompressItem item) {
+        if (findInCompressQue(item) != null) {
+            // already inside curent collection. Do not add again
+            return false;
+        }
+
+        compressQue.add(item);
+        return true;
+    }
+
     /**
      * adds one file to the CompressQue
      */
     CompressItem addItemToCompressQue(String destZipPath, File srcFile) {
         CompressItem item = new FileCompressItem(destZipPath, srcFile);
-        if (findInCompressQue(item) != null) return null;
-
-        addToCompressQueue(item);
-        return item;
+        if (addToCompressQueue(item)) {
+            return item;
+        }
+        return null;
     }
 
-    public boolean addToCompressQueue(CompressItem item) {
-        return compressQue.add(item);
+    public void addToCompressQueue(CompressItem[] items) {
+        for (CompressItem item : items) {
+            addToCompressQueue(item);
+        }
     }
 
     public TextCompressItem addTextToCompressQue(String textfile, String textToBeAdded) {

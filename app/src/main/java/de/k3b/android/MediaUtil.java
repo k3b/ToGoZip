@@ -23,20 +23,18 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import java.util.List;
+
 /**
  * Android-Media related helper functions
  *
  * Created by k3b on 23.11.2014.
  */
 public class MediaUtil {
-    /*
-    Input: URI -- something like content://com.example.app.provider/table2/dataset1
-    Output: PATH -- something like /sdcard/DCIM/123242-image.jpg
-    */
-    public static String convertMediaUriToPath(Context context, Uri uri) {
+    private static String getString(Context context, Uri uri, String columnName) {
         Cursor cursor = null;
         try {
-            String[] fields = {MediaStore.Images.Media.DATA};
+            String[] fields = {columnName};
             cursor = context.getContentResolver().query(uri, fields, null, null, null);
             int column_index = cursor.getColumnIndex(fields[0]);
             if (column_index >= 0) {
@@ -48,5 +46,65 @@ public class MediaUtil {
             cursor.close();
         }
         return null;
+    }
+
+    private static long getLong(Context context, Uri uri, String columnName) {
+        Cursor cursor = null;
+        try {
+            String[] fields = {columnName};
+            cursor = context.getContentResolver().query(uri, fields, null, null, null);
+            int column_index = cursor.getColumnIndex(fields[0]);
+            if (column_index >= 0) {
+                cursor.moveToFirst();
+                return cursor.getLong(column_index);
+            }
+        } catch (Exception ignore) {
+        } finally {
+            cursor.close();
+        }
+        return 0;
+    }
+
+    /*
+    Input: URI -- something like content://com.example.app.provider/table2/dataset1
+    Output: PATH -- something like /sdcard/DCIM/123242-image.jpg
+    */
+    public static String convertMediaUriToPath(Context context, Uri uri) {
+        return getString(context, uri, MediaStore.Images.Media.DATA);
+    }
+
+    /*
+    Input: URI -- something like content://com.example.app.provider/table2/dataset1
+    Output: 0 or date
+    */
+    public static long getDateModified(Context context, Uri uri) {
+        return getLong(context, uri, MediaStore.Images.Media.DATE_MODIFIED);
+    }
+
+    /*
+    Input: URI -- something like content://com.example.app.provider/table2/dataset1
+    Output: null or date
+    */
+    public static String getFileName(Context context, Uri uri) {
+        StringBuilder result = new StringBuilder();
+
+        String displayName = getString(context, uri, MediaStore.Images.Media.DISPLAY_NAME);
+        if ((displayName == null) || (displayName.length() == 0)) {
+            List<String> segs = uri.getPathSegments();
+            final int segsZize = segs.size();
+            if (segsZize > 1) {
+                String prefix = segs.get(segsZize - 2);
+                int lastPoint = prefix.lastIndexOf('.');
+                result.append(prefix).append("_");
+            }
+            if (segsZize > 0) {
+                result.append(segs.get(segsZize - 1));
+            }
+            // "content://com.mediatek.calendarimporter/1282" becomes "calendarimporter_1282"
+        } else {
+            result.append(displayName);
+        }
+
+        return result.toString();
     }
 }

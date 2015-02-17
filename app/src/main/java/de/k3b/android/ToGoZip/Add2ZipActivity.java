@@ -33,6 +33,7 @@ import java.util.List;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.MediaUtil;
+import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
 
@@ -58,7 +59,7 @@ public class Add2ZipActivity extends Activity {
 
         AndroidCompressJob job = new AndroidCompressJob(this, getCurrentZipFile(), zipLog);
         StringBuffer texts = new StringBuffer();
-        File[] filesToBeAdded = intentParser.getFilesToBeAdded();
+        CompressItem[] filesToBeAdded = intentParser.getFilesToBeAdded();
         String textToBeAdded = intentParser.getTextToBeAdded();
 
         // on error show settings

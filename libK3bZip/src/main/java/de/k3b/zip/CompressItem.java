@@ -11,10 +11,6 @@ abstract public class CompressItem {
     protected boolean processed;
     private String zipFileName;
 
-    public String getZipFileName() {
-        return zipFileName;
-    }
-
     abstract public InputStream getFileInputStream() throws IOException ;
 
     abstract public long getLastModified();
@@ -22,6 +18,10 @@ abstract public class CompressItem {
     public boolean isSame(CompressItem other) {
         if (other == null) return false;
         return this.getClass().equals(other.getClass());
+    }
+
+    public String getZipFileName() {
+        return zipFileName;
     }
 
     public CompressItem setZipFileName(String zipFileName) {

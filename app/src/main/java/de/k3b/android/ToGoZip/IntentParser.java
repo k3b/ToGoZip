@@ -27,10 +27,14 @@ import android.os.Build;
 import android.os.Bundle;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.k3b.android.MediaUtil;
+import de.k3b.zip.CompressItem;
+import de.k3b.zip.FileCompressItem;
 import de.k3b.zip.ZipLog;
 
 /**
@@ -41,7 +45,7 @@ public class IntentParser {
     private final ZipLog zipLog;
     private final Context context;
 
-    private ArrayList<File> resultFiles = null;
+    private ArrayList<CompressItem> resultFiles = null;
     private StringBuffer resultText = null;
     public IntentParser(Context context, Intent intent, ZipLog zipLog) {
         this.context = context;
@@ -80,11 +84,11 @@ public class IntentParser {
         }
     }
 
-    public File[] getFilesToBeAdded() {
+    public CompressItem[] getFilesToBeAdded() {
         parse();
         int len = resultFiles.size();
         if (len == 0) return null;
-        return resultFiles.toArray(new File[len]);
+        return resultFiles.toArray(new CompressItem[len]);
     }
 
     public String getTextToBeAdded() {
@@ -97,7 +101,7 @@ public class IntentParser {
         if ((resultFiles != null) && (resultText != null)) {
             return;
         }
-        resultFiles = new ArrayList<File>();
+        resultFiles = new ArrayList<CompressItem>();
         resultText = new StringBuffer();
 
         Object extra = null;
@@ -160,7 +164,7 @@ public class IntentParser {
         if (uri != null) {
             zipLog.traceMessage("{0}: adding file {1}", context, uri);
 
-            File file = getLocalFile(uri);
+            CompressItem file = getCompressItem(uri);
             if (file != null) {
                 resultFiles.add(file);
                 return;
@@ -175,21 +179,38 @@ public class IntentParser {
         }
     }
 
-    private File getLocalFile(Uri uri) {
+    private CompressItem getCompressItem(Uri uri) {
         if (uri != null) {
             String scheme = uri.getScheme();
 
             if ("file".equalsIgnoreCase(scheme)) {
                 File file = new File(uri.getPath());
                 if (file.exists()) {
-                    return file;
+                    zipLog.traceMessage("Data[file-uri={0}]: {1}", uri, file);
+                    return new FileCompressItem(null, file);
                 }
             } else if ("content".equalsIgnoreCase(scheme)) {
                 String path = MediaUtil.convertMediaUriToPath(context, uri);
                 if (path != null) {
-                    return new File(path);
+                    zipLog.traceMessage("Data[file-content-uri={0}]: {1}", uri, path);
+                    return new FileCompressItem(null, new File(path));
                 }
+
+                final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri);
+                try {
+                    InputStream is = item.getFileInputStream();
+                    if (is != null) {
+                        is.close();
+                        zipLog.traceMessage("Data[resolvable-content-uri={0}]", uri);
+                        return item;
+                    }
+                } catch (IOException ex) {
+                    zipLog.traceMessage("Error reading Data[content-uri='{0}']: {1}", uri, ex.getMessage());
+                }
+
             }
+            zipLog.traceMessage("Data[uri='{0}']: not resolved", uri);
+
         }
         return null;
     }
