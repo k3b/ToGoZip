@@ -1,5 +1,7 @@
 # ToGoZip: "Add To Zip" for android's share/send menu.
 
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="available on F-Droid app store" height="45">](https://f-droid.org/app/de.k3b.android.toGoZip)
+
 Easy collection of files from every supporting app into one zip-file while
 beeing 'on the go' or offline.
 
@@ -8,7 +10,7 @@ into from nearly everywhere (from every app that supports 'share'/'send')
 and that can travel everywhere (via email, bluetooth, nfc).
 
  In the beginning this program was developed to collect new android calendar
- entries ([[https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter | ics-files]])
+ entries [ics-files](https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter)
  that should be transfered to the desctop-pcs-s calendar. <br/>
 
 ## Features:
