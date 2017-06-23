@@ -4,8 +4,6 @@
 /build
 .iml
 /*.iml
-/gradle
-/gradlew
-/gradlew.bat
 /app/*.iml
 /*.properties
+/libK3bZip/*.iml

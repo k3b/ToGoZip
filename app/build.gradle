@@ -1,17 +1,30 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '20.0.0'
+    compileSdkVersion 23
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId 'de.k3b.android.toGoZip'
         minSdkVersion 7
-        targetSdkVersion 19
-        versionCode 6
-        versionName '1.0.6.20141207'
+        targetSdkVersion 23
+        versionCode 7
+        versionName '1.0.7.170623'
+        // Mintanance versionName '1.0.7.20170623'
+        // Improvements v1.0.6.20141207
+        // Improvements v1.0.6.20141207
+        // Improvements v0.2.2.20141120
+        // Initial Version v0.1.1.20141109
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
     buildTypes {
         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

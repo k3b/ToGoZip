@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014 k3b
+Copyright (C) 2014-2017 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -31,6 +31,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
 $about$
 <hr />
 <h2>History</h2>
+Improvements v1.0.7.170623<br />
+<ul>
+  <li>Maintenace release: comiled/linked against latest libs.</li>
+</ul>
+<br />
 Improvements v1.0.6.20141207<br />
 <ul>
   <li>Added support to add text to zip. Short texts will be collected in one file; long texts get one file per long text.</li>
@@ -78,7 +83,7 @@ Initial Version v0.1.1.20141109<br />
 <h2>Legal stuff</h2>
 <b>ToGoZip</b>&nbsp;<br />
 &nbsp;<br />
-Copyright (c) 2014 by k3b<br />
+Copyright (c) 2014-2017 by k3b<br />
 Licensed under GPL, Version 3.0 or later.<br />
 <br />
 Android is a trademark of Google Inc. Use of this trademark is subject
