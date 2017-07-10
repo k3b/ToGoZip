@@ -19,6 +19,7 @@ and that can travel everywhere (via email, bluetooth, nfc).
 * automatic file-renaming in the zip if the same name with different file-date already exists.
 * if settings/DebugMode is enabled processing is logged to logcat and to clipboard as text.
 * Settings automatically pops up, if the zip folder is not writable.
+* Minimual requirements: Works with android-2.1 (api 7) and up. apk size is only 81 KB.
 
 ## Required Android Permissions:
 * WRITE_EXTERNAL_STORAGE used to store the created/updated zip-file.
