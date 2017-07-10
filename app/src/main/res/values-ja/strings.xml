@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2014 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+
+    <string name="title_activity_add2zip">Zip に追加</string>
+
+    <string name="cmd_use_default">デフォルトを使用する</string>
+    <string name="cmd_cancel">キャンセル</string>
+    <string name="cmd_edit">編集</string>
+
+    <string name="ERR_ADD">更新できません %1$s :\n%2$s</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">書き込みアクセス許可がありません %1$s %2$s。
+(SD カードが挿入されて、かつマウントされていますか?)</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">現在の zip に書き込みアクセス許可がありません \'%1$s\'。
+代わりに、デフォルトの \'%2$s\' を使用しますか? </string>
+    <string name="WARN_ADD_NO_CHANGES">ファイルはすでに含まれています\n%1$s</string>
+    <string name="SUCCESS_ADD">%2$d ファイルを追加しました \n%1$s</string>
+    <string name="WARN_ADD_NO_FILES">ファイルは選択されていません</string>
+    <string name="WARN_ADD_CANCELED">キャンセル: ファイルは追加されません</string>
+
+    <string name="about_summary">ToGoZip について</string>
+    <string name="banner">ToGoZip バージョン $versionName$ に集める</string>
+
+    <string name="about_content_about">"<![CDATA[
+<b><i>"Zip に追加"</i></b>
+ Android の <i>'共有'/'送信'</i> メニュー用: <br/>
+ <br/>
+ それぞれのサポートするアプリから 1 つの zip ファイルに
+ '<i>外出中</i>' またはオフラインでも簡単にファイルを集めます。<br/>
+<br/>
+この <i>2go.zip</i> ファイルはスーツケースのように、
+ <i>'共有'/'送信'</i> をサポートするすべてのアプリから、
+ ほぼどこからでもファイルを入れることができ、
+ (メール、Bluetooth、NFC 経由で)
+ どこへでも持ち運ぶことができます。<br/>
+<br/>
+ 最初このプログラムは、新しい Android のカレンダーのエントリ
+ (<a
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics ファイル)</a>&nbsp;
+ をデスクトップ PC のカレンダーに転送するために開発されました。 <br/>
+<br/>
+<br/>
+    ]]>"</string>
+    <string name="pref_debug_title">デバッグモード</string>
+    <string name="pref_debug_summary">デバッグメッセージをクリップボードにコピーして、LogCat に追加しました</string>
+    <string name="pref_long_text_file_title">zip に長いテキストファイル</string>
+    <string name="pref_long_text_file_len_min">長いファイル: 最小テキスト長</string>
+    <string name="pref_short_text_file_title">zip に短いテキストファイル</string>
+    <string name="pref_zipfile_title">出力 Zip ファイル</string>
+    <string name="pref_settings_title">設定</string>
+</resources>
