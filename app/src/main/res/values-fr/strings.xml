@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2014 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+
+    <string name="title_activity_add2zip">Add To Zip</string>
+
+    <string name="cmd_use_default">Par Défaut</string>
+    <string name="cmd_cancel">Annuler</string>
+    <string name="cmd_edit">Modifier</string>
+
+    <string name="ERR_ADD">Impossible d\'actualiser %1$s :\n%2$s</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">Aucune autorisation d\'écrire sur %1$s %2$s.
+(Y a-t-il une carte SD, et est-elle montée ?)</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">Aucune autorisation d\'écrire dans le zip actuel \'%1$s\'.
+Voulez-vous utiliser l\'emplacement par défaut \'%2$s\' à la place? </string>
+    <string name="WARN_ADD_NO_CHANGES">Les fichiers sont déjà inclus dans\n%1$s</string>
+    <string name="SUCCESS_ADD">%2$d fichier(s) ajouté(s) à \n%1$s</string>
+    <string name="WARN_ADD_NO_FILES">Aucun fichier sélectionné</string>
+    <string name="WARN_ADD_CANCELED">Annuler : Aucun fichier ajouté</string>
+
+    <string name="about_summary">À propos de ToGoZip</string>
+    <string name="banner">Collecté avec la version $versionName$ de ToGoZip</string>
+
+    <string name="about_content_about">"<![CDATA[
+<b><i>"Add to Zip"</i></b>
+ for android's <i>'share'/'send'</i> menu: <br/>
+ <br/>
+ Collecte facile de fichiers depuis les apps supportées dans un
+ fichier zip, '<i>très efficace</i>' et hors-ligne.<br/>
+<br/>
+ Ce fichier <i>2go.zip</i> est comme un coffre
+ où vous pouvez ajouter des fichiers depuis n\'importe où (depuis toutes les
+ Apps qui supportent la fonction <i>\'Partager\'</i>) et qui peut être
+ envoyé&nbsp; partout (par mail,
+ bluetooth,&nbsp;nfc).<br/>
+<br/>
+ Au début, ce programme était développé pour collecter les nouvelles entrées
+ du calendrier Android (<a
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
+ qui devaient être transférées vers le calendrier du PC.<br/>
+<br/>
+<br/>
+    ]]>"</string>
+    <string name="pref_debug_title">Mode Débogage</string>
+    <string name="pref_debug_summary">Messages de débogage copiés dans le presse-papiers et ajoutés à LogCat</string>
+    <string name="pref_long_text_file_title">Long Text File in zip</string>
+    <string name="pref_long_text_file_len_min">Long File: Min Text Len</string>
+    <string name="pref_short_text_file_title">Short Text File in zip</string>
+    <string name="pref_zipfile_title">Output Zip File</string>
+    <string name="pref_settings_title">Paramètres</string>
+</resources>
