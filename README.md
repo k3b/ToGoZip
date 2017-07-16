@@ -1,6 +1,7 @@
 # ToGoZip: "Add To Zip" for android's share/send menu.
 
-[<img src="https://f-droid.org/badge/get-it-on.png" alt="available on F-Droid app store" height="45">](https://f-droid.org/app/de.k3b.android.toGoZip)
+<a href="https://f-droid.org/packages/de.k3b.android.toGoZip" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="100"/></a>
 
 Easy collection of files from every supporting app into one zip-file while
 beeing 'on the go' or offline.
