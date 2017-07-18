@@ -18,10 +18,15 @@
  */
 package de.k3b.android.toGoZip;
 
+import java.util.Locale;
+
 /**
  * Global settings
  */
 public class Global {
+    /** local settings: which language should the gui use */
+    public static final String PREF_KEY_USER_LOCALE = "user_locale";
+
     public static final String LOG_CONTEXT = "toGoZip";
     /**
      * true: addToCompressQue several Log.d(...) to show what is going on.
@@ -29,4 +34,6 @@ public class Global {
      */
     public static boolean debugEnabled = false;
 
+    /** Remember ininial language settings. This allows setting "switch back to device language" after changing app locale */
+    public static Locale systemLocale = Locale.getDefault();
 }

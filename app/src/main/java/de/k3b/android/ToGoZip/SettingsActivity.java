@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2017 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -22,14 +22,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
+import de.k3b.android.widget.LocalizedActivity;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
@@ -45,6 +50,9 @@ public class SettingsActivity extends PreferenceActivity {
     private static CompressItem[] filesToBeAdded = null;
     private static String textToBeAdded = null;
     private AndroidCompressJob job = null;
+
+    private SharedPreferences prefsInstance = null;
+    private ListPreference defaultLocalePreference;  // #6: Support to change locale at runtime
 
     /**
      * public api to start settings-activity
@@ -65,6 +73,7 @@ public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        LocalizedActivity.fixLocale(this);	// #6: Support to change locale at runtime
         super.onCreate(savedInstanceState);
         SettingsImpl.init(this);
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
@@ -72,6 +81,23 @@ public class SettingsActivity extends PreferenceActivity {
         this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), zipLog);
 
         this.addPreferencesFromResource(R.xml.preferences);
+
+        prefsInstance = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        // #6: Support to change locale at runtime
+        defaultLocalePreference =
+                (ListPreference) findPreference(Global.PREF_KEY_USER_LOCALE);
+        defaultLocalePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                setLanguage((String) newValue);
+                LocalizedActivity.recreate(SettingsActivity.this);
+                return true; // change is allowed
+            }
+        });
+
+        // #6: Support to change locale at runtime
+        updateSummary();
 
         showAlertOnError();
     }
@@ -188,4 +214,31 @@ public class SettingsActivity extends PreferenceActivity {
 
         finishWithoutCheck();
     }
+
+    // #6: Support to change locale at runtime
+    // This is used to show the status of some preference in the description
+    private void updateSummary() {
+        final String languageKey = prefsInstance.getString(Global.PREF_KEY_USER_LOCALE, "");
+        setLanguage(languageKey);
+    }
+
+    // #6: Support to change locale at runtime
+    private void setLanguage(String languageKey) {
+        setPref(languageKey, defaultLocalePreference, R.array.pref_locale_names);
+    }
+
+    private void setPref(String key, ListPreference listPreference, int arrayResourceId) {
+        int index = listPreference.findIndexOfValue(key);
+        String summary = "";
+
+        if (index >= 0) {
+            String[] names = this.getResources().getStringArray(arrayResourceId);
+            if (index < names.length) {
+                summary = names[index];
+            }
+        }
+        listPreference.setSummary(summary);
+
+    }
+
 }

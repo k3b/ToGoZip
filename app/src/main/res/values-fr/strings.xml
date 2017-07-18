@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014 k3b
+Copyright (C) 2014-2017 k3b
+French translation 2017 by Poussinou
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -65,4 +66,6 @@ Voulez-vous utiliser l\'emplacement par défaut \'%2$s\' à la place? </string>
     <string name="pref_short_text_file_title">Short Text File in zip</string>
     <string name="pref_zipfile_title">Output Zip File</string>
     <string name="pref_settings_title">Paramètres</string>
+    <string name="settings_locale_title">Langue</string>
+    <string name="settings_locale_os_language">(langue de l\'appareil)</string>
 </resources>

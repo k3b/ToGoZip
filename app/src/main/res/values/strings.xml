@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014 k3b
+Copyright (C) 2014-2017 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -65,4 +65,6 @@ This collecting <i>2go.zip</i>-file is like a suitcase
     <string name="pref_short_text_file_title">Short Text File in zip</string>
     <string name="pref_zipfile_title">Output Zip File</string>
     <string name="pref_settings_title">Settings</string>
+    <string name="settings_locale_title">Language</string>
+    <string name="settings_locale_os_language">System default</string>
 </resources>

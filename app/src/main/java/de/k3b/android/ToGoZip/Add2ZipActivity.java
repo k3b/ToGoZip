@@ -18,21 +18,13 @@
  */
 package de.k3b.android.toGoZip;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.ClipData;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import de.k3b.android.AndroidCompressJob;
-import de.k3b.android.MediaUtil;
+import de.k3b.android.widget.LocalizedActivity;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
@@ -41,7 +33,7 @@ import de.k3b.zip.ZipLogImpl;
  * This pseudo activity has no gui. It starts add2zip from intent-data
  * or starts the settings-activity if the zip-output-dir is write-protected
  */
-public class Add2ZipActivity extends Activity {
+public class Add2ZipActivity extends LocalizedActivity {
     /**
      * caption for logging
      */

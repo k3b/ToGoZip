@@ -26,7 +26,7 @@ import java.io.File;
 import de.k3b.android.toGoZip.Global;
 import de.k3b.android.toGoZip.R;
 import de.k3b.android.toGoZip.SettingsImpl;
-import de.k3b.android.widgets.Clipboard;
+import de.k3b.android.widget.Clipboard;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.CompressJob;
 import de.k3b.zip.ZipLog;

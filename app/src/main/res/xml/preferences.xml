@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014 k3b
+Copyright (C) 2014-2017 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -25,19 +25,29 @@ this program. If not, see <http://www.gnu.org/licenses/>
         android:key="first_category"
         android:title="@string/pref_settings_title">
 
+        <!-- #6: Support to change locale at runtime -->
+        <ListPreference
+            android:key="user_locale"
+            android:title="@string/settings_locale_title"
+            android:defaultValue=""
+            android:entries="@array/pref_locale_names"
+            android:entryValues="@array/pref_locale_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
+
         <!-- EditTextPreference -->
-        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+        <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="zipfile"
             android:title="@string/pref_zipfile_title" />
         <!-- EditTextPreference -->
-        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+        <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="textfile_short"
             android:title="@string/pref_short_text_file_title" />
-        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+        <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="textfile_long_min"
             android:defaultValue="150"
             android:title="@string/pref_long_text_file_len_min" />
-        <de.k3b.android.widgets.EditTextPreferenceWithSummary
+        <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="textfile_long"
             android:title="@string/pref_long_text_file_title" />
         <!--
@@ -52,7 +62,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:summary="@string/pref_debug_summary"
             android:title="@string/pref_debug_title" />
 
-        <de.k3b.android.widgets.AboutDialogPreference
+        <de.k3b.android.widget.AboutDialogPreference
             android:key="about"
             android:title="@string/about_summary" />
 

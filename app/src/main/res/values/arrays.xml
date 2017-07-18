@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2014-2017 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+    <!-- #6: which gui language to use ? pref_locale_names must correspond with pref_locale_values -->
+    <string-array name="pref_locale_names" translatable="false">
+        <item>@string/settings_locale_os_language</item>
+        <item>Deutsch (German)</item>
+        <item>English</item>
+        <item>Français (French)</item>
+        <item>日本人 (Japanese)</item>
+        <item>(For Translators)</item>
+    </string-array>
+    <string-array name="pref_locale_values" translatable="false">
+        <item></item>
+        <item>de</item>
+        <item>en</item>
+        <item>fr</item>
+        <item>ja</item>
+        <item>zz</item>
+    </string-array>
+</resources>
