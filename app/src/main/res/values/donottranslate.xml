@@ -24,11 +24,37 @@ this program. If not, see <http://www.gnu.org/licenses/>
 <resources>
     <string name="app_name">ToGoZip</string>
     <string name="default_zip_path">copy/2go.zip</string>
+
+
+    <!-- added to all language specific about boxes as $translate$ -->
+    <string name="about_translate" translatable="false"><![CDATA["
+	App and internet homepage available in these languages:<ul>
+	<li>
+		<a href="https://github.com/k3b/ToGoZip/wiki/de-home">de</a>,&nbsp;
+		<a href="https://github.com/k3b/ToGoZip/wiki/home">en</a>,&nbsp;
+		<a href="https://github.com/k3b/ToGoZip/wiki/fr-home">fr</a>,&nbsp;
+		<a href="https://github.com/k3b/ToGoZip/wiki/ja-home">ja</a>,&nbsp;
+	</li>
+	<li>
+		<b>Help us to translate this app into other languages:</b>
+		<ul>
+			<li>On a pc with keyboard and internet access through the
+				<a href="https://github.com/k3b/ToGoZip/issues/6">crowdin.com website.</a>
+			</li>
+			<li>On android through the <a href="https://f-droid.org/app/io.github.lonamiwebs.stringlate">stringlate app</a>.
+			</li>
+		</ul>
+	</li>
+</ul>
+	"]]></string>
+
+
     <string name="about_content"><![CDATA[ <html><body>
 <a href="http://github.com/k3b/ToGoZip/wiki"><b>ToGoZip</b></a><br/>Version $versionName$
 <br />
 <hr />
 $about$
+<hr />$translate$
 <hr />
 <h2>History</h2>
 Improvements v1.0.7.170623<br />
