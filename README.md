@@ -12,7 +12,7 @@ and that can travel everywhere (via email, bluetooth, nfc).
 
  In the beginning this program was developed to collect new android calendar
  entries [ics-files](https://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter)
- that should be transfered to the desctop-pcs-s calendar. <br/>
+ that should be transfered to the desktop-pcs-s calendar. <br/>
 
 ## Features:
 
