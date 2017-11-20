@@ -1,0 +1,1 @@
+ToGoZip: Agregar a Zip, para el menú compartir/enviar de Android.
