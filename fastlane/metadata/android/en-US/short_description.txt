@@ -1,0 +1,1 @@
+ToGoZip: Add to Zip for android-s share/send menu.

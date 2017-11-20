@@ -1,0 +1,2 @@
+* Added translations: Japanese (by naofum), French (by Poussinou), Spanish (by NeHoMaR)
+* Settings: allow manual selection of language.
