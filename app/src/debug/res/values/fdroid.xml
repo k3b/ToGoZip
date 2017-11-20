@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?><!--
+/*
+ * These Texts will be shown as programdescription in the fdroid app store
+ * https://f-droid.org/app/de.k3b.android.toGoZip.
+ *
+ * The content will be copied to .../fastlane/metadata/android/*.txt
+ *
+ * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>
+ */
+ -->
+<resources>
+
+    <!-- This becomes .../fastlane/metadata/android/title.txt.
+    See https://f-droid.org/docs/Build_Metadata_Reference/#Name -->
+    <string name="title">ToGoZip (\'==&gt; Zip\')</string>
+
+    <!-- This becomes .../fastlane/metadata/android/short_description.txt.
+    See https://f-droid.org/docs/Build_Metadata_Reference/#Summary -->
+    <string name="short_description">ToGoZip: Add to Zip for android-s share/send menu.</string>
+
+    <!-- This becomes .../fastlane/metadata/android/full_description.txt.
+    See https://f-droid.org/docs/Build_Metadata_Reference/#Description -->
+	<string name="full_description"><![CDATA["
+Add to Zip for android-s share/send menu.
+
+Easy collecting files from every supporting app into
+one zip-file while beeing \`on the go\` or offline.
+(Note the english \'to go\` means \'while traveling\').
+
+This collecting \'2go.zip\'-file is like a suitcase
+where you can put things (files) into from nearly everywhere (from
+every app that supports \'share/send\') and that
+can travel  everywhere (via email,
+bluetooth, nfc).
+
+Required Android Permissions:
+
+* WRITE_EXTERNAL_STORAGE to save/update \'2go.zip\' to some public folder.
+
+.
+"]]></string>
+</resources>

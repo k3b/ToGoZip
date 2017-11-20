@@ -22,9 +22,6 @@ this program. If not, see <http://www.gnu.org/licenses/>
     package="de.k3b.android.toGoZip"
     android:installLocation="auto"
 	
-	android:versionCode="8"
-    android:versionName="1.0.8.170626"
-
     >
 	<!-- manifest.versionXXX are used by fdroid to trigger rebuild "Update Check Mode:RepoManifest" -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

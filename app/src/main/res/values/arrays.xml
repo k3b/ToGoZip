@@ -23,6 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>@string/settings_locale_os_language</item>
         <item>Deutsch (German)</item>
         <item>English</item>
+        <item>Espanol (Spanish)</item>
         <item>Français (French)</item>
         <item>日本人 (Japanese)</item>
         <item>(For Translators)</item>
@@ -31,6 +32,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item></item>
         <item>de</item>
         <item>en</item>
+        <item>es</item>
         <item>fr</item>
         <item>ja</item>
         <item>zz</item>
