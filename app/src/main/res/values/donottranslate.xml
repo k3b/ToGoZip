@@ -30,10 +30,14 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string name="about_translate" translatable="false"><![CDATA["
 	App and internet homepage available in these languages:<ul>
 	<li>
-		<a href="https://github.com/k3b/ToGoZip/wiki/de-home">de</a>,&nbsp;
-		<a href="https://github.com/k3b/ToGoZip/wiki/home">en</a>,&nbsp;
-		<a href="https://github.com/k3b/ToGoZip/wiki/fr-home">fr</a>,&nbsp;
-		<a href="https://github.com/k3b/ToGoZip/wiki/ja-home">ja</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/bn-home">bn</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/de-home">de</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/home"   >en</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/es-home">es</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/fr-home">fr</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/ja-home">ja</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/tr-home">tr</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/zh-CN-home">zh-CN</a>,&nbsp;
 	</li>
 	<li>
 		<b>Help us to translate this app into other languages:</b>
@@ -55,34 +59,6 @@ this program. If not, see <http://www.gnu.org/licenses/>
 <hr />
 $about$
 <hr />$translate$
-<hr />
-<h2>History</h2>
-Improvements v1.0.7.170623<br />
-<ul>
-  <li>Maintenace release: comiled/linked against latest libs.</li>
-</ul>
-<br />
-Improvements v1.0.6.20141207<br />
-<ul>
-  <li>Added support to add text to zip. Short texts will be collected in one file; long texts get one file per long text.</li>
-  <li>Added german translation to existing english.</li>
-
-</ul>
-<br />
-Improvements v0.2.2.20141120<br />
-<ul>
-  <li>Added Settings Activity to define zip-file.</li>
-  <li>Added Settings Debug Mode: Debug Messages copied to clipboard and added to LogCat.</li>
-  <li>Added this About-Box in Settings.</li>
-</ul>
-<br />
-Initial Version v0.1.1.20141109<br />
-<ul>
-  <li>Created share handler for Add To Zip without a gui.</li>
-  <li>Hardcoded zipfile /sdcard/copy/2go.zip.</li>
-  <li>Implemented view/send/sendto/send_multible for file and folder.</li>
-  <li>Intelligent file renaming if file with same name and different last-modified-date is added.</li>
-</ul>
 <hr />
 <h2>Links</h2>
 <ul>

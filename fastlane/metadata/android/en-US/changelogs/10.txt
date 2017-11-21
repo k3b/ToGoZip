@@ -1,0 +1,4 @@
+* Translation: Spanish (by NeHoMaR)
+* Translation: Chinese Simplified (by daijia)
+* Translation: Bengali (by Md Rokonuzzaman)
+* Translation: Turkish (by ozmodias)

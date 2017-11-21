@@ -1,2 +1,2 @@
-* Added translations: Japanese (by naofum), French (by Poussinou), Spanish (by NeHoMaR), Chinese Simplified (by daijia).
+* Added translations: Japanese (by naofum), French (by Poussinou).
 * Settings: allow manual selection of language.
