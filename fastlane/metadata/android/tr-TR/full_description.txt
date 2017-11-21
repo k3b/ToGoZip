@@ -1,0 +1,17 @@
+Android-s paylaşımı / gönderme menüsü için Zip'e ekleyin.
+
+Her destekleyici uygulamadan dosyaları kolayca toplama
+Bir zip dosyası \ "hareket halindeyken \" ya da çevrimdışı.
+(Not ingilizce \ 'gitmek \' yolculuk sırasında \ 'anlamına gelir \').
+
+Bu toplama \ '2go.zip \' dosyası bir bavul gibidir
+Nereden nereye (dosyalar) nereye
+\ 'paylaş / gönder \' i destekleyen her uygulama ve bunu
+her yere gidebilir (e-posta yoluyla,
+bluetooth, nfc).
+
+Gerekli Android İzinleri:
+
+\ "2go.zip \" dosyasını bazı ortak klasöre kaydetmek / güncellemek için * WRITE_EXTERNAL_STORAGE.
+
+.
