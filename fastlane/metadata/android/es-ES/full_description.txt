@@ -1,15 +1,15 @@
 Agregar a Zip, para el menú compartir/enviar de Android.
 
 Fácil recolección de archivos para aplicaciones soportadas 
-en un archivo zip cuando estás \`sobre la marcha\` o desconectado.
+en un archivo zip cuando estás 'sobre la marcha' o desconectado.
 
-Este archivo recolector \'2go.zip\'-es como un maletín 
+Este archivo recolector '2go.zip'-es como un maletín 
 donde puedes guardar cosas (archivos) desde casi cualquier parte (desde 
-aplicaciones que soporten \'compartir/enviar\') y puede viajar a cualquier 
+aplicaciones que soporten 'compartir/enviar') y puede viajar a cualquier 
 parte (vía email, bluetooth, nfc).
 
 Requiere los siguientes permisos de Android:
 
-* WRITE_EXTERNAL_STORAGE para salvar/actualizar \'2go.zip\' a alguna carpeta pública.
+* WRITE_EXTERNAL_STORAGE para salvar/actualizar '2go.zip' a alguna carpeta pública.
 
 .
