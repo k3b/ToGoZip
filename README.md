@@ -1,4 +1,4 @@
-# ToGoZip: "Add To Zip" for android's share/send menu.
+# ![](https://raw.githubusercontent.com/k3b/ToGoZip/master/app/src/main/res/drawable-hdpi/ic_launcher.png)  ToGoZip: "Add To Zip" for android's share/send menu.
 
 <a href="https://f-droid.org/packages/de.k3b.android.toGoZip" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="100"/></a>
@@ -31,3 +31,7 @@ and that can travel everywhere (via email, bluetooth, nfc).
 [Changelog](https://github.com/k3b/toGoZip/wiki/History)
 
 [Technical Features](https://github.com/k3b/toGoZip/wiki/Features)
+
+![](https://raw.githubusercontent.com/k3b/ToGoZip/master/fastlane/metadata/android/en-US/images/1-send.png)
+
+![](https://github.com/k3b/ToGoZip/raw/master/fastlane/metadata/android/en-US/images/2-settings.png)
