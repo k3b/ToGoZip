@@ -7,8 +7,9 @@ android {
         applicationId 'de.k3b.android.toGoZip'
         minSdkVersion 7
         targetSdkVersion 23
-        versionCode 9
-        versionName '1.0.9.170725'
+        versionCode 10
+        versionName '1.0.10.171128'
+        // 1.0.10.171128 (10) more translations es, zh, bd,tr
         // 1.0.9.170725 (9) translations ja/fr/es + weblate
         // Mintanance versionName '1.0.8.170626'
         // Mintanance versionName '1.0.7.20170623'
