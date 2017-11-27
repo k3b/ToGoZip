@@ -2,3 +2,4 @@
 * Translation: Chinese Simplified (by daijia)
 * Translation: Bengali (by Md Rokonuzzaman)
 * Translation: Turkish (by ozmodias)
+* Prepared for fordroid localized app translations for en-US, ja-JP, fr-FR, zh-CN, tr-TR, bn-BD, es-ES, de-DE
