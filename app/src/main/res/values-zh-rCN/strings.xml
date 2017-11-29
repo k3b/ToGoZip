@@ -35,17 +35,17 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="about_summary">关于 ToGoZip</string>
   <string name="banner">使用 ToGoZip 版本$versionName$ 收集</string>
   <string name="about_content_about">"<![CDATA[
-通过安卓设备的<i>'分享'/'发送'</i>菜单<b><i>'添加到 Zip'</i></b>: <br/>
+通过安卓设备的<i>'分享'/'发送'</i>菜单<b><i>"添加到 Zip"</i></b>: <br/>
  <br/>
- 轻易地从每个支持的应用程序中的文件压缩为一个 ZIP 文档，无论是在“<i>途中</i>”或者离线状态。<br/>
+可轻易地将每个支持的应用程序中的文件压缩为一个 ZIP 文档，无论是在“<i>途中</i>”还是离线状态。<br/>
 <br/>
-这个 <i>2go.zip</i> 文件就像是一个箱子，你可以将附近任何地方（每个支持<i>“分享”/“发送”</i>的应用程序）的东西（文件）放进来，并传送到任何地方（通过 Email、蓝牙、NFC）。<br/>
+这个 <i>2go.zip</i> 文件就像是一个手提箱，你可以将附近任何地方（每个支持<i>“分享”/“发送”</i>的应用程序）的东西（文件）放进来，并（通过 Email、蓝牙、NFC）传送到任何地方。<br/>
 <br/>
-一开始，开发这个程序是用来收集新的安卓日历项（<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;已被转移到 desctop-pcs-s 日历。<br/>
+一开始，开发这个程序是用来收集新的安卓日历项（的<a
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;应该已被迁移到了 desctop-pcs-s 日历。<br/>
 <br/>
 <br/>
-    ]]>"</string>
+    ]]>;"</string>
   <string name="pref_debug_title">调试模式</string>
   <string name="pref_debug_summary">调试信息已复制到剪贴板并添加到 LogCat</string>
   <string name="pref_long_text_file_title">Zip 中的长文本文件</string>
