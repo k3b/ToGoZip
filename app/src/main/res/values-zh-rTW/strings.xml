@@ -34,7 +34,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="WARN_ADD_CANCELED">取消: 未添加任何文件</string>
   <string name="about_summary">關於 ToGoZip</string>
   <string name="banner">使用 ToGoZip 版本$versionName$ 收集</string>
-  <string name="about_content_about">\"<![CDATA[
+  <string name="about_content_about"><![CDATA["
 通過安卓設備的<i>'分享'/'發送'</i>菜單<b><i>"添加到 Zip"</i></b>: <br/>
  <br/>
  輕易地從每個支持的應用程序中的文件壓縮為一個 ZIP 文檔，無論是在“<i>途中</i>”或者離線狀態。 <br/>
@@ -45,7 +45,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
  href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;已被轉移到desctop-pcs-s 日曆。 <br/>
 <br/>
 <br/>
-    ]]>;\"</string>
+    "]]></string>
   <string name="pref_debug_title">調試模式</string>
   <string name="pref_debug_summary">調試信息已復製到剪貼板並添加到 LogCat</string>
   <string name="pref_long_text_file_title">Zip 中的長文本文件</string>

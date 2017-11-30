@@ -32,7 +32,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="WARN_ADD_CANCELED">Batal: Tidak ada berkas ditambahkan</string>
   <string name="about_summary">Tentang ToGoZip</string>
   <string name="banner">Kumpulkan ke ToGoZip versi $versionName$</string>
-  <string name="about_content_about">\"<![CDATA[
+  <string name="about_content_about"><![CDATA["
 <b><i>"Tambahkan ke Zip"</i></b>
 Untuk android <i> 'Share' / 'kirim'</i> menu:<br/>
 <br/>  .
@@ -51,7 +51,7 @@ href ='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'> file i
 yang harus ditransfer ke kalender desktop-pcs. <br/>
 <br/>
 <br/>
-    ]]>;\"</string>
+    "]]></string>
   <string name="pref_debug_title">Mode debug</string>
   <string name="pref_debug_summary">Menyalin pesan debug ke clipboard dan menambahkannya ke LogCat</string>
   <string name="pref_long_text_file_title">Berkas teks panjang pada zip</string>
