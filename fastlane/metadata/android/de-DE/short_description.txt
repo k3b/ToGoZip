@@ -1,1 +1,1 @@
-ToGoZip: \'==&gt; Zip\' für Androids Senden/Teilen Menü.
+ToGoZip: '==> Zip' für Androids Senden/Teilen Menü.

@@ -1,1 +1,1 @@
-ToGoZip (\'==&gt; Zip\')
+ToGoZip (==> Zip)

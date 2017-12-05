@@ -1,4 +1,4 @@
-ToGoZip: '==&gt; Zip' für Androids Senden/Teilen Menü.
+ToGoZip: '==> Zip' für Androids Senden/Teilen Menü.
 
 Einfaches einsammeln von Dateien, Ordnern, Internetaddressen, Texten in eine gemeinsame Zip-Datei
 aus allen Apps heraus, die die Android-Funktion 'Senden' bzw. 'Teilen' </i> unterstützen.
