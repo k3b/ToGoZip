@@ -1,2 +1,2 @@
-* Made app localizable.
+* Made app localisable.
 * Added translations: French (by Poussinou), English (by k3b), German (by k3b)

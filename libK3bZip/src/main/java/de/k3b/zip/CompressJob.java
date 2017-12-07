@@ -49,7 +49,7 @@ public class CompressJob implements ZipLog {
 
     // global processing options
     /**
-     * true: remove obsoled bak file when done
+     * true: remove obsolete bak file when done
      */
     private final boolean optDeleteBakFileWhenFinished = true;
 
@@ -101,7 +101,7 @@ public class CompressJob implements ZipLog {
     }
 
     /**
-     * Remeber files that should be added to the zip.
+     * Remember files that should be added to the zip.
      * Used in unittests.
      *
      * @param destZipPath where the files will go to
@@ -117,7 +117,7 @@ public class CompressJob implements ZipLog {
     }
 
     /**
-     * Remeber files that should be added to the zip.
+     * Remember files that should be added to the zip.
      */
     public CompressItem addToCompressQue(String destZipPath, File... srcFiles) {
         CompressItem item = null;
@@ -136,7 +136,7 @@ public class CompressJob implements ZipLog {
 
     public boolean addToCompressQueue(CompressItem item) {
         if (findInCompressQue(item) != null) {
-            // already inside curent collection. Do not add again
+            // already inside current collection. Do not add again
             return false;
         }
 
@@ -185,7 +185,7 @@ public class CompressJob implements ZipLog {
     }
 
     /**
-     * depending on global options: duprlicate zip entries are either ignored or renamed
+     * depending on global options: duplicate zip entries are either ignored or renamed
      *
      * @return collection of items that where renamed.
      */
@@ -214,7 +214,7 @@ public class CompressJob implements ZipLog {
 
     /**
      * a unittest friendly version of handleDuplicates:<br/>
-     * depending on global options: duprlicate zip entries are either ignored or renamed
+     * depending on global options: duplicate zip entries are either ignored or renamed
      *
      * @param zipFile
      * @return collection of items that where renamed.
@@ -320,9 +320,9 @@ public class CompressJob implements ZipLog {
     public int compress(boolean renameDouplicateTextFile) {
         // to make shure that orginal is not broken if there is an error:
         // 1) Workflow addToCompressQue to somefile.zip.tmp, (a) old content, (b) new content
-        // 2) rename exising to somefile.zip.bak
+        // 2) rename existing to somefile.zip.bak
         // 3) rename somefile.zip.tmp to somefile.zip
-        // 4) delete exising to somefile.zip.bak
+        // 4) delete existing to somefile.zip.bak
 
         // if text is to be appended to "last text-entry" do not use handleDuplicates for that
         boolean preventTextFromRenaming = (!renameDouplicateTextFile) && (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
@@ -406,7 +406,7 @@ public class CompressJob implements ZipLog {
             out = null;
 
             // no exception yet: Assume it is save to change the old zip
-            // (2) rename exising-old somefile.zip to somefile.zip.bak
+            // (2) rename existing-old somefile.zip to somefile.zip.bak
             if (oldZip != null) {
                 oldZip.delete(); // should ignore error
 
@@ -432,10 +432,10 @@ public class CompressJob implements ZipLog {
                 thowrError(context);
             }
 
-            // 4) delete exising renamed old somefile.zip.bak
+            // 4) delete existing renamed old somefile.zip.bak
             if ((optDeleteBakFileWhenFinished) && (oldZip != null)) {
                 context = traceMessage(
-                        "(4) delete exising renamed old zip file {0}", oldZip);
+                        "(4) delete existing renamed old zip file {0}", oldZip);
                 oldZip.delete();
             }
             context = traceMessage("(5a) successfull updated zip file {0}",

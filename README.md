@@ -4,7 +4,7 @@
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="100"/></a>
 
 Easy collection of files from every supporting app into one zip-file while
-beeing 'on the go' or offline.
+being 'on the go' or offline.
 
 This collecting "2go.zip"-file is like a suitcase where you can put things (files)
 into from nearly everywhere (from every app that supports 'share'/'send')
@@ -22,11 +22,11 @@ and that can travel everywhere (via email, bluetooth, nfc).
 * Settings automatically pops up, if the zip folder is not writable.
 * [Translations](https://crowdin.com/project/togozip) : bn, de, en, id, es, fr, ja, tr, zh-CN, zh-TW
   * [![Crowdin](https://d322cqt584bo4o.cloudfront.net/togozip/localized.svg)](https://crowdin.com/project/togozip) [Help us to translate into other languages.](https://crowdin.com/project/togozip)
-* Minimual requirements: Works with android-2.1 (api 7) and up. apk size is only about 100 KB.
+* Minimal requirements: Works with android-2.1 (api 7) and up. apk size is only about 100 KB.
 
 ## Required Android Permissions:
 * WRITE_EXTERNAL_STORAGE used to store the created/updated zip-file.
-* The Adroid must have external storage (aka sdcard) where the zip file is written to.
+* The Android must have external storage (aka sdcard) where the zip file is written to.
 
 [Changelog](https://github.com/k3b/toGoZip/wiki/History)
 

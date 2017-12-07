@@ -39,18 +39,15 @@ public class Add2ZipActivity extends LocalizedActivity {
      */
     private static final String TAG = "Add2ZipActivity";
 
-    private IntentParser intentParser = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean canWrite = SettingsImpl.init(this);
 
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
-        intentParser = new IntentParser(this, getIntent(), zipLog);
+        IntentParser intentParser = new IntentParser(this, getIntent(), zipLog);
 
         AndroidCompressJob job = new AndroidCompressJob(this, getCurrentZipFile(), zipLog);
-        StringBuffer texts = new StringBuffer();
         CompressItem[] filesToBeAdded = intentParser.getFilesToBeAdded();
         String textToBeAdded = intentParser.getTextToBeAdded();
 

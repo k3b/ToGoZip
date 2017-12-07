@@ -55,7 +55,7 @@ public abstract class LocalizedActivity extends Activity {
         super.onResume();
 
         // Locale has changed by other Activity ?
-        if ((myLocale != null) && (myLocale.getLanguage() != Locale.getDefault().getLanguage())) {
+        if ((myLocale != null) && !(myLocale.getLanguage().equals(Locale.getDefault().getLanguage()))) {
             myLocale = null;
             recreate(LocalizedActivity.this);
         }

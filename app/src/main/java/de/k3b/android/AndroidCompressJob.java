@@ -61,7 +61,6 @@ public class AndroidCompressJob extends CompressJob {
             }
             int result = compress(useLongTextFile);
 
-            String currentZipFileAbsolutePath = destZip.getAbsolutePath();
             final String text = getResultMessage(result);
             Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 

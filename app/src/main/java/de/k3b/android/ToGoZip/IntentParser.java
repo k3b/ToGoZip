@@ -54,7 +54,6 @@ public class IntentParser {
     }
 
     private void getTextToBeAdded(StringBuffer resultText) {
-        int oldItems = resultText.length();
         Bundle extras = (intent != null) ? intent.getExtras() : null;
         Object extra = (extras != null) ? extras.get(Intent.EXTRA_TEXT) : null;
         if (extra != null) {
@@ -123,7 +122,8 @@ public class IntentParser {
                 extra = null;
             }
 
-            addResult("getData uri ", intent.getData(), null, mimeType);
+            final Uri data = (intent == null) ? null : intent.getData();
+            addResult("getData uri ", data, null, mimeType);
             getTextToBeAdded(resultText);
 
             if ((android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) && (resultFiles.size() == 0) && (resultText.length() == 0)) {

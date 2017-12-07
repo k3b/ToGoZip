@@ -24,8 +24,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
 
-import java.util.List;
-
 import de.k3b.io.FileNameUtil;
 
 /**
@@ -39,14 +37,16 @@ public class MediaUtil {
         try {
             String[] fields = {columnName};
             cursor = context.getContentResolver().query(uri, fields, null, null, null);
-            int column_index = cursor.getColumnIndex(fields[0]);
-            if (column_index >= 0) {
-                cursor.moveToFirst();
-                return cursor.getString(column_index);
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndex(fields[0]);
+                if (column_index >= 0) {
+                    cursor.moveToFirst();
+                    return cursor.getString(column_index);
+                }
             }
         } catch (Exception ignore) {
         } finally {
-            cursor.close();
+            if (cursor != null) cursor.close();
         }
         return null;
     }
@@ -56,14 +56,16 @@ public class MediaUtil {
         try {
             String[] fields = {columnName};
             cursor = context.getContentResolver().query(uri, fields, null, null, null);
-            int column_index = cursor.getColumnIndex(fields[0]);
-            if (column_index >= 0) {
-                cursor.moveToFirst();
-                return cursor.getLong(column_index);
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndex(fields[0]);
+                if (column_index >= 0) {
+                    cursor.moveToFirst();
+                    return cursor.getLong(column_index);
+                }
             }
         } catch (Exception ignore) {
         } finally {
-            cursor.close();
+            if (cursor != null) cursor.close();
         }
         return 0;
     }
@@ -89,8 +91,6 @@ public class MediaUtil {
     Output: null or date
     */
     public static String getFileName(Context context, Uri uri, String mimeType) {
-        StringBuilder result = new StringBuilder();
-
         String baseName = getString(context, uri, MediaStore.Images.Media.DISPLAY_NAME);
         if ((baseName == null) || (baseName.length() == 0)) {
             baseName = uri.getLastPathSegment();
