@@ -23,18 +23,21 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_use_default">পূর্বনির্ধারণ ব্যবহার করুন</string>
   <string name="cmd_cancel">বাতিল করুন</string>
   <string name="cmd_edit">সম্পাদনা করুন</string>
-  <string name="ERR_ADD">%1$s হালনাগাদ করা যায়নি: \n%2$s</string>
-  <string name="ERR_NO_WRITE_PERMISSIONS">"%1$s %2$s জন্য লিখতে অনুমতি নেই।
- (Sdcard হার্ডওয়্যার আছে এবং sdcard সওয়ার হয়?)"</string>
-  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">"\'%1$s\' কাছে বর্তমান লেখার জন্য কোন অনুমতি জিপ। আপনি পূর্ব-নির্ধারিত
-\'%2$s\' এর পরিবর্তে ব্যবহার করতে চান? "</string>
-  <string name="WARN_ADD_NO_CHANGES">ফাইল অন্তর্ভুক্ত in\n%1$s গেছে</string>
-  <string name="SUCCESS_ADD">\n%1$s সাথে যুক্ত করা হয়েছে %2$d ফাইল (গুলি)</string>
+  <string name="ERR_ADD"><![CDATA["%1$s হালনাগাদ করা যায়নি: 
+%2$s"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["%1$s %2$s জন্য লিখতে অনুমতি নেই।
+ (Sdcard হার্ডওয়্যার আছে এবং sdcard সওয়ার হয়?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["'%1$s' কাছে বর্তমান লেখার জন্য কোন অনুমতি জিপ। আপনি পূর্ব-নির্ধারিত
+'%2$s' এর পরিবর্তে ব্যবহার করতে চান? "]]></string>
+  <string name="WARN_ADD_NO_CHANGES"><![CDATA["ফাইল অন্তর্ভুক্ত in 
+%1$s গেছে"]]></string>
+  <string name="SUCCESS_ADD"><![CDATA["%1$s সাথে যুক্ত করা হয়েছে 
+%2$d ফাইল (গুলি)"]]></string>
   <string name="WARN_ADD_NO_FILES">কোনো ফাইল সিলেক্ট করা হয় নি</string>
   <string name="WARN_ADD_CANCELED">বাতিল: যুক্ত কোন ফাইল নেই</string>
   <string name="about_summary">ToGoZip সম্পর্কে</string>
   <string name="banner">ToGoZip সংস্করণ $versionName$ দ্বারা সংগৃহীত</string>
-  <string name="about_content_about">"<![CDATA[
+  <string name="about_content_about"><![CDATA["
 <b><i>'জিপ যোগ করুন'</i></b>
  for android's <i>'share'/'send'</i> মেনু: <br/>
  <br/>
@@ -52,7 +55,7 @@ This collecting <i>2go.zip</i>-file is like a suitcase
  এটি ডেস্কটপ-পিসি-ক্যাল ক্যালেন্ডারে স্থানান্তর করা উচিত. <br/>
 <br/>
 <br/>
-    ]]>"</string>
+    "]]></string>
   <string name="pref_debug_title">ডিবাগ মোড</string>
   <string name="pref_debug_summary">ক্লিপবোর্ডে কপি এবং LogCat সাথে যুক্ত বার্তা ডিবাগ করুন</string>
   <string name="pref_long_text_file_title">দীর্ঘ লেখা জিপ ফাইল</string>

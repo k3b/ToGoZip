@@ -19,7 +19,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 
 -->
 <!--
-    resources that shold NOT be localized
+    resources that should NOT be localized
 -->
 <resources>
     <string name="app_name">ToGoZip</string>
@@ -35,9 +35,13 @@ this program. If not, see <http://www.gnu.org/licenses/>
 <a href="https://github.com/k3b/toGoZip/wiki/home"   >en</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/es-home">es</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/fr-home">fr</a>,&nbsp;
+hi,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/id-home">id</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/ja-home">ja</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/nl-home">nl</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/tr-home">tr</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/zh-CN-home">zh-CN</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/zh-TW-home">zh-TW</a>,&nbsp;
 	</li>
 	<li>
 		<b>Help us to translate this app into other languages:</b>

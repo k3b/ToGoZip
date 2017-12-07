@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2017 k3b
 Japanese translation 2017 by naofum
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
@@ -26,20 +25,23 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string name="cmd_cancel">キャンセル</string>
     <string name="cmd_edit">編集</string>
 
-    <string name="ERR_ADD">更新できません %1$s :\n%2$s</string>
-    <string name="ERR_NO_WRITE_PERMISSIONS">書き込みアクセス許可がありません %1$s %2$s。
-(SD カードが挿入されて、かつマウントされていますか?)</string>
-    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">現在の zip に書き込みアクセス許可がありません \'%1$s\'。
-代わりに、デフォルトの \'%2$s\' を使用しますか? </string>
-    <string name="WARN_ADD_NO_CHANGES">ファイルはすでに含まれています\n%1$s</string>
-    <string name="SUCCESS_ADD">%2$d ファイルを追加しました \n%1$s</string>
+    <string name="ERR_ADD"><![CDATA["更新できません %1$s : 
+%2$s"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["書き込みアクセス許可がありません %1$s %2$s。
+(SD カードが挿入されて、かつマウントされていますか?)"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["現在の zip に書き込みアクセス許可がありません '%1$s'。
+代わりに、デフォルトの '%2$s' を使用しますか? "]]></string>
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA["ファイルはすでに含まれています 
+%1$s"]]></string>
+    <string name="SUCCESS_ADD"><![CDATA["%2$d ファイルを追加しました 
+%1$s"]]></string>
     <string name="WARN_ADD_NO_FILES">ファイルは選択されていません</string>
     <string name="WARN_ADD_CANCELED">キャンセル: ファイルは追加されません</string>
 
     <string name="about_summary">ToGoZip について</string>
     <string name="banner">ToGoZip バージョン $versionName$ に集める</string>
 
-    <string name="about_content_about">"<![CDATA[
+    <string name="about_content_about"><![CDATA["
 <b><i>"Zip に追加"</i></b>
  Android の <i>'共有'/'送信'</i> メニュー用: <br/>
  <br/>
@@ -58,7 +60,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
  をデスクトップ PC のカレンダーに転送するために開発されました。 <br/>
 <br/>
 <br/>
-    ]]>"</string>
+    "]]></string>
     <string name="pref_debug_title">デバッグモード</string>
     <string name="pref_debug_summary">デバッグメッセージをクリップボードにコピーして、LogCat に追加しました</string>
     <string name="pref_long_text_file_title">zip に長いテキストファイル</string>

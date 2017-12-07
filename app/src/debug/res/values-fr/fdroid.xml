@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?><!--
 /*
+French translation 2017 by Poussinou
+
  * These Texts will be shown as programdescription in the fdroid app store
  * https://f-droid.org/app/de.k3b.android.toGoZip.
  *
@@ -22,15 +24,6 @@
  */
  -->
 <resources>
-
-    <!-- This becomes .../fastlane/metadata/android/title.txt.
-    See https://f-droid.org/docs/Build_Metadata_Reference/#Name -->
-    <string name="title"><![CDATA["ToGoZip ('==> Zip')"]]></string>
-
-    <!-- This becomes .../fastlane/metadata/android/short_description.txt.
-    See https://f-droid.org/docs/Build_Metadata_Reference/#Summary -->
-    <string name="short_description">ToGoZip: Add to Zip for android-s share/send menu.</string>
-
     <!-- This becomes .../fastlane/metadata/android/full_description.txt.
     See https://f-droid.org/docs/Build_Metadata_Reference/#Description
 
@@ -40,25 +33,20 @@
      and in github homepage.
      -->
 	<string name="full_description"><![CDATA["
-Add to Zip for android-s share/send menu.
+'Add to Zip' for android's 'share'/'send' menu: 
+ 
+ Collecte facile de fichiers depuis les apps supportées dans un
+ fichier zip, 'très efficace' et hors-ligne.
 
-Easy collecting files from every supporting app into
-one zip-file while being 'on the go' or offline.
-(Note the english 'to go' means 'while traveling').
+ Ce fichier 2go.zip est comme un coffre
+ où vous pouvez ajouter des fichiers depuis n'importe où (depuis toutes les
+ Apps qui supportent la fonction 'Partager') et qui peut être
+ envoyé  partout (par mail,
+ bluetooth, nfc).
 
-This collecting '2go.zip'-file is like a suitcase
-where you can put things (files) into from nearly everywhere (from
-every app that supports 'share' / 'send') and that
-can travel  everywhere (via email,
-bluetooth, nfc).
-
-The program's author uses ToGoZip to collect new android calendar entries
-that should be later imported into the desctop-pcs-s calender.
-
-Required Android Permissions:
-
-* WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.
-
+ Au début, ce programme était développé pour collecter les nouvelles entrées
+ du calendrier Android  
+ qui devaient être transférées vers le calendrier du PC.
 .
 "]]></string>
 </resources>

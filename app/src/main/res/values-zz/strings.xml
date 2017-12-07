@@ -25,20 +25,23 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string name="cmd_cancel">cmd_cancel:Cancel</string>
     <string name="cmd_edit">cmd_edit:Edit</string>
 
-    <string name="ERR_ADD">ERR_ADD:Could not update  %1$s :\n%2$s</string>
-    <string name="ERR_NO_WRITE_PERMISSIONS">ERR_NO_WRITE_PERMISSIONS:No Permissions to write to %1$s %2$s.
-(Is there sdcard-hardware and is the sdcard mounted?)</string>
-    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT:No Permissions to write to current zip \'%1$s\'.
-Do you want to use default \'%2$s\' instead? </string>
-    <string name="WARN_ADD_NO_CHANGES">WARN_ADD_NO_CHANGES:Files are already included in\n%1$s</string>
-    <string name="SUCCESS_ADD">SUCCESS_ADD:added %2$d file(s) to \n%1$s</string>
+    <string name="ERR_ADD"><![CDATA["ERR_ADD:Could not update  %1$s : 
+%2$s"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["ERR_NO_WRITE_PERMISSIONS:No Permissions to write to %1$s %2$s.
+(Is there sdcard-hardware and is the sdcard mounted?)"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT:No Permissions to write to current zip '%1$s'.
+Do you want to use default '%2$s' instead? "]]></string>
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA["WARN_ADD_NO_CHANGES:Files are already included in 
+%1$s"]]></string>
+    <string name="SUCCESS_ADD"><![CDATA["SUCCESS_ADD:added %2$d file(s) to 
+%1$s"]]></string>
     <string name="WARN_ADD_NO_FILES">WARN_ADD_NO_FILES:No files selected</string>
     <string name="WARN_ADD_CANCELED">WARN_ADD_CANCELED:Cancel: No files added</string>
 
     <string name="about_summary">about_summary:About ToGoZip</string>
     <string name="banner">banner:Collected with ToGoZip Version $versionName$</string>
 
-    <string name="about_content_about">"<![CDATA[about_content_about:
+    <string name="about_content_about"><![CDATA["about_content_about:
 <b><i>"Add to Zip"</i></b>
  for android's <i>'share'/'send'</i> menu: <br/>
  <br/>
@@ -57,7 +60,7 @@ This collecting <i>2go.zip</i>-file is like a suitcase
  that should be transfered to the desctop-pcs-s calendar. <br/>
 <br/>
 <br/>
-    ]]>"</string>
+    "]]></string>
     <string name="pref_debug_title">pref_debug_title:Debug Mode</string>
     <string name="pref_debug_summary">pref_debug_summary:Debug Messages copied to clipboard and added to LogCat</string>
     <string name="pref_long_text_file_title">pref_long_text_file_title:Long Text File in zip</string>
