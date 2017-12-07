@@ -1,0 +1,17 @@
+Toevoegen aan Zip voor android-s deel/verzend menu.
+
+Eenvoudige bestandsverzameling voor ondersteunde applicaties
+in een zip-bestand wanneer je `on the go` bent of niet verbonden bent.
+(Let op de Engelse 'to go` betekent 'tijdens het reizen').
+
+Deze bestandsverzamelaar '2go.zip'-is als een koffertje
+waarin je dingen (bestanden) bijna overal kunt opslaan (van 
+toepassingen die 'delen' / 'verzenden' ondersteunen) en
+overal naartoe kunnen reizen (via email,
+bluetooth, nfc).
+
+Vereist de volgende Android-machtigingen:
+
+* WRITE_EXTERNAL_STORAGE opslaan/bijwerken '2go.zip' naar een openbare map.
+
+.
