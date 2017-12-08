@@ -1,4 +1,5 @@
-* Translation: Indonesian (by isaideureka)
-* Translation update: Chinese Simplified (by daijia)
-* Translation: Chinese Traditional (by incrediblesnow)
-* Translation: Nederlands (Dutch) by Omer Surer (omersurer)
+Translations:
+
+* fixed technical problems with encodig, newline, html escaping
+* new: Indonesian by isaideureka, Chinese Traditional by incrediblesnow, Dutch by Omer Surer
+* update: Chinese Simplified by daijia, Turkish by vitruvianman
