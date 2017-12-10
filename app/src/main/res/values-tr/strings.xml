@@ -50,10 +50,6 @@ Nereden nereye (dosyalar) nereye
 '<i>paylaş / gönder</i>' i destekleyen her uygulama ve bunu
 her yere gidebilir (e-posta yoluyla,
 bluetooth, nfc).
-
-Gerekli Android İzinleri:
-
-* WRITE_EXTERNAL_STORAGE '2go.zip' dosyasını bazı ortak klasöre kaydetmek / güncellemek için .
 <br/>
 <br/>
     "]]></string>

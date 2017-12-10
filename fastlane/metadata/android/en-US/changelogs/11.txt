@@ -1,5 +1,5 @@
 Translations:
 
-* fixed technical problems with encodig, newline, html escaping
+* fdroid localized app descripton: fixed technical problems with encodig, newline, html escaping, wrong image-directory
 * new: Indonesian by isaideureka, Chinese Traditional by incrediblesnow, Dutch by Omer Surer
 * update: Chinese Simplified by daijia, Turkish by vitruvianman
