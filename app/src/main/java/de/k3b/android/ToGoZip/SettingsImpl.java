@@ -18,10 +18,14 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
 import java.io.File;
@@ -31,8 +35,12 @@ import java.io.File;
  */
 public class SettingsImpl {
     /** full path of the zipfile where "Add To Zip" goes to. */
+    private static String zipDocDirUri = null;
+    static final String KEY_ZIPDIR = "zip.dir";
+
+    /** full path of the zipfile where "Add To Zip" goes to. */
     private static String zipfile = null;
-    static final String KEY_ZIPFILE = "zipfile";
+    static final String KEY_ZIPFILE = "zip.file";
 
     /** short texts like urls are prepended to this zip entry */
     private static String textfile_short = "texts.txt";
@@ -87,16 +95,34 @@ public class SettingsImpl {
      * calculates the dafault-path value for 2go.zip
      */
     public static String getDefaultZipPath(Context context) {
-        Boolean isSDPresent = true; // Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+        File rootDir = null;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            // before api-14/android-4.4/KITKAT
+            // write support on sdcard, if mounted
+            Boolean isSDPresent = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+            rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
+        } else if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) && (zipDocDirUri != null)) {
+            DocumentFile docDir = DocumentFile.fromTreeUri(context, Uri.parse(zipDocDirUri));
+            if (docDir != null) {
+                // DocumentFile.fromFile()
+                // docDir.
+            }
+        }
 
-        // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory ()
-        // is protected by android-os :-(
-        // app will not work on devices with no external storage (sdcard)
-        final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
+        if (rootDir == null) {
+            // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory ()
+            // is protected by android-os :-(
+            rootDir = getRootDir44();
+        }
+
         final String zipfile = rootDir.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
         return zipfile;
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static File getRootDir44() {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+    }
     /**
      * return true if outputdirectory of zipfile is writable
      */
@@ -110,7 +136,7 @@ public class SettingsImpl {
             return false; // parentdir does not exist and cannot be created
         }
 
-        return (parentDir.canWrite());
+        return true; // (parentDir.canWrite());
     }
 
     /**

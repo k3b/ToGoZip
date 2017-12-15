@@ -7,8 +7,10 @@ android {
         applicationId 'de.k3b.android.toGoZip'
         minSdkVersion 7
         targetSdkVersion 23
-        versionCode 10
-        versionName '1.0.10.171128'
+        versionCode 11
+        versionName '2.0.11.171227'
+
+        // 2.0.11.171227 (11) new zip impl to support android-5.0ff; fixed fdroid encoding and image-dir; translations id, nl, hi, zh-TW; fixed tr, zh-CN, pt
         // 1.0.10.171128 (10) more translations es, zh, bd,tr
         // 1.0.9.170725 (9) translations ja/fr/es + weblate
         // Maintanance versionName '1.0.8.170626'
@@ -48,7 +50,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //  compile 'eu.lp0.slf4j:slf4j-android:1.7.7-1'
     // compile 'com.android.support:appcompat-v7:20.0.0'
-    // compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:23.2.1'
     compile project(':libK3bZip')
     //  compile 'org.slf4j:slf4j-android:1.7.7@jar' // replaces cellInfoLib.'slf4j-api'
     compile 'eu.lp0.slf4j:slf4j-android:1.7.7-1@jar'

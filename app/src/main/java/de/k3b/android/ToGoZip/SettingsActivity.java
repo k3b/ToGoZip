@@ -18,11 +18,16 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -30,11 +35,13 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+import android.support.v4.provider.DocumentFile;
 
 import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
+import de.k3b.io.IFile;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
@@ -44,6 +51,7 @@ import de.k3b.zip.ZipLogImpl;
  */
 public class SettingsActivity extends PreferenceActivity {
 
+    private static final int REQUEST_CODE_GET_ZIP_DIR = 12;
     /**
      * if not null: try to execute add2zip on finish
      */
@@ -78,7 +86,7 @@ public class SettingsActivity extends PreferenceActivity {
         SettingsImpl.init(this);
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
 
-        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), zipLog);
+        this.job = new AndroidCompressJob(this, new IFile(SettingsImpl.getZipfile()), zipLog);
 
         this.addPreferencesFromResource(R.xml.preferences);
 
@@ -239,6 +247,39 @@ public class SettingsActivity extends PreferenceActivity {
         }
         listPreference.setSummary(summary);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void requestZipDir(Activity ctx, File formerZipDir) {
+        final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+
+        /*
+        if (formerZipDir != null) {
+            // since API level 26
+            DocumentFile docDir = DocumentFile.fromFile(formerZipDir);
+            intent.putExtra(Intent.EXTRA_INITIAL_URI, docDir.getUri().toString());
+        }
+        */
+
+        ctx.startActivityForResult(intent, REQUEST_CODE_GET_ZIP_DIR);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_GET_ZIP_DIR && resultCode == RESULT_OK && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            grandPermission5(this, data.getData());
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static void grandPermission5(Context ctx, Uri data) {
+        DocumentFile docPath = DocumentFile.fromTreeUri(ctx, data);
+        if (docPath != null) {
+            final ContentResolver resolver = ctx.getContentResolver();
+            resolver.takePersistableUriPermission(data,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        }
     }
 
 }

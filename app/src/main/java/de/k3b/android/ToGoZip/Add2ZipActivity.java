@@ -25,6 +25,7 @@ import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
+import de.k3b.io.IFile;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
@@ -67,8 +68,8 @@ public class Add2ZipActivity extends LocalizedActivity {
         this.finish();
     }
 
-    private File getCurrentZipFile() {
-        return new File(SettingsImpl.getZipfile());
+    private IFile getCurrentZipFile() {
+        return new IFile(SettingsImpl.getZipfile());
     }
 
 }

@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 	<!-- manifest.versionXXX are used by fdroid to trigger rebuild "Update Check Mode:RepoManifest" -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">
         <activity
