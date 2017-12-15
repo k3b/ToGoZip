@@ -20,7 +20,7 @@ public class AndroidUriCompressItem extends CompressItem {
         this.context = context;
         this.uri = uri;
         String name = MediaUtil.getFileName(context, uri, mimeType);
-        setZipFileName(name);
+        setZipEntryFileName(name);
 
     }
 

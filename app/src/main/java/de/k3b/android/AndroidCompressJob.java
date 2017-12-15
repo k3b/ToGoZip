@@ -27,6 +27,7 @@ import de.k3b.android.toGoZip.Global;
 import de.k3b.android.toGoZip.R;
 import de.k3b.android.toGoZip.SettingsImpl;
 import de.k3b.android.widget.Clipboard;
+import de.k3b.io.IFile;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.CompressJob;
 import de.k3b.zip.ZipLog;
@@ -44,7 +45,7 @@ public class AndroidCompressJob extends CompressJob {
      *  @param destZip     full path to the zipfile where the new files should be added to
      * @param zipLog if true collect diagnostics/debug messages to debugLogMessages.
      */
-    public AndroidCompressJob(Context context, File destZip, ZipLog zipLog) {
+    public AndroidCompressJob(Context context, IFile destZip, ZipLog zipLog) {
         super(destZip, zipLog);
         this.context = context;
     }

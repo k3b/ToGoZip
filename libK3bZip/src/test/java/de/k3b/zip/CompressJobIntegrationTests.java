@@ -34,6 +34,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.k3b.io.IFile;
+
 /**
  * Integration-Tests using real zip files in the temp-folder<br/>
  * <br/>
@@ -41,11 +43,11 @@ import java.util.Date;
  */
 public class CompressJobIntegrationTests {
     static private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
-    static private File root = new File(System.getProperty("java.io.tmpdir")
+    static private IFile root = new IFile(System.getProperty("java.io.tmpdir")
             + "/k3bZipTests/"
 //          + format.format(new Date())
     );
-    static private File testZip = new File(root, "test.zip");
+    static private IFile testZip = new IFile(root, "test.zip");
     static private File testContent = new File(root, "testFile.txt");
     static private File testContent2 = new File(root, "testFile2.txt");
     static private File testDirWith2SubItems = new File(root, "dir");
@@ -86,7 +88,7 @@ public class CompressJobIntegrationTests {
         Assert.assertEquals(1, itemCount);
     }
 
-    private CompressJob createCompressJob(File testZip) {
+    private CompressJob createCompressJob(IFile testZip) {
         return new CompressJob(testZip, null);
     }
 
@@ -118,10 +120,10 @@ public class CompressJobIntegrationTests {
     public void shouldRenameSameFileNameWithDifferentDate() {
         CompressJob sut = createCompressJob(testZip);
         CompressItem item = sut.addToCompressQue("", testContent2);
-        item.setZipFileName(testContent.getName());
+        item.setZipEntryFileName(testContent.getName());
         int itemCount = sut.compress(false);
         Assert.assertEquals(2, itemCount);
-        Assert.assertEquals("testFile(1).txt", item.getZipFileName());
+        Assert.assertEquals("testFile(1).txt", item.getZipEntryFileName());
     }
 
     @Test
