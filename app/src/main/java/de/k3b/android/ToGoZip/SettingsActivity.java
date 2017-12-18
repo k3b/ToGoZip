@@ -86,7 +86,8 @@ public class SettingsActivity extends PreferenceActivity {
         SettingsImpl.init(this);
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
 
-        this.job = new AndroidCompressJob(this, new IFile(SettingsImpl.getZipfile()), zipLog);
+        this.job = new AndroidCompressJob(this, zipLog);
+        this.job.setDestZipFile(new IFile(SettingsImpl.getZipfile()));
 
         this.addPreferencesFromResource(R.xml.preferences);
 

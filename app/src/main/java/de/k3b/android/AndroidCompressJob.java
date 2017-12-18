@@ -19,9 +19,8 @@
 package de.k3b.android;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
-
-import java.io.File;
 
 import de.k3b.android.toGoZip.Global;
 import de.k3b.android.toGoZip.R;
@@ -42,18 +41,16 @@ public class AndroidCompressJob extends CompressJob {
 
     /**
      * Creates a job.
-     *  @param destZip     full path to the zipfile where the new files should be added to
      * @param zipLog if true collect diagnostics/debug messages to debugLogMessages.
      */
-    public AndroidCompressJob(Context context, IFile destZip, ZipLog zipLog) {
-        super(destZip, zipLog);
+    public AndroidCompressJob(Context context, ZipLog zipLog) {
+        super(zipLog);
         this.context = context;
     }
     //############ processing ########
 
     public void addToZip(String textToBeAdded, CompressItem[] filesToBeAdded) {
         if ((textToBeAdded != null) || ((filesToBeAdded != null) && (filesToBeAdded.length > 0))) {
-            destZip.getParentFile().mkdirs();
             addToCompressQueue(filesToBeAdded);
             boolean useLongTextFile = false;
             if (textToBeAdded != null) {
@@ -72,7 +69,7 @@ public class AndroidCompressJob extends CompressJob {
     }
 
     private String getResultMessage(int convertResult) {
-        String currentZipFileAbsolutePath = this.destZip.getAbsolutePath();
+        String currentZipFileAbsolutePath = getAbsolutePath();
         if (convertResult == CompressJob.RESULT_ERROR_ABOART) {
             return String.format(context.getString(R.string.ERR_ADD),
                     currentZipFileAbsolutePath, getLastError(false));

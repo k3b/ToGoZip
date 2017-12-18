@@ -89,7 +89,7 @@ public class CompressJobIntegrationTests {
     }
 
     private CompressJob createCompressJob(IFile testZip) {
-        return new CompressJob(testZip, null);
+        return new CompressJob(null).setDestZipFile(testZip);
     }
 
     @Test

@@ -27,11 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import de.k3b.io.IFile;
 
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -40,8 +38,6 @@ import static org.mockito.Mockito.when;
  * Created by k3b on 02.11.2014.
  */
 public class CompressJobTests {
-
-    private ZipFile mockedZipFile_Depricated = null;
     private ZipEntry zeA;
     private ZipEntry zeA1;
 
@@ -54,9 +50,6 @@ public class CompressJobTests {
         this.zeA.setTime(100000);
         this.zeA1 = new ZipEntry("a(1).txt");
         this.zeA1.setTime(200000);
-        this.mockedZipFile_Depricated = mock(ZipFile.class);
-        when(this.mockedZipFile_Depricated.getEntry(eq("a.txt"))).thenReturn(this.zeA);
-        when(this.mockedZipFile_Depricated.getEntry(eq("a(1).txt"))).thenReturn(this.zeA1);
 
         this.existingZipFileEntries = new HashMap<>();
         this.existingZipFileEntries.put(this.zeA.getName(), this.zeA.getTime());
@@ -64,18 +57,7 @@ public class CompressJobTests {
     }
 
     private CompressJob createCompressJob(IFile testZip) {
-        return new CompressJob(testZip, null);
-    }
-
-    @Test
-    public void shouldRenameExisting_Depricated() {
-
-        CompressJob sut = createCompressJob(null);
-        sut.addItemToCompressQue("", new File("a.txt"));
-
-        List<CompressItem> result = sut.handleDuplicates_Depricated(this.mockedZipFile_Depricated);
-
-        Assert.assertEquals("a(2).txt", result.get(0).getZipEntryFileName());
+        return new CompressJob(null).setDestZipFile(testZip);
     }
 
     private File createMockFile(String name, long date) {
@@ -109,34 +91,12 @@ public class CompressJobTests {
     }
 
     @Test
-    public void shouldNotRenameNew_Depricated() {
-
-        CompressJob sut = createCompressJob(null);
-        sut.addToCompressQue("", "b.txt");
-
-        List<CompressItem> result = sut.handleDuplicates_Depricated(this.mockedZipFile_Depricated);
-
-        Assert.assertEquals(null, result);
-    }
-
-    @Test
     public void shouldNotRenameNew() {
 
         CompressJob sut = createCompressJob(null);
         sut.addToCompressQue("", "b.txt");
 
         List<CompressItem> result = sut.handleDuplicates(this.existingZipFileEntries);
-
-        Assert.assertEquals(null, result);
-    }
-
-    @Test
-    public void shouldIgnoreSame_Deprecated() {
-
-        CompressJob sut = createCompressJob(null);
-        sut.addToCompressQue("", "a.txt");
-
-        String result = sut.getRenamedZipEntryFileName_Deprecated(this.mockedZipFile_Depricated, this.zeA1, this.zeA1.getTime());
 
         Assert.assertEquals(null, result);
     }
@@ -151,15 +111,4 @@ public class CompressJobTests {
 
         Assert.assertEquals(null, result);
     }
-
-    @Test
-    public void shouldRenameIfDifferentDate_Deprecated() {
-
-        CompressJob sut = createCompressJob(null);
-
-        String result = sut.getRenamedZipEntryFileName_Deprecated(this.mockedZipFile_Depricated, this.zeA, this.zeA.getTime() + 199900);
-
-        Assert.assertEquals("a(2).txt", result);
-    }
-
 }
