@@ -93,7 +93,7 @@ public class CompressJobIntegrationTests {
     }
 
     @Test
-    public void shouldNotAddDouplicate() {
+    public void shouldNotAddDuplicate() {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress(false);
@@ -105,7 +105,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent2.getAbsolutePath());
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testDirWith2SubItems);
         int itemCount = sut.compress(false);
-        Assert.assertEquals(3, itemCount);
+        Assert.assertEquals(2, itemCount);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class CompressJobIntegrationTests {
         CompressItem item = sut.addToCompressQue("", testContent2);
         item.setZipEntryFileName(testContent.getName());
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
         Assert.assertEquals("testFile(1).txt", item.getZipEntryFileName());
     }
 
@@ -131,7 +131,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addTextToCompressQue("hello.txt", "hello world");
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 
     @Test
@@ -140,6 +140,6 @@ public class CompressJobIntegrationTests {
         sut.addTextToCompressQue("hello.txt", "hello world");
         sut.addTextToCompressQue("hello.txt", "once again: hello world");
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 }

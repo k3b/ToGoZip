@@ -48,8 +48,8 @@ import de.k3b.io.IFile;
  */
 public class CompressJob implements ZipLog {
     //!!! next handle text append in copy loop
-    // private static final boolean useOldImpl_Depricated = false;
-    private static final boolean useOldImpl_Depricated = true;
+    private static final boolean useOldImpl_Depricated = false;
+    // private static final boolean useOldImpl_Depricated = true;
 
     public static final int RESULT_NO_CHANGES = 0;
     public static final int RESULT_ERROR_ABOART = -1;
@@ -77,6 +77,7 @@ public class CompressJob implements ZipLog {
      */
     private List<CompressItem> compressQue = new ArrayList<CompressItem>();
 
+    /** this item from the que will receive all short texts */
     private TextCompressItem compressTextItem = null;
 
     /**
@@ -199,7 +200,6 @@ public class CompressJob implements ZipLog {
      */
     public List<CompressItem> handleDuplicates_Depricated() {
         if ((this.destZip != null) && (this.destZip.exists())) {
-            //!!! TODO change from ZipFile to ZipInputStream
             ZipInputStream zi = null;
             ZipOutputStream zo = null;
             ZipFile zipFile = null;
@@ -223,36 +223,50 @@ public class CompressJob implements ZipLog {
     }
 
     /**
-     * a unittest friendly version of handleDuplicates_Depricated:<br/>
+     * a unittest friendly version of handleDuplicates:<br/>
      * depending on global options: duplicate zip entries are either ignored or renamed
      *
      * @param existingZipEntries
-     * @return collection of items that where renamed or null if no renaming took place.
+     * @return For unittests-only: collection of items that where renamed or null if no renaming
+     *         took place.
      */
     List<CompressItem> handleDuplicates(Map<String, Long> existingZipEntries) {
-        List<CompressItem> result = new ArrayList<CompressItem>();
+
+        // used by unittest to find out if renaming duplicates works as expected.
+        List<CompressItem> renamedItems = new ArrayList<CompressItem>();
         for (CompressItem itemToAdd : this.compressQue) {
             if (!itemToAdd.isProcessed()) {
                 String addFileName = (itemToAdd != null) ? itemToAdd.getZipEntryFileName() : null;
                 Long zipEntryFileLastModified = (addFileName != null) ? existingZipEntries.get(addFileName) : null;
 
                 if (zipEntryFileLastModified != null) {
-                    // same file name found
-                    // may zipEntryExisting.setName(null) if not to add
-                    itemToAdd.setZipEntryFileName(getRenamedZipEntryFileName(existingZipEntries, itemToAdd,
-                            zipEntryFileLastModified));
-                    result.add(itemToAdd);
+                    // Threre is already an entry with the same name as the new item
+
+                    // null means means do not add this
+                    // else new entry gets a new name
+                    final String newEntryName = getRenamedZipEntryFileName(existingZipEntries, itemToAdd,
+                            zipEntryFileLastModified);
+                    itemToAdd.setZipEntryFileName(newEntryName);
+                    renamedItems.add(itemToAdd);
+                    addFileName = newEntryName;
+                }
+
+                if (addFileName != null) {
+                    // add new item to existing so that a second instance with the same filename will be renamed
+                    existingZipEntries.put(addFileName, itemToAdd.getLastModified());
                 }
             }
         }
+
+        // remove the ithems that are marked with null filename
         for (int i = this.compressQue.size() - 1; i >= 0; i--) {
             if (this.compressQue.get(i).getZipEntryFileName() == null) {
                 this.compressQue.remove(i);
             }
         }
 
-        if (result.size() > 0) {
-            return result;
+        if (renamedItems.size() > 0) {
+            return renamedItems;
         }
         return null;
     }
@@ -262,19 +276,24 @@ public class CompressJob implements ZipLog {
      * depending on global options: duplicate zip entries are either ignored or renamed
      *
      * @param zipFile
-     * @return collection of items that where renamed.
+     * @return For unittests-only: collection of items that where renamed.
      */
     List<CompressItem> handleDuplicates_Depricated(ZipFile zipFile) {
-        List<CompressItem> result = new ArrayList<CompressItem>();
+        List<CompressItem> renamedItems = new ArrayList<CompressItem>();
         for (CompressItem itemToAdd : this.compressQue) {
             if (!itemToAdd.isProcessed()) {
-                String zipFileName = (itemToAdd != null) ? itemToAdd.getZipEntryFileName() : null;
-                ZipEntry zipEntryExisting = (zipFileName != null) ? zipFile.getEntry(zipFileName) : null;
+                String zipEntyFileName = (itemToAdd != null) ? itemToAdd.getZipEntryFileName() : null;
+                ZipEntry zipEntryExisting = (zipEntyFileName != null) ? zipFile.getEntry(zipEntyFileName) : null;
 
                 if (zipEntryExisting != null) {
-                    itemToAdd.setZipEntryFileName(getRenamedZipEntryFileName_Deprecated(zipFile, zipEntryExisting,
-                            itemToAdd.getLastModified()));
-                    result.add(itemToAdd);
+                    // Threre is already an entry with the same name as the new item
+
+                    // null means means do not add this
+                    // else new entry gets a new name
+                    final String newEntryName = getRenamedZipEntryFileName_Deprecated(zipFile, zipEntryExisting,
+                            itemToAdd.getLastModified());
+                    itemToAdd.setZipEntryFileName(newEntryName);
+                    renamedItems.add(itemToAdd);
                 }
             }
         }
@@ -284,8 +303,8 @@ public class CompressJob implements ZipLog {
             }
         }
 
-        if (result.size() > 0) {
-            return result;
+        if (renamedItems.size() > 0) {
+            return renamedItems;
         }
         return null;
     }
@@ -341,26 +360,26 @@ public class CompressJob implements ZipLog {
      */
     String getRenamedZipEntryFileName_Deprecated(ZipFile zipFile, ZipEntry zipEntry,
                                                  long lastModified) {
-        String zipFileName = zipEntry.getName();
+        String zipEntryFileName = zipEntry.getName();
         if (!optRenameExistingOldEntry) {
-            logger.debug("do not include: optRenameExistingOldEntry disabled {}", zipFileName);
+            logger.debug("do not include: optRenameExistingOldEntry disabled {}", zipEntryFileName);
             return null;
         }
 
         if (sameDate_Deprecated(zipEntry, lastModified)) {
-            logger.debug("do not include: duplicate with same datetime found {}", zipFileName);
+            logger.debug("do not include: duplicate with same datetime found {}", zipEntryFileName);
             return null;
         }
 
         String extension = ")";
-        int extensionPosition = zipFileName.lastIndexOf(".");
+        int extensionPosition = zipEntryFileName.lastIndexOf(".");
         if (extensionPosition >= 0) {
-            extension = ")" + zipFileName.substring(extensionPosition);
-            zipFileName = zipFileName.substring(0, extensionPosition) + "(";
+            extension = ")" + zipEntryFileName.substring(extensionPosition);
+            zipEntryFileName = zipEntryFileName.substring(0, extensionPosition) + "(";
         }
         int id = 1;
         while (true) {
-            String newZifFileName = zipFileName + id + extension;
+            String newZifFileName = zipEntryFileName + id + extension;
             ZipEntry newZipEntry = zipFile.getEntry(newZifFileName);
             if (newZipEntry == null) {
                 logger.debug("renamed zipentry from '{}' to '{}'", zipEntry.getName(), newZifFileName);
@@ -370,7 +389,7 @@ public class CompressJob implements ZipLog {
             if (sameDate_Deprecated(newZipEntry, lastModified)) {
                 if (logger.isDebugEnabled()) {
                     logger.debug("do not include: duplicate with same datetime found '{}' for '{}'",
-                            newZifFileName, zipFileName);
+                            newZifFileName, zipEntryFileName);
                 }
                 return null;
             }
@@ -408,10 +427,11 @@ public class CompressJob implements ZipLog {
     /**
      * Processes the compressQue: renaming duplicates and add items to zip.
      *
-     * @return number of compressQue in the result zip or RESULT_XXX
-     * @param renameDouplicateTextFile
+     * @param renameDuplicateTextFile true: add an additional renamed entry for the texts.
+     *                                 False: append to existing enty
+     * @return number of modified items (compressQue and/or text appended)
      */
-    public int compress(boolean renameDouplicateTextFile) {
+    public int compress(boolean renameDuplicateTextFile) {
         // to make shure that orginal is not broken if there is an error:
         // 1) Workflow addToCompressQue to somefile.zip.tmp, (a) old content, (b) new content
         // 2) rename existing to somefile.zip.bak
@@ -419,7 +439,7 @@ public class CompressJob implements ZipLog {
         // 4) delete existing to somefile.zip.bak
 
         // if text is to be appended to "last text-entry" do not use handleDuplicates_Depricated for that
-        boolean preventTextFromRenaming = (!renameDouplicateTextFile) && (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
+        boolean preventTextFromRenaming = (!renameDuplicateTextFile) && (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
 
         if (useOldImpl_Depricated) {
             if (preventTextFromRenaming) this.compressTextItem.setProcessed(true);
@@ -462,17 +482,17 @@ public class CompressJob implements ZipLog {
                     if (null != zipOldEntry) {
                         InputStream prependInputStream = this.getPrependInputStream(zipOldEntry, this.compressTextItem);
                         if (prependInputStream != null) {
+                            itemCount++;
                             context = traceMessage(
                                     "- (1a+) add text to existing item from {0} to {1} : {2}",
                                     this.destZip, newZip, zipOldEntry);
-                            existingEntries.put(zipOldEntry.getName(), zipOldEntry.getTime());
                         } else {
                             context = traceMessage(
                                     "- (1a) copy existing item from {0} to {1} : {2}",
                                     this.destZip, newZip, zipOldEntry);
                         }
                         add(out, zipOldEntry, prependInputStream, zipInputStream);
-                        itemCount++;
+                        existingEntries.put(zipOldEntry.getName(), zipOldEntry.getTime());
                     }
                 }
                 zipInputStream.close();
@@ -489,6 +509,8 @@ public class CompressJob implements ZipLog {
 
             if ((this.compressTextItem != null) && !this.compressTextItem.isProcessed()) {
                 this.compressTextItem.addText(this.getTextFooter());
+                this.compressTextItem.setProcessed(true);
+                itemCount++;
             }
 
             // (1b) copy new compressQue
