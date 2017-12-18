@@ -3,5 +3,5 @@ Translations:
 !!! todo #8: cannot save zip on android-7.1 bug
 
 * fdroid localized app descripton: fixed technical problems with encodig, newline, html escaping, wrong image-directory
-* new: Indonesian by isaideureka, Chinese Traditional by incrediblesnow, Dutch by Omer Surer, Portugese by Miguel Dos Reis
+* new: Indonesian by isaideureka, Chinese Traditional by incrediblesnow, Dutch by Omer Surer, Portugese by Miguel Dos Reis, Hungarian by csongorhunt
 * update: Chinese Simplified by daijia, Turkish by vitruvianman
