@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 
-import de.k3b.io.IFile;
+import de.k3b.io.ZipStorage;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -56,7 +56,7 @@ public class CompressJobTests {
         this.existingZipFileEntries.put(this.zeA1.getName(), this.zeA1.getTime());
     }
 
-    private CompressJob createCompressJob(IFile testZip) {
+    private CompressJob createCompressJob(ZipStorage testZip) {
         return new CompressJob(null).setDestZipFile(testZip);
     }
 

@@ -30,6 +30,9 @@ import android.util.Log;
 
 import java.io.File;
 
+import de.k3b.io.ZipStorage;
+import de.k3b.io.ZipStorageFile;
+
 /**
  * implements SettingsData from android preferences
  */
@@ -152,6 +155,10 @@ public class SettingsImpl {
     /** full path of the zipfile where "Add To Zip" goes to. */
     public static String getZipfile() {
         return SettingsImpl.zipfile;
+    }
+
+    public static ZipStorage getCurrentZipStorage() {
+        return new ZipStorageFile(SettingsImpl.getZipfile());
     }
 
     public static String getTextfile(boolean useLongTextFile) {

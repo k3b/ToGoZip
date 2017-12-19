@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -26,13 +26,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.k3b.android.MediaUtil;
-import de.k3b.io.IFile;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.FileCompressItem;
 import de.k3b.zip.ZipLog;
@@ -185,7 +185,7 @@ public class IntentParser {
             String scheme = uri.getScheme();
 
             if ("file".equalsIgnoreCase(scheme)) {
-                IFile file = new IFile(uri.getPath());
+                File file = new File(uri.getPath());
                 if (file.exists()) {
                     zipLog.traceMessage("Data[file-uri={0}]: {1}", uri, file);
                     return new FileCompressItem(null, file);
@@ -194,7 +194,7 @@ public class IntentParser {
                 String path = MediaUtil.convertMediaUriToPath(context, uri);
                 if (path != null) {
                     zipLog.traceMessage("Data[file-content-uri={0}]: {1}", uri, path);
-                    return new FileCompressItem(null, new IFile(path));
+                    return new FileCompressItem(null, new File(path));
                 }
 
                 final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri, mimeType);

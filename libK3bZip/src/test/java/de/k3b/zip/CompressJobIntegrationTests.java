@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -34,7 +34,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import de.k3b.io.IFile;
+import de.k3b.io.ZipStorage;
+import de.k3b.io.ZipStorageFile;
 
 /**
  * Integration-Tests using real zip files in the temp-folder<br/>
@@ -43,20 +44,20 @@ import de.k3b.io.IFile;
  */
 public class CompressJobIntegrationTests {
     static private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
-    static private IFile root = new IFile(System.getProperty("java.io.tmpdir")
-            + "/k3bZipTests/"
-//          + format.format(new Date())
-    );
-    static private IFile testZip = new IFile(root, "test.zip");
-    static private File testContent = new File(root, "testFile.txt");
-    static private File testContent2 = new File(root, "testFile2.txt");
-    static private File testDirWith2SubItems = new File(root, "dir");
+    // static private File root = new File(System.getProperty("java.io.tmpdir")
+    static private String root = System.getProperty("java.io.tmpdir")
+
+            + "/k3bZipTests/";
+    static private ZipStorage testZip = new ZipStorageFile(root+"test.zip");
+    static private File testContent = new File(root + "testFile.txt");
+    static private File testContent2 = new File(root + "testFile2.txt");
+    static private File testDirWith2SubItems = new File(root + "dir");
     static private File testContent3 = new File(testDirWith2SubItems, "testFile3.txt");
     static private File testContent4 = new File(testDirWith2SubItems, "testFile4.txt");
 
     @BeforeClass
     static public void createTestData() throws IOException, ParseException {
-        root.mkdirs();
+        // root.mkdirs();
         testDirWith2SubItems.mkdirs();
         createTestFile(testContent, format.parse("1980-12-24_123456-123"));
         createTestFile(testContent2, new Date());
@@ -81,14 +82,14 @@ public class CompressJobIntegrationTests {
 
     @Before
     public void setup() throws IOException {
-        testZip.delete();
+        testZip.delete(ZipStorage.Instance.current);
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress(false);
         Assert.assertEquals(1, itemCount);
     }
 
-    private CompressJob createCompressJob(IFile testZip) {
+    private CompressJob createCompressJob(ZipStorage testZip) {
         return new CompressJob(null).setDestZipFile(testZip);
     }
 
