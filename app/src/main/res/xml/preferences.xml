@@ -36,8 +36,12 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:positiveButtonText="@null" />
 
         <!-- EditTextPreference -->
+        <Preference
+            android:key="zip.dir"
+            android:title="@string/title_select_folder" >
+        </Preference>
         <de.k3b.android.widget.EditTextPreferenceWithSummary
-            android:key="zipfile"
+            android:key="zip.file"
             android:title="@string/pref_zipfile_title" />
         <!-- EditTextPreference -->
         <de.k3b.android.widget.EditTextPreferenceWithSummary

@@ -153,8 +153,10 @@ public class CompressJob implements ZipLog {
     }
 
     public void addToCompressQueue(CompressItem[] items) {
-        for (CompressItem item : items) {
-            addToCompressQueue(item);
+        if (items != null) {
+            for (CompressItem item : items) {
+                addToCompressQueue(item);
+            }
         }
     }
 
@@ -162,7 +164,7 @@ public class CompressJob implements ZipLog {
         if ((textToBeAdded!=null) && (textToBeAdded.length() > 0)) {
             if (this.compressTextItem == null) {
                 File srcFile = new File("/" + textfile);
-                this.compressTextItem = new TextCompressItem(textfile, srcFile);
+                this.compressTextItem = new TextCompressItem("", srcFile);
                 this.compressTextItem.setLastModified(new Date().getTime());
                 addToCompressQueue(this.compressTextItem);
             }
@@ -413,14 +415,18 @@ public class CompressJob implements ZipLog {
                 oldZipFileName = this.destZipFile.getName(ZipStorage.Instance.old);
             }
 
-			if (preventTextFromRenaming) this.compressTextItem.setProcessed(true);
+            boolean oldProcessed = false;
+			if (preventTextFromRenaming) {
+                oldProcessed = this.compressTextItem.isProcessed();
+                this.compressTextItem.setProcessed(true);
+            }
 			handleDuplicates(existingEntries);
-			if (preventTextFromRenaming) this.compressTextItem.setProcessed(false);
+			if (preventTextFromRenaming) this.compressTextItem.setProcessed(oldProcessed);
 
             if ((this.compressTextItem != null) && !this.compressTextItem.isProcessed()) {
                 this.compressTextItem.addText(this.getTextFooter());
-                this.compressTextItem.setProcessed(true);
-                itemCount++;
+                // this.compressTextItem.setProcessed(true);
+                // itemCount++;
             }
 
             // (1b) copy new compressQue
