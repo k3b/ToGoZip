@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014 k3b
+Copyright (C) 2014-2018 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -33,6 +33,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:name="de.k3b.android.toGoZip.Add2ZipActivity"
             android:label="@string/title_activity_add2zip">
 
+            <!-- where data is set -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />
@@ -44,6 +45,18 @@ this program. If not, see <http://www.gnu.org/licenses/>
                 <!-- file must have mimeType to match -->
                 <data android:mimeType="*/*" />
                 <data android:scheme="file" />
+            </intent-filter>
+            <!-- same as before but data is null so data is from extras Intent.EXTRA_STREAM -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- file must have mimeType to match -->
+                <data android:mimeType="*/*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

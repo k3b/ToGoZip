@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/colorFolderpickerBackground"
     >
 
     <TextView
@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dp"
-        android:text="@string/title_select_folder"
+        android:text="@string/pref_zipfolder_title"
         android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="#333"
+        android:textColor="@color/colorFolderpickerTextColor"
         />
 
 
@@ -27,7 +27,7 @@
         android:padding="5dp"
         android:text="Current Location"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#333"
+        android:textColor="@color/colorFolderpickerTextColor"
         />
 
 
@@ -41,64 +41,42 @@
         android:padding="5sp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
             android:background="@drawable/outline_black_1dp"
             android:clickable="true"
             android:drawableTop="@drawable/ic_action_up"
-            android:gravity="center"
             android:onClick="goBack"
-            android:padding="5dp"
-            android:text="@string/folder_picker_up"
-            android:textColor="#333"
+            android:text="@string/folder_picker_parent_dir"
+            style="@style/folderpicker_style_button"
             />
 
         <TextView
             android:id="@+id/fp_btn_new"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
             android:background="@drawable/outline_black_1dp"
             android:clickable="true"
-            android:drawableTop="@drawable/ic_action_add"
-            android:gravity="center"
             android:onClick="newFolderDialog"
-            android:padding="5dp"
-            android:text="@string/folder_picker_new"
-            android:textColor="#333"
+            android:drawableTop="@drawable/ic_action_add"
+            android:text="@string/folder_picker_create_new_directory"
+            style="@style/folderpicker_style_button"
+
             />
 
         <TextView
             android:id="@+id/fp_btn_select"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
             android:background="@drawable/outline_black_1dp"
             android:clickable="true"
-            android:drawableTop="@drawable/ic_action_back"
-            android:gravity="center"
             android:onClick="select"
-            android:padding="5dp"
+            android:drawableTop="@drawable/ic_action_back"
             android:text="@android:string/ok"
-            android:textColor="#333"
+            style="@style/folderpicker_style_button"
             />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@drawable/outline_black_1dp"
             android:clickable="true"
-            android:drawableTop="@drawable/ic_action_cancel"
-            android:gravity="center"
             android:onClick="cancel"
-            android:padding="5dp"
+            android:drawableTop="@drawable/ic_action_cancel"
             android:text="@string/cmd_cancel"
-            android:textColor="#333"
+            style="@style/folderpicker_style_button"
             />
 
     </LinearLayout>

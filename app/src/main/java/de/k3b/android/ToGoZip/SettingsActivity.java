@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -41,10 +41,10 @@ import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
-import de.k3b.io.IFile;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
+import lib.folderpicker.FolderPicker;
 
 /**
  * show settings/config activity. On Start and Exit checks if data is valid.
@@ -52,6 +52,7 @@ import de.k3b.zip.ZipLogImpl;
 public class SettingsActivity extends PreferenceActivity {
 
     private static final int REQUEST_CODE_GET_ZIP_DIR = 12;
+    private static final int FOLDERPICKER_CODE = 1234;
     /**
      * if not null: try to execute add2zip on finish
      */
@@ -62,6 +63,8 @@ public class SettingsActivity extends PreferenceActivity {
     private SharedPreferences prefsInstance = null;
     private ListPreference defaultLocalePreference;  // #6: Support to change locale at runtime
 
+    // #8: pick folder
+    private Preference folderPickerPreference = null;
     /**
      * public api to start settings-activity
      */
@@ -87,7 +90,7 @@ public class SettingsActivity extends PreferenceActivity {
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
 
         this.job = new AndroidCompressJob(this, zipLog);
-        this.job.setDestZipFile(new IFile(SettingsImpl.getZipfile()));
+        this.job.setDestZipFile(SettingsImpl.getCurrentZipStorage());
 
         this.addPreferencesFromResource(R.xml.preferences);
 
@@ -105,6 +108,25 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
+        folderPickerPreference = (Preference) findPreference(SettingsImpl.PREF_KEY_ZIP_DOC_DIR_URI);
+        folderPickerPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                CharSequence folder = folderPickerPreference.getSummary();
+
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+
+                } else {
+
+                }
+                Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
+                if ((folder != null) && (folder.length() > 0)) {
+                    intent.putExtra("location", folder); // initial dir
+                }
+                startActivityForResult(intent, FOLDERPICKER_CODE);
+                return true;            }
+        });
+        folderPickerPreference.setSummary(SettingsImpl.getZipDocDirUri());
         // #6: Support to change locale at runtime
         updateSummary();
 
@@ -118,8 +140,8 @@ public class SettingsActivity extends PreferenceActivity {
         boolean canWriteCurrent = SettingsImpl.init(this);
 
         if (!canWriteCurrent) {
-            String currentZipPath = SettingsImpl.getZipfile();
-            String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
+            String currentZipPath = SettingsImpl.getAbsoluteZipFile().getAbsolutePath();
+            String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
             boolean canWriteDefault = SettingsImpl.canWrite(defaultZipPath);
 
             String format = (canWriteDefault)
@@ -200,8 +222,8 @@ public class SettingsActivity extends PreferenceActivity {
      * resets zip to default and restart settings activity.
      */
     private void setDefault() {
-        String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
-        SettingsImpl.setZipfile(this, defaultZipPath);
+        String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
+        SettingsImpl.setZipDocDirUri(this, defaultZipPath);
         CompressItem[] fileToBeAdded = SettingsActivity.filesToBeAdded;
         String textToBeAdded = SettingsActivity.textToBeAdded;
         SettingsActivity.filesToBeAdded = null; // do not start add2zip
@@ -269,6 +291,15 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_GET_ZIP_DIR && resultCode == RESULT_OK && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             grandPermission5(this, data.getData());
+        }
+        if (requestCode == FOLDERPICKER_CODE && resultCode == Activity.RESULT_OK) {
+
+            String folderLocation = data.getExtras().getString("data");
+            if (Global.debugEnabled) {
+                Log.d(Global.LOG_CONTEXT, "Picked folder " + folderLocation);
+            }
+            SettingsImpl.setZipDocDirUri(this, folderLocation);
+            folderPickerPreference.setSummary(folderLocation);
         }
     }
 

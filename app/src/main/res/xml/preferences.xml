@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2017 k3b
+Copyright (C) 2014-2018 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -38,7 +38,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <!-- EditTextPreference -->
         <Preference
             android:key="zip.dir"
-            android:title="@string/title_select_folder" >
+            android:title="@string/pref_zipfolder_title" >
         </Preference>
         <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="zip.file"

@@ -2,7 +2,7 @@
 <!--
 Deutsch (German) by k3b
 
-Copyright (C) 2014-2017 k3b
+Copyright (C) 2014-2018 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -72,4 +72,9 @@ Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
     <string name="pref_settings_title">Einstellungen</string>
     <string name="settings_locale_title">Sprache</string>
     <string name="settings_locale_os_language">(Sprache des Gerätes)</string>
+
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">Zip-Directory</string>
+    <string name="folder_picker_parent_dir">Zurück</string>
+    <string name="folder_picker_create_new_directory">Anlegen</string>
 </resources>

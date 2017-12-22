@@ -26,7 +26,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/iv_icon"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#333"
+        android:textColor="@color/colorFolderpickerTextColor"
         android:text="No Name"
         />
 

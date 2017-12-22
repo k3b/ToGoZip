@@ -119,7 +119,7 @@ public class FolderPicker extends LocalizedActivity {
             if( !folder.isDirectory() )
                 return;
 
-            tv_location.setText( "Location : "+ folder.getAbsolutePath() );
+            tv_location.setText( folder.getAbsolutePath() );
             File[] files = folder.listFiles();
 
             foldersList = new ArrayList<>();
