@@ -78,4 +78,10 @@ public interface ZipStorage {
         old,
         /** path of the new updated zip while CompressJob is active /path/to/file.zip.tmp */
         new_}
+
+    static final String SUFFIX_NEW_ZIP = ".tmp.zip";
+    static final String SUFFIX_OLD_ZIP = ".bak.zip";
+    static final String SUFFIX_CURRENT_ZIP = "";
+
+
 }

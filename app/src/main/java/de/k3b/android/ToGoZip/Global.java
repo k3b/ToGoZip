@@ -18,12 +18,17 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.os.Build;
+
 import java.util.Locale;
 
 /**
  * Global settings
  */
 public class Global {
+    /** document tree supported since andrid-5.0. For older devices use folder picker */
+    public static final boolean USE_DOCUMENT_PROVIDER = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+
     /** #6: local settings: which language should the gui use */
     public static final String PREF_KEY_USER_LOCALE = "user_locale";
 

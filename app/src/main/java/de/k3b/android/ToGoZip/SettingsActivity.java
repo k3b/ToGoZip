@@ -90,7 +90,7 @@ public class SettingsActivity extends PreferenceActivity {
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
 
         this.job = new AndroidCompressJob(this, zipLog);
-        this.job.setDestZipFile(SettingsImpl.getCurrentZipStorage());
+        this.job.setDestZipFile(SettingsImpl.getCurrentZipStorage(this));
 
         this.addPreferencesFromResource(R.xml.preferences);
 
@@ -112,25 +112,41 @@ public class SettingsActivity extends PreferenceActivity {
         folderPickerPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                CharSequence folder = folderPickerPreference.getSummary();
-
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-
-                } else {
-
-                }
-                Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
-                if ((folder != null) && (folder.length() > 0)) {
-                    intent.putExtra("location", folder); // initial dir
-                }
-                startActivityForResult(intent, FOLDERPICKER_CODE);
-                return true;            }
+                return onCmdPickFolder();
+            }
         });
         folderPickerPreference.setSummary(SettingsImpl.getZipDocDirUri());
         // #6: Support to change locale at runtime
         updateSummary();
 
         showAlertOnError();
+    }
+
+    private boolean onCmdPickFolder() {
+        CharSequence folder = folderPickerPreference.getSummary();
+
+        if (!Global.USE_DOCUMENT_PROVIDER) {
+            Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
+            if ((folder != null) && (folder.length() > 0)) {
+                intent.putExtra("location", folder); // initial dir
+            }
+            startActivityForResult(intent, FOLDERPICKER_CODE);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(intent, FOLDERPICKER_CODE);
+        }
+        return true;
+    }
+
+    private void onFolderPickResult(String folderLocation) {
+        if (Global.debugEnabled) {
+            Log.d(Global.LOG_CONTEXT, "Picked folder " + folderLocation);
+        }
+        SettingsImpl.setZipDocDirUri(this, folderLocation);
+        folderPickerPreference.setSummary(folderLocation);
     }
 
     /**
@@ -142,7 +158,7 @@ public class SettingsActivity extends PreferenceActivity {
         if (!canWriteCurrent) {
             String currentZipPath = SettingsImpl.getAbsoluteZipFile().getAbsolutePath();
             String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
-            boolean canWriteDefault = SettingsImpl.canWrite(defaultZipPath);
+            boolean canWriteDefault = SettingsImpl.canWrite(this, defaultZipPath);
 
             String format = (canWriteDefault)
                     ? getString(R.string.ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT)
@@ -289,21 +305,23 @@ public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_GET_ZIP_DIR && resultCode == RESULT_OK && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (requestCode == REQUEST_CODE_GET_ZIP_DIR && resultCode == RESULT_OK && Global.USE_DOCUMENT_PROVIDER) {
             grandPermission5(this, data.getData());
         }
-        if (requestCode == FOLDERPICKER_CODE && resultCode == Activity.RESULT_OK) {
 
-            String folderLocation = data.getExtras().getString("data");
-            if (Global.debugEnabled) {
-                Log.d(Global.LOG_CONTEXT, "Picked folder " + folderLocation);
+        if (requestCode == FOLDERPICKER_CODE && resultCode == Activity.RESULT_OK) {
+            if (Global.USE_DOCUMENT_PROVIDER) {
+                Uri uri = data.getData();
+                onFolderPickResult(uri.toString());
+            } else {
+                // folder picker specific implementation
+                String folderLocation = data.getExtras().getString("data");
+                onFolderPickResult(folderLocation);
             }
-            SettingsImpl.setZipDocDirUri(this, folderLocation);
-            folderPickerPreference.setSummary(folderLocation);
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static void grandPermission5(Context ctx, Uri data) {
         DocumentFile docPath = DocumentFile.fromTreeUri(ctx, data);
         if (docPath != null) {

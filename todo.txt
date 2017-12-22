@@ -1,6 +1,15 @@
 todo.txt for k3b.add2Zip
 =========
 
+init upgrade data dir/file if upgrading
+
+file with path => move path to dir
+?? getDefault
+
+
+
+
+-------
 #8 Cannot save zip on android-7.1
 
 Porting from java-file to android-SAF-DocumentFile is a litte more work. I hope to get done by chrissmas 2017

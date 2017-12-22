@@ -34,10 +34,6 @@ import java.io.OutputStream;
  */
 
 public class ZipStorageFile implements ZipStorage {
-    private static final String SUFFIX_NEW_ZIP = ".tmp";
-    private static final String SUFFIX_OLD_ZIP = ".bak";
-    private static final String SUFFIX_CURRENT_ZIP = "";
-
     private final File fileCur;
     private final File fileNew;
     private final File fileOld;

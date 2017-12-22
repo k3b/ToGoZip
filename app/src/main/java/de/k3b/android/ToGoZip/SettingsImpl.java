@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
@@ -94,7 +95,7 @@ public class SettingsImpl {
                 .getPrefValue(prefs, KEY_TEXTFILE_LONG_MIN,
                         SettingsImpl.textfile_long_min);
 
-        return canWrite(SettingsImpl.zipDocDirUri);
+        return canWrite(context, SettingsImpl.zipDocDirUri);
     }
 
     private static void fixPathIfNeccessary(Context context) {
@@ -127,12 +128,12 @@ public class SettingsImpl {
             // write support on sdcard, if mounted
             Boolean isSDPresent = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
             rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
-        } else if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) && (zipDocDirUri != null)) {
-            ///TODO !!!
-            DocumentFile docDir = DocumentFile.fromTreeUri(context, Uri.parse(zipDocDirUri));
-            if (docDir != null) {
-                // DocumentFile.fromFile()
-                // docDir.
+        } else if (Global.USE_DOCUMENT_PROVIDER && (zipDocDirUri != null)) {
+
+            // DocumentFile docDir = DocumentFile.fromTreeUri(context, Uri.parse(zipDocDirUri));
+            DocumentFile docDir = DocumentFile.fromFile(new File(zipDocDirUri));
+            if ((docDir != null) && docDir.canWrite()) {
+                return rootDir.getAbsolutePath();
             }
         }
 
@@ -150,20 +151,58 @@ public class SettingsImpl {
     private static File getRootDir44() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     }
+
+    public static ZipStorage getCurrentZipStorage(Context context) {
+        if (Global.USE_DOCUMENT_PROVIDER) {
+            DocumentFile docDir = getDocFile(context, zipDocDirUri);
+            return new ZipStorageDocumentFile(context, docDir,zipfile);
+
+        } else {
+            File absoluteZipFile = getAbsoluteZipFile();
+            return new ZipStorageFile(absoluteZipFile.getAbsolutePath());
+        }
+    }
+
+
     /**
      * return true if outputdirectory of zipfile is writable
      */
-    public static boolean canWrite(String dir) {
+    public static boolean canWrite(Context context, String dir) {
         if ((dir == null) || (dir.trim().length() == 0)) {
             return false; // empty is no valid path
         }
 
-        File parentDir = new File(dir);
-        if ((parentDir == null) || (!parentDir.exists() && !parentDir.mkdirs())) {
+        if (Global.USE_DOCUMENT_PROVIDER) {
+            DocumentFile docDir = getDocFile(context, dir);
+            return ((docDir != null) && docDir.canWrite());
+        }
+
+        File fileDir = new File(dir);
+        if ((fileDir == null) || (!fileDir.exists() && !fileDir.mkdirs())) {
             return false; // parentdir does not exist and cannot be created
         }
 
         return true; // (parentDir.canWrite());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static DocumentFile getDocFile(Context context, @NonNull String dir ) {
+        DocumentFile docDir = null;
+
+        if (dir.indexOf(":") >= 0) {
+            Uri uri = Uri.parse(dir);
+
+            if ("file".equals(uri.getScheme())) {
+                File fileDir = new File(uri.getPath());
+                docDir = DocumentFile.fromFile(fileDir);
+            } else {
+                docDir = DocumentFile.fromTreeUri(context, uri);
+            }
+        } else {
+            docDir = DocumentFile.fromFile(new File(dir));
+        }
+        return docDir;
+
     }
 
     /**
@@ -180,17 +219,6 @@ public class SettingsImpl {
     /** full path of the zipfile where "Add To Zip" goes to. */
     public static File getAbsoluteZipFile() {
         return new File(zipDocDirUri, zipfile);
-    }
-
-    public static ZipStorage getCurrentZipStorage() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-
-        } else {
-
-        }
-
-        File absoluteZipFile = getAbsoluteZipFile();
-        return new ZipStorageFile(absoluteZipFile.getAbsolutePath());
     }
 
     public static String getTextfile(boolean useLongTextFile) {
