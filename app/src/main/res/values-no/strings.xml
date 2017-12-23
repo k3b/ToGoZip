@@ -23,26 +23,26 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_use_default">Bruk standard</string>
   <string name="cmd_cancel">Avbryt</string>
   <string name="cmd_edit">Redigere</string>
-  <string name="ERR_ADD"><![CDATA["Kunne ikke oppdatere% 1 $ s: %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS">Ingen tillatelser å skrive til% 1 $ s% 2 $ s.
-(Er det sdcard-maskinvare og er Sd-kortet montert?)</string>
-  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Ingen tillatelser til å skrive til gjeldende zip '% 1 $ s'.
-Vil du bruke standard '% 2 $ s' i stedet? "]]></string>
+  <string name="ERR_ADD"><![CDATA["Kunne ikke oppdatere %1$s: %2$s"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Ingen tillatelser å skrive til %1$s %2$s.
+(Er det sdcard-maskinvare og er Sd-kortet montert?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Ingen tillatelser til å skrive til gjeldende zip '%1$s'.
+Vil du bruke standard '%2$s' i stedet? "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Filene er allerede inkludert i
-% 1 $ s"]]></string>
-  <string name="SUCCESS_ADD"><![CDATA["lagt til% 2 $ d fil (er) til
-% 1 $ s"]]></string>
+%1$s"]]></string>
+  <string name="SUCCESS_ADD"><![CDATA["lagt til %2$d fil (er) til
+%1$s"]]></string>
   <string name="WARN_ADD_NO_FILES">Ingen filer valgt</string>
   <string name="WARN_ADD_CANCELED">Avbryt: Ingen filer lagt til</string>
   <string name="about_summary">Om ToGoZip</string>
-  <string name="banner">Samles med ToGoZip versjon $ versjonnavn $</string>
+  <string name="banner">Samles med ToGoZip versjon $versjonnavn$</string>
   <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
          strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
          fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
          and in github homepage.
          -->
   <string name="about_content_about"><![CDATA["
-<b> <i> "Legg til i zip" </i> </b>
+<b> <i> 'Legg til i zip' </i> </b>
   for android <i> 'share' / 'send' </i> -menyen: <br/>
   <br/>
   Enkel samling av filer fra hver støttende app inn i
@@ -68,9 +68,4 @@ Programmets forfatter bruker ToGoZip til å samle inn nye android kalenderoppfø
   <string name="pref_zipfile_title">Output Zip File</string>
   <string name="pref_settings_title">Innstillinger</string>
   <string name="settings_locale_title">Språk</string>
-  <string name="settings_locale_os_language">System standard</string>
-  <!-- #8: for folder picker -->
-  <string name="pref_zipfolder_title">Output Zip Folder</string>
-  <string name="folder_picker_parent_dir">Up</string>
-  <string name="folder_picker_create_new_directory">New</string>
 </resources>
