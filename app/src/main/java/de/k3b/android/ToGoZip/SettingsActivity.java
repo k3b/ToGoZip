@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -18,11 +18,16 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -30,6 +35,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+import android.support.v4.provider.DocumentFile;
 
 import java.io.File;
 
@@ -38,12 +44,15 @@ import de.k3b.android.widget.LocalizedActivity;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
+import lib.folderpicker.FolderPicker;
 
 /**
  * show settings/config activity. On Start and Exit checks if data is valid.
  */
 public class SettingsActivity extends PreferenceActivity {
 
+    private static final int REQUEST_CODE_GET_ZIP_DIR = 12;
+    private static final int FOLDERPICKER_CODE = 1234;
     /**
      * if not null: try to execute add2zip on finish
      */
@@ -54,6 +63,8 @@ public class SettingsActivity extends PreferenceActivity {
     private SharedPreferences prefsInstance = null;
     private ListPreference defaultLocalePreference;  // #6: Support to change locale at runtime
 
+    // #8: pick folder
+    private Preference folderPickerPreference = null;
     /**
      * public api to start settings-activity
      */
@@ -78,7 +89,8 @@ public class SettingsActivity extends PreferenceActivity {
         SettingsImpl.init(this);
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
 
-        this.job = new AndroidCompressJob(this, new File(SettingsImpl.getZipfile()), zipLog);
+        this.job = new AndroidCompressJob(this, zipLog);
+        this.job.setDestZipFile(SettingsImpl.getCurrentZipStorage(this));
 
         this.addPreferencesFromResource(R.xml.preferences);
 
@@ -96,10 +108,45 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
+        folderPickerPreference = (Preference) findPreference(SettingsImpl.PREF_KEY_ZIP_DOC_DIR_URI);
+        folderPickerPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                return onCmdPickFolder();
+            }
+        });
+        folderPickerPreference.setSummary(SettingsImpl.getZipDocDirUri());
         // #6: Support to change locale at runtime
         updateSummary();
 
         showAlertOnError();
+    }
+
+    private boolean onCmdPickFolder() {
+        CharSequence folder = folderPickerPreference.getSummary();
+
+        if (!Global.USE_DOCUMENT_PROVIDER) {
+            Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
+            if ((folder != null) && (folder.length() > 0)) {
+                intent.putExtra("location", folder); // initial dir
+            }
+            startActivityForResult(intent, FOLDERPICKER_CODE);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(intent, FOLDERPICKER_CODE);
+        }
+        return true;
+    }
+
+    private void onFolderPickResult(String folderLocation) {
+        if (Global.debugEnabled) {
+            Log.d(Global.LOG_CONTEXT, "Picked folder " + folderLocation);
+        }
+        SettingsImpl.setZipDocDirUri(this, folderLocation);
+        folderPickerPreference.setSummary(folderLocation);
     }
 
     /**
@@ -109,9 +156,9 @@ public class SettingsActivity extends PreferenceActivity {
         boolean canWriteCurrent = SettingsImpl.init(this);
 
         if (!canWriteCurrent) {
-            String currentZipPath = SettingsImpl.getZipfile();
-            String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
-            boolean canWriteDefault = SettingsImpl.canWrite(defaultZipPath);
+            String currentZipPath = SettingsImpl.getAbsoluteZipFile().getAbsolutePath();
+            String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
+            boolean canWriteDefault = SettingsImpl.canWrite(this, defaultZipPath);
 
             String format = (canWriteDefault)
                     ? getString(R.string.ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT)
@@ -191,8 +238,8 @@ public class SettingsActivity extends PreferenceActivity {
      * resets zip to default and restart settings activity.
      */
     private void setDefault() {
-        String defaultZipPath = SettingsImpl.getDefaultZipPath(this);
-        SettingsImpl.setZipfile(this, defaultZipPath);
+        String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
+        SettingsImpl.setZipDocDirUri(this, defaultZipPath);
         CompressItem[] fileToBeAdded = SettingsActivity.filesToBeAdded;
         String textToBeAdded = SettingsActivity.textToBeAdded;
         SettingsActivity.filesToBeAdded = null; // do not start add2zip
@@ -239,6 +286,50 @@ public class SettingsActivity extends PreferenceActivity {
         }
         listPreference.setSummary(summary);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void requestZipDir(Activity ctx, File formerZipDir) {
+        final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+
+        /*
+        if (formerZipDir != null) {
+            // since API level 26
+            DocumentFile docDir = DocumentFile.fromFile(formerZipDir);
+            intent.putExtra(Intent.EXTRA_INITIAL_URI, docDir.getUri().toString());
+        }
+        */
+
+        ctx.startActivityForResult(intent, REQUEST_CODE_GET_ZIP_DIR);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_GET_ZIP_DIR && resultCode == RESULT_OK && Global.USE_DOCUMENT_PROVIDER) {
+            grandPermission5(this, data.getData());
+        }
+
+        if (requestCode == FOLDERPICKER_CODE && resultCode == Activity.RESULT_OK) {
+            if (Global.USE_DOCUMENT_PROVIDER) {
+                Uri uri = data.getData();
+                onFolderPickResult(uri.toString());
+            } else {
+                // folder picker specific implementation
+                String folderLocation = data.getExtras().getString("data");
+                onFolderPickResult(folderLocation);
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void grandPermission5(Context ctx, Uri data) {
+        DocumentFile docPath = DocumentFile.fromTreeUri(ctx, data);
+        if (docPath != null) {
+            final ContentResolver resolver = ctx.getContentResolver();
+            resolver.takePersistableUriPermission(data,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        }
     }
 
 }

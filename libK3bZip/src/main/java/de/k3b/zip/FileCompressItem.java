@@ -32,7 +32,7 @@ public class FileCompressItem extends CompressItem {
     public FileCompressItem(String destZipPath, File srcFile) {
         if (destZipPath == null) destZipPath = "";
         setFile(srcFile);
-        setZipFileName(destZipPath + srcFile.getName());
+        setZipEntryFileName(destZipPath + srcFile.getName());
     }
 
     public FileCompressItem setFile(File file) {

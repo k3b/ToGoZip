@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -23,11 +23,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
-import static org.mockito.Mockito.eq;
+import de.k3b.io.ZipStorage;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,35 +38,46 @@ import static org.mockito.Mockito.when;
  * Created by k3b on 02.11.2014.
  */
 public class CompressJobTests {
-
-    private ZipFile zipFile = null;
     private ZipEntry zeA;
     private ZipEntry zeA1;
 
+    // simulated content of zipFile: map from path to lastModifiedDate used to find the duplicates
+    Map<String, Long> existingZipFileEntries;
+
     @Before
     public void setup() {
-        zeA = new ZipEntry("a.txt");
-        zeA.setTime(10000);
-        zeA1 = new ZipEntry("a(1).txt");
-        zeA1.setTime(20000);
-        zipFile = mock(ZipFile.class);
-        when(zipFile.getEntry(eq("a.txt"))).thenReturn(zeA);
-        when(zipFile.getEntry(eq("a(1).txt"))).thenReturn(zeA1);
+        this.zeA = new ZipEntry("a.txt");
+        this.zeA.setTime(100000);
+        this.zeA1 = new ZipEntry("a(1).txt");
+        this.zeA1.setTime(200000);
+
+        this.existingZipFileEntries = new HashMap<>();
+        this.existingZipFileEntries.put(this.zeA.getName(), this.zeA.getTime());
+        this.existingZipFileEntries.put(this.zeA1.getName(), this.zeA1.getTime());
     }
 
-    private CompressJob createCompressJob(File testZip) {
-        return new CompressJob(testZip, null);
+    private CompressJob createCompressJob(ZipStorage testZip) {
+        return new CompressJob(null).setDestZipFile(testZip);
+    }
+
+    private File createMockFile(String name, long date) {
+        File mockedFile = mock(File.class);
+        when(mockedFile.getName()).thenReturn(name);
+        when(mockedFile.lastModified()).thenReturn(date);
+        when(mockedFile.isFile()).thenReturn(true);
+        return mockedFile;
     }
 
     @Test
     public void shouldRenameExisting() {
-
         CompressJob sut = createCompressJob(null);
-        sut.addItemToCompressQue("", new File("a.txt"));
+        File mockedFile = createMockFile("a.txt", 300000l);
 
-        List<CompressItem> result = sut.handleDuplicates(zipFile);
+        sut.addItemToCompressQue("", mockedFile);
 
-        Assert.assertEquals("a(2).txt", result.get(0).getZipFileName());
+        List<CompressItem> result = sut.handleDuplicates(this.existingZipFileEntries);
+
+        Assert.assertEquals("a(2).txt", result.get(0).getZipEntryFileName());
     }
 
     @Test
@@ -83,7 +96,7 @@ public class CompressJobTests {
         CompressJob sut = createCompressJob(null);
         sut.addToCompressQue("", "b.txt");
 
-        List<CompressItem> result = sut.handleDuplicates(zipFile);
+        List<CompressItem> result = sut.handleDuplicates(this.existingZipFileEntries);
 
         Assert.assertEquals(null, result);
     }
@@ -92,21 +105,10 @@ public class CompressJobTests {
     public void shouldIgnoreSame() {
 
         CompressJob sut = createCompressJob(null);
-        sut.addToCompressQue("", "a.txt");
+        CompressItem newItem = sut.addToCompressQue("", createMockFile("a.txt", 300000l));
 
-        String result = sut.getFixedZipFileName(zipFile, zeA1, zeA1.getTime());
+        String result = sut.getRenamedZipEntryFileName(existingZipFileEntries, newItem, this.zeA1.getTime());
 
         Assert.assertEquals(null, result);
     }
-
-    @Test
-    public void shouldRenameIfDifferentDate() {
-
-        CompressJob sut = createCompressJob(null);
-
-        String result = sut.getFixedZipFileName(zipFile, zeA, zeA.getTime() + 99900);
-
-        Assert.assertEquals("a(2).txt", result);
-    }
-
 }

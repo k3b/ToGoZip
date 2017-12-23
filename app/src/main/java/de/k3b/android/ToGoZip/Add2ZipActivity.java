@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -20,8 +20,6 @@ package de.k3b.android.toGoZip;
 
 import android.os.Bundle;
 import android.widget.Toast;
-
-import java.io.File;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
@@ -47,7 +45,9 @@ public class Add2ZipActivity extends LocalizedActivity {
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
         IntentParser intentParser = new IntentParser(this, getIntent(), zipLog);
 
-        AndroidCompressJob job = new AndroidCompressJob(this, getCurrentZipFile(), zipLog);
+        AndroidCompressJob job = new AndroidCompressJob(this, zipLog);
+        job.setDestZipFile(SettingsImpl.getCurrentZipStorage(this));
+
         CompressItem[] filesToBeAdded = intentParser.getFilesToBeAdded();
         String textToBeAdded = intentParser.getTextToBeAdded();
 
@@ -65,10 +65,6 @@ public class Add2ZipActivity extends LocalizedActivity {
             job.addToZip(textToBeAdded, filesToBeAdded);
         }
         this.finish();
-    }
-
-    private File getCurrentZipFile() {
-        return new File(SettingsImpl.getZipfile());
     }
 
 }

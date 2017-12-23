@@ -8,7 +8,7 @@ import java.io.InputStream;
  */
 abstract public class CompressItem {
     protected boolean processed;
-    private String zipFileName;
+    private String zipEntryFileName;
 
     abstract public InputStream getFileInputStream() throws IOException ;
 
@@ -19,12 +19,12 @@ abstract public class CompressItem {
         return this.getClass().equals(other.getClass());
     }
 
-    public String getZipFileName() {
-        return zipFileName;
+    public String getZipEntryFileName() {
+        return zipEntryFileName;
     }
 
-    public CompressItem setZipFileName(String zipFileName) {
-        this.zipFileName = zipFileName;
+    public CompressItem setZipEntryFileName(String zipEntryFileName) {
+        this.zipEntryFileName = zipEntryFileName;
         return this;
     }
 

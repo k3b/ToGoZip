@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFolderpickerBackground"
+    >
+
+    <TextView
+        android:id="@+id/fp_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/pref_zipfolder_title"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/colorFolderpickerTextColor"
+        />
+
+
+    <TextView
+        android:id="@+id/fp_tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fp_tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
+        android:gravity="left"
+        android:padding="5dp"
+        android:text="Current Location"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/colorFolderpickerTextColor"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/fp_buttonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fp_tv_location"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5sp">
+
+        <TextView
+            android:background="@drawable/outline_black_1dp"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_action_up"
+            android:onClick="goBack"
+            android:text="@string/folder_picker_parent_dir"
+            style="@style/folderpicker_style_button"
+            />
+
+        <TextView
+            android:id="@+id/fp_btn_new"
+            android:background="@drawable/outline_black_1dp"
+            android:clickable="true"
+            android:onClick="newFolderDialog"
+            android:drawableTop="@drawable/ic_action_add"
+            android:text="@string/folder_picker_create_new_directory"
+            style="@style/folderpicker_style_button"
+
+            />
+
+        <TextView
+            android:id="@+id/fp_btn_select"
+            android:background="@drawable/outline_black_1dp"
+            android:clickable="true"
+            android:onClick="select"
+            android:drawableTop="@drawable/ic_action_back"
+            android:text="@android:string/ok"
+            style="@style/folderpicker_style_button"
+            />
+
+        <TextView
+            android:background="@drawable/outline_black_1dp"
+            android:clickable="true"
+            android:onClick="cancel"
+            android:drawableTop="@drawable/ic_action_cancel"
+            android:text="@string/cmd_cancel"
+            style="@style/folderpicker_style_button"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/fp_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/fp_buttonsLayout">
+
+    </ListView>
+
+</RelativeLayout>

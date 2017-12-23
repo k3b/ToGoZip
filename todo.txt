@@ -1,6 +1,34 @@
 todo.txt for k3b.add2Zip
 =========
 
+init upgrade data dir/file if upgrading
+
+file with path => move path to dir
+?? getDefault
+
+
+
+
+-------
+#8 Cannot save zip on android-7.1
+
+Porting from java-file to android-SAF-DocumentFile is a litte more work. I hope to get done by chrissmas 2017
+
+
+* unittests für neue stream-api
+* existing+=new/renamed
+* file-streaming in protected methoden kapseln; Android-overwrite via DocumentFile instead
+* remove _Depricated
+* change milestone 1.0.11 to 2.0.0
+
+------
+
+
+
+ACTION_OPEN_DOCUMENT and ACTION_GET_CONTENT are both "pick a piece of content" actions. 
+ACTION_OPEN_DOCUMENT_TREE is "pick a folder/directory/container/tree of content".
+
+
 
 ToGOZip adds "Add To Zip" for the android system-events View/Send/SendTo/SendMultible
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -16,47 +16,36 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.zip;
+package de.k3b.android.toGoZip;
 
-import java.io.ByteArrayInputStream;
+import android.content.Context;
+import android.net.Uri;
+import android.support.v4.provider.DocumentFile;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import de.k3b.zip.FileCompressItem;
+
 /**
- * plain Text that should go into the zip.
- *
- * Created by k3b on 24.11.2014.
+ * same as FileCompressItem but using DocumentFile instead of File
+ * Created by k3b on 22.12.2017.
  */
-public class TextCompressItem extends FileCompressItem {
 
-    private StringBuilder text = new StringBuilder();
-    private long lastModified;
+public class DocumentFileCompressItem extends FileCompressItem {
+    private final Context context;
+    private final Uri uri;
 
-    public TextCompressItem(String destZipPath, File srcFile) {
+    public DocumentFileCompressItem(Context context, String destZipPath, File srcFile, Uri uri) {
         super(destZipPath, srcFile);
+        this.context = context;
+        this.uri = uri;
     }
 
     public InputStream getFileInputStream() throws IOException {
-        return new ByteArrayInputStream(getText().getBytes("UTF-8"));
-    }
-
-    public TextCompressItem addText(String text) {
-        if ((text != null) && (text.length() > 0)) {
-            this.text.append(text).append("\n\n");
-        }
-        return this;
-    }
-
-    public String getText() {
-        return text.toString();
-    }
-
-    public void setLastModified(long lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    public long getLastModified() {
-        return lastModified;
+        DocumentFile doc = DocumentFile.fromFile(getFile());
+        return context.getContentResolver().openInputStream(uri);
     }
 }

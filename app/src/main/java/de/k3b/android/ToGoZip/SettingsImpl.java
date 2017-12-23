@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -18,21 +18,35 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
 import java.io.File;
+
+import de.k3b.io.ZipStorage;
+import de.k3b.io.ZipStorageFile;
 
 /**
  * implements SettingsData from android preferences
  */
 public class SettingsImpl {
-    /** full path of the zipfile where "Add To Zip" goes to. */
-    private static String zipfile = null;
-    static final String KEY_ZIPFILE = "zipfile";
+    /** full path of directory where the zipfile is stored as uri
+     * either as file(android-4.4. and older) or
+     * as documentfile(android-5 and newer) uri. */
+    public static final String PREF_KEY_ZIP_DOC_DIR_URI = "zip.dir";
+    private static String zipDocDirUri = null;
+
+    /** file name of the zipfile (without path) where "Add To Zip" goes to. */
+    private static String zipfile = "2go.zip";
+    static final String KEY_ZIPFILE = "zip.file";
 
     /** short texts like urls are prepended to this zip entry */
     private static String textfile_short = "texts.txt";
@@ -59,10 +73,15 @@ public class SettingsImpl {
         Global.debugEnabled = SettingsImpl.getPrefValue(prefs,
                 "isDebugEnabled", Global.debugEnabled);
 
-        // in case first start(no where no zip is defined yet),
-        if (SettingsImpl.zipfile == null) {
-            SettingsImpl.zipfile = getDefaultZipPath(context);
-        }
+        SettingsImpl.zipfile = SettingsImpl
+                .getPrefValue(prefs, KEY_ZIPFILE,
+                        SettingsImpl.zipfile);
+
+        SettingsImpl.zipDocDirUri = SettingsImpl
+                .getPrefValue(prefs, PREF_KEY_ZIP_DOC_DIR_URI,
+                        SettingsImpl.zipDocDirUri);
+
+        fixPathIfNeccessary(context);
 
         SettingsImpl.textfile_short = SettingsImpl
                 .getPrefValue(prefs, KEY_TEXTFILE_SHORT,
@@ -76,56 +95,130 @@ public class SettingsImpl {
                 .getPrefValue(prefs, KEY_TEXTFILE_LONG_MIN,
                         SettingsImpl.textfile_long_min);
 
-        SettingsImpl.zipfile = SettingsImpl
-                .getPrefValue(prefs, KEY_ZIPFILE,
-                        SettingsImpl.zipfile);
+        return canWrite(context, SettingsImpl.zipDocDirUri);
+    }
 
-        return canWrite(SettingsImpl.zipfile);
+    private static void fixPathIfNeccessary(Context context) {
+        // convert from togozip-ver-1 to togozip-ver-2
+        if ((SettingsImpl.zipfile != null) && (zipfile.indexOf("/") >= 0)) {
+            // old formt of togozip-ver-1.x with path
+            // new forman in togozip-ver-2.x dir and filename are seperate
+            File f = new File(SettingsImpl.zipfile).getAbsoluteFile();
+
+            SettingsImpl.setZipfile(context, f.getName());
+            String path = f.getParent();
+            if (path != null) {
+                SettingsImpl.setZipDocDirUri(context, path);
+            }
+        }
+
+        // there must always be a dir. Set to default if it does not exist.
+        if (SettingsImpl.zipDocDirUri == null) {
+            SettingsImpl.zipDocDirUri = getDefaultZipDirPath(context);
+        }
     }
 
     /**
      * calculates the dafault-path value for 2go.zip
      */
-    public static String getDefaultZipPath(Context context) {
-        Boolean isSDPresent = true; // Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+    public static String getDefaultZipDirPath(Context context) {
+        File rootDir = null;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            // before api-14/android-4.4/KITKAT
+            // write support on sdcard, if mounted
+            Boolean isSDPresent = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+            rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
+        } else if (Global.USE_DOCUMENT_PROVIDER && (zipDocDirUri != null)) {
 
-        // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory ()
-        // is protected by android-os :-(
-        // app will not work on devices with no external storage (sdcard)
-        final File rootDir = ((isSDPresent)) ? Environment.getExternalStorageDirectory() : Environment.getRootDirectory();
-        final String zipfile = rootDir.getAbsolutePath() + "/" + context.getString(R.string.default_zip_path);
+            // DocumentFile docDir = DocumentFile.fromTreeUri(context, Uri.parse(zipDocDirUri));
+            DocumentFile docDir = DocumentFile.fromFile(new File(zipDocDirUri));
+            if ((docDir != null) && docDir.canWrite()) {
+                return rootDir.getAbsolutePath();
+            }
+        }
+
+        if (rootDir == null) {
+            // since android 4.4 Environment.getDataDirectory() and .getDownloadCacheDirectory ()
+            // is protected by android-os :-(
+            rootDir = getRootDir44();
+        }
+
+        final String zipfile = rootDir.getAbsolutePath() + "/copy";
         return zipfile;
     }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static File getRootDir44() {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+    }
+
+    public static ZipStorage getCurrentZipStorage(Context context) {
+        if (Global.USE_DOCUMENT_PROVIDER) {
+            DocumentFile docDir = getDocFile(context, zipDocDirUri);
+            return new ZipStorageDocumentFile(context, docDir,zipfile);
+
+        } else {
+            File absoluteZipFile = getAbsoluteZipFile();
+            return new ZipStorageFile(absoluteZipFile.getAbsolutePath());
+        }
+    }
+
 
     /**
      * return true if outputdirectory of zipfile is writable
      */
-    public static boolean canWrite(String zipfile) {
-        if ((zipfile == null) || (zipfile.trim().length() == 0)) {
+    public static boolean canWrite(Context context, String dir) {
+        if ((dir == null) || (dir.trim().length() == 0)) {
             return false; // empty is no valid path
         }
 
-        File parentDir = new File(zipfile).getParentFile();
-        if ((parentDir == null) || (!parentDir.exists() && !parentDir.mkdirs())) {
+        if (Global.USE_DOCUMENT_PROVIDER) {
+            DocumentFile docDir = getDocFile(context, dir);
+            return ((docDir != null) && docDir.canWrite());
+        }
+
+        File fileDir = new File(dir);
+        if ((fileDir == null) || (!fileDir.exists() && !fileDir.mkdirs())) {
             return false; // parentdir does not exist and cannot be created
         }
 
-        return (parentDir.canWrite());
+        return true; // (parentDir.canWrite());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static DocumentFile getDocFile(Context context, @NonNull String dir ) {
+        DocumentFile docDir = null;
+
+        if (dir.indexOf(":") >= 0) {
+            Uri uri = Uri.parse(dir);
+
+            if ("file".equals(uri.getScheme())) {
+                File fileDir = new File(uri.getPath());
+                docDir = DocumentFile.fromFile(fileDir);
+            } else {
+                docDir = DocumentFile.fromTreeUri(context, uri);
+            }
+        } else {
+            docDir = DocumentFile.fromFile(new File(dir));
+        }
+        return docDir;
+
     }
 
     /**
      * updates zipFile property in preferences
      */
-    public static void setZipfile(final Context context, String zipFile) {
+    private static void setZipfile(final Context context, String zipFile) {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
         setValue(prefs, KEY_ZIPFILE, zipFile);
+        SettingsImpl.zipfile = zipFile;
     }
 
     /** full path of the zipfile where "Add To Zip" goes to. */
-    public static String getZipfile() {
-        return SettingsImpl.zipfile;
+    public static File getAbsoluteZipFile() {
+        return new File(zipDocDirUri, zipfile);
     }
 
     public static String getTextfile(boolean useLongTextFile) {
@@ -159,7 +252,6 @@ public class SettingsImpl {
         SharedPreferences.Editor edit = prefs.edit();
         edit.putString(key, value);
         edit.commit();
-        SettingsImpl.zipfile = value;
     }
 
     /**
@@ -201,4 +293,16 @@ public class SettingsImpl {
         return result;
     }
 
+    /** full path of the zipfile where "Add To Zip" goes to. */
+    public static String getZipDocDirUri() {
+        return zipDocDirUri;
+    }
+
+    public static void setZipDocDirUri(final Context context, String zipDocDirUri) {
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        setValue(prefs, PREF_KEY_ZIP_DOC_DIR_URI, zipDocDirUri);
+        SettingsImpl.zipDocDirUri = zipDocDirUri;
+    }
 }

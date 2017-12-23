@@ -2,7 +2,7 @@
 <!--
 English translation by k3b.
 
-Copyright (C) 2014-2017 k3b
+Copyright (C) 2014-2018 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -76,4 +76,9 @@ The program's author uses ToGoZip to collect new android calendar entries
     <string name="pref_settings_title">Settings</string>
     <string name="settings_locale_title">Language</string>
     <string name="settings_locale_os_language">System default</string>
+
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">Output Zip Folder</string>
+    <string name="folder_picker_parent_dir">Up</string>
+    <string name="folder_picker_create_new_directory">New</string>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -34,6 +34,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.k3b.io.ZipStorage;
+import de.k3b.io.ZipStorageFile;
+
 /**
  * Integration-Tests using real zip files in the temp-folder<br/>
  * <br/>
@@ -41,20 +44,20 @@ import java.util.Date;
  */
 public class CompressJobIntegrationTests {
     static private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
-    static private File root = new File(System.getProperty("java.io.tmpdir")
-            + "/k3bZipTests/"
-//          + format.format(new Date())
-    );
-    static private File testZip = new File(root, "test.zip");
-    static private File testContent = new File(root, "testFile.txt");
-    static private File testContent2 = new File(root, "testFile2.txt");
-    static private File testDirWith2SubItems = new File(root, "dir");
+    // static private File root = new File(System.getProperty("java.io.tmpdir")
+    static private String root = System.getProperty("java.io.tmpdir")
+
+            + "/k3bZipTests/";
+    static private ZipStorage testZip = new ZipStorageFile(root+"test.zip");
+    static private File testContent = new File(root + "testFile.txt");
+    static private File testContent2 = new File(root + "testFile2.txt");
+    static private File testDirWith2SubItems = new File(root + "dir");
     static private File testContent3 = new File(testDirWith2SubItems, "testFile3.txt");
     static private File testContent4 = new File(testDirWith2SubItems, "testFile4.txt");
 
     @BeforeClass
     static public void createTestData() throws IOException, ParseException {
-        root.mkdirs();
+        // root.mkdirs();
         testDirWith2SubItems.mkdirs();
         createTestFile(testContent, format.parse("1980-12-24_123456-123"));
         createTestFile(testContent2, new Date());
@@ -79,19 +82,19 @@ public class CompressJobIntegrationTests {
 
     @Before
     public void setup() throws IOException {
-        testZip.delete();
+        testZip.delete(ZipStorage.Instance.current);
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress(false);
         Assert.assertEquals(1, itemCount);
     }
 
-    private CompressJob createCompressJob(File testZip) {
-        return new CompressJob(testZip, null);
+    private CompressJob createCompressJob(ZipStorage testZip) {
+        return new CompressJob(null).setDestZipFile(testZip);
     }
 
     @Test
-    public void shouldNotAddDouplicate() {
+    public void shouldNotAddDuplicate() {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress(false);
@@ -103,7 +106,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent2.getAbsolutePath());
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 
     @Test
@@ -111,17 +114,17 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testDirWith2SubItems);
         int itemCount = sut.compress(false);
-        Assert.assertEquals(3, itemCount);
+        Assert.assertEquals(2, itemCount);
     }
 
     @Test
     public void shouldRenameSameFileNameWithDifferentDate() {
         CompressJob sut = createCompressJob(testZip);
         CompressItem item = sut.addToCompressQue("", testContent2);
-        item.setZipFileName(testContent.getName());
+        item.setZipEntryFileName(testContent.getName());
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
-        Assert.assertEquals("testFile(1).txt", item.getZipFileName());
+        Assert.assertEquals(1, itemCount);
+        Assert.assertEquals("testFile(1).txt", item.getZipEntryFileName());
     }
 
     @Test
@@ -129,7 +132,7 @@ public class CompressJobIntegrationTests {
         CompressJob sut = createCompressJob(testZip);
         sut.addTextToCompressQue("hello.txt", "hello world");
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 
     @Test
@@ -138,6 +141,6 @@ public class CompressJobIntegrationTests {
         sut.addTextToCompressQue("hello.txt", "hello world");
         sut.addTextToCompressQue("hello.txt", "once again: hello world");
         int itemCount = sut.compress(false);
-        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(1, itemCount);
     }
 }
