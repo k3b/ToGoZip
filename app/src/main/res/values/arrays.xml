@@ -32,6 +32,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 		<item>Magyar (Hungarian)</item>
         <item>Indonesia (Indonesian)</item>
         <item>Nederlands (Dutch)</item>
+        <item>Norsk (Norwegian)</item>
         <item>Português (Portuguese)</item>
         <item>Türk (Turkish)</item>
         <item>日本人 (Japanese)</item>
@@ -50,6 +51,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>hu</item>
         <item>in</item> <!-- iso uses "id" but java uses "in" -->
         <item>nl</item>
+        <item>no</item>
         <item>pt</item>
         <item>tr</item>
         <item>ja</item>
