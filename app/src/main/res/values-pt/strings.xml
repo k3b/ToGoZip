@@ -24,8 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_cancel">Cancelar</string>
   <string name="cmd_edit">Editar</string>
   <string name="ERR_ADD"><![CDATA["Não foi possivel atualizar o %1$s:%2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS">Não há permissões para gravar %1$s %2$s.
-(Existe sdcard-Hardware e é montado o sdcard?)</string>
+  <string name="ERR_NO_WRITE_PERMISSIONS">Não há permissões para gravar %1$s %2$s.</string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Não há permissões para gravar a atual zip '%1$s'.
 Você quer usar o padrão '%2$s' em vez?"]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Arquivos já estão incluidos no %1$s"]]></string>

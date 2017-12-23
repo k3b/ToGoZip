@@ -27,8 +27,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 
     <string name="ERR_ADD"><![CDATA["更新できません %1$s : 
 %2$s"]]></string>
-    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["書き込みアクセス許可がありません %1$s %2$s。
-(SD カードが挿入されて、かつマウントされていますか?)"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["書き込みアクセス許可がありません %1$s %2$s。"]]></string>
     <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["現在の zip に書き込みアクセス許可がありません '%1$s'。
 代わりに、デフォルトの '%2$s' を使用しますか? "]]></string>
     <string name="WARN_ADD_NO_CHANGES"><![CDATA["ファイルはすでに含まれています 

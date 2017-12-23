@@ -27,8 +27,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 
     <string name="ERR_ADD"><![CDATA["ERR_ADD:Could not update  %1$s : 
 %2$s"]]></string>
-    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["ERR_NO_WRITE_PERMISSIONS:No Permissions to write to %1$s %2$s.
-(Is there sdcard-hardware and is the sdcard mounted?)"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["ERR_NO_WRITE_PERMISSIONS:No Permissions to write to %1$s %2$s."]]></string>
     <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT:No Permissions to write to current zip '%1$s'.
 Do you want to use default '%2$s' instead? "]]></string>
     <string name="WARN_ADD_NO_CHANGES"><![CDATA["WARN_ADD_NO_CHANGES:Files are already included in 

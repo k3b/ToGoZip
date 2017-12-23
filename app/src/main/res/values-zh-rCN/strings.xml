@@ -25,8 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_edit">编辑</string>
   <string name="ERR_ADD"><![CDATA["无法更新 %1$s : 
 %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["没有写入 %1$s %2$s 的权限。
-(是否有 SD 卡，是否加载了 SD 卡？)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["没有写入 %1$s %2$s 的权限。"]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["没有写入当前 zip '%1$s' 的权限。
 是否要改用默认的 '%2$s'？ "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["文件已包含于 

@@ -25,8 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_edit">Bewerken</string>
   <string name="ERR_ADD"><![CDATA["Kan niet updaten  %1$s :
 %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Geen machtigingen om te schrijven naar %1$s %2$s. 
-(Is er sdcard-hardware en is de sdcard gemonteerd?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Geen machtigingen om te schrijven naar %1$s %2$s. "]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Geen rechten om te schrijven naar huidige zip  '%1$s '.
 Wilt u standaard  '%2$s ' gebruiken? "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Bestanden zijn al opgenomen in 

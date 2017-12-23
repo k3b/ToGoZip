@@ -33,6 +33,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 import android.support.v4.provider.DocumentFile;
@@ -49,7 +50,8 @@ import lib.folderpicker.FolderPicker;
 /**
  * show settings/config activity. On Start and Exit checks if data is valid.
  */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity
+        implements ActivityCompat.OnRequestPermissionsResultCallback  {
 
     private static final int REQUEST_CODE_GET_ZIP_DIR = 12;
     private static final int FOLDERPICKER_CODE = 1234;
@@ -86,6 +88,19 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         LocalizedActivity.fixLocale(this);	// #6: Support to change locale at runtime
         super.onCreate(savedInstanceState);
+        if (PermissionHelper.hasPermissionOrRequest(this)) {
+            initActivity();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (PermissionHelper.receivedPermissionsOrFinish(this, requestCode, permissions, grantResults)) {
+            initActivity();
+        }
+    }
+    private void initActivity() {
         SettingsImpl.init(this);
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
 

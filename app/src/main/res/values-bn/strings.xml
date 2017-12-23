@@ -25,8 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_edit">সম্পাদনা করুন</string>
   <string name="ERR_ADD"><![CDATA["%1$s হালনাগাদ করা যায়নি: 
 %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["%1$s %2$s জন্য লিখতে অনুমতি নেই।
- (Sdcard হার্ডওয়্যার আছে এবং sdcard সওয়ার হয়?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["%1$s %2$s জন্য লিখতে অনুমতি নেই।"]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["'%1$s' কাছে বর্তমান লেখার জন্য কোন অনুমতি জিপ। আপনি পূর্ব-নির্ধারিত
 '%2$s' এর পরিবর্তে ব্যবহার করতে চান? "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["ফাইল অন্তর্ভুক্ত in 

@@ -25,8 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_edit">Düzenle</string>
   <string name="ERR_ADD"><![CDATA["%1$s : 
 %2$s güncelleştirilemedi"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["%1$s %2$s 'ye yazma izni yok.
-(SD kart donanımı var mı ve SD kart takılı mı?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["%1$s %2$s 'ye yazma izni yok."]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Geçerli zip '%1$s' için yazma izni yok.
 Bunun yerine varsayılan '%2$s' kullanmak istiyor musunuz?"]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Dosyalar zaten 

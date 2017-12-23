@@ -24,8 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_cancel">取消</string>
   <string name="cmd_edit">編輯</string>
   <string name="ERR_ADD">無法更新 %1$s :\n%2$s</string>
-  <string name="ERR_NO_WRITE_PERMISSIONS">沒有寫入 %1$s %2$s 的權限。
-(是否有 Sd 卡，是否加載了 Sd 卡？)</string>
+  <string name="ERR_NO_WRITE_PERMISSIONS">沒有寫入 %1$s %2$s 的權限。</string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT">沒有寫入當前 zip \"%1$s\" 的權限。
 是否要改用默認的 \"%2$s\"？ </string>
   <string name="WARN_ADD_NO_CHANGES">文件已包含於\n%1$s</string>

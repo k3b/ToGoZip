@@ -19,6 +19,7 @@
 package de.k3b.android.toGoZip;
 
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import de.k3b.android.AndroidCompressJob;
@@ -31,7 +32,8 @@ import de.k3b.zip.ZipLogImpl;
  * This pseudo activity has no gui. It starts add2zip from intent-data
  * or starts the settings-activity if the zip-output-dir is write-protected
  */
-public class Add2ZipActivity extends LocalizedActivity {
+public class Add2ZipActivity extends LocalizedActivity
+        implements ActivityCompat.OnRequestPermissionsResultCallback {
     /**
      * caption for logging
      */
@@ -40,8 +42,21 @@ public class Add2ZipActivity extends LocalizedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean canWrite = SettingsImpl.init(this);
+        if (PermissionHelper.hasPermissionOrRequest(this)) {
+            executeZipJob();
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (PermissionHelper.receivedPermissionsOrFinish(this, requestCode, permissions, grantResults)) {
+            executeZipJob();
+        }
+    }
+
+    private void executeZipJob() {
+        boolean canWrite = SettingsImpl.init(this);
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
         IntentParser intentParser = new IntentParser(this, getIntent(), zipLog);
 

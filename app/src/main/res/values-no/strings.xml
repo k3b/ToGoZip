@@ -24,8 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_cancel">Avbryt</string>
   <string name="cmd_edit">Redigere</string>
   <string name="ERR_ADD"><![CDATA["Kunne ikke oppdatere %1$s: %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Ingen tillatelser å skrive til %1$s %2$s.
-(Er det sdcard-maskinvare og er Sd-kortet montert?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Ingen tillatelser å skrive til %1$s %2$s."]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Ingen tillatelser til å skrive til gjeldende zip '%1$s'.
 Vil du bruke standard '%2$s' i stedet? "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Filene er allerede inkludert i

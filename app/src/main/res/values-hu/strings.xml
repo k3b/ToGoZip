@@ -24,8 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_cancel">Megszünteti</string>
   <string name="cmd_edit">Szerkesztése</string>
   <string name="ERR_ADD"><![CDATA["Nem sikerült frissíteni a %1$s:%2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Nincs jogosultsága a következőre:%1$s%2$s.
-(Van-e sdcard hardver és az Sd kártya fel van szerelve?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Nincs jogosultsága a következőre:%1$s%2$s."]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Msgstr 'Nincs jogosultság az aktuális zipre írni: '%1$s'.
 Szeretné használni az alapértelmezett '%2$s' értéket? "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Msgstr "A fájlok már szerepelnek

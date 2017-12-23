@@ -25,8 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_edit">Editar</string>
   <string name="ERR_ADD"><![CDATA["No se puede actualizar %1$s: 
 %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Sin permisos para escribir en %1$s %2$s.
- (¿Hay una tarjeta SD y está montada?)"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Sin permisos para escribir en %1$s %2$s."]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Sin permisos para escribir al zip '%1$s'.
 ¿Quieres usar '%2$s' por defecto en su lugar? "]]></string>
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Los archivos ya están incluidos en 

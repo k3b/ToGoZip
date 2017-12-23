@@ -29,8 +29,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 
     <string name="ERR_ADD"><![CDATA["Konnte %1$s nicht aktualisieren : 
 %2$s"]]></string>
-    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Keine Schreibberechtigung für %1$s %2$s.
-(Unterstützt das Gerät externe Speicherkarten und ist eine eingelegt?)"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Keine Schreibberechtigung für %1$s %2$s."]]></string>
     <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Keine Schreibberechtigung für die aktuelle Zip-Datei '%1$s'.
 Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
     <string name="WARN_ADD_NO_CHANGES"><![CDATA["Die Dateien sind bereit in der Zip-Datei enthalten 
