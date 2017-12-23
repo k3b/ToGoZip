@@ -188,13 +188,13 @@ public class IntentParser {
                 File file = new File(uri.getPath());
                 if (file.exists()) {
                     zipLog.traceMessage("Data[file-uri={0}]: {1}", uri, file);
-                    return new FileCompressItem(null, file);
+                    return new DocumentFileCompressItem(context, null, file, uri);
                 }
             } else if ("content".equalsIgnoreCase(scheme)) {
                 String path = MediaUtil.convertMediaUriToPath(context, uri);
                 if (path != null) {
                     zipLog.traceMessage("Data[file-content-uri={0}]: {1}", uri, path);
-                    return new FileCompressItem(null, new File(path));
+                    return new DocumentFileCompressItem(context, null, new File(path), uri);
                 }
 
                 final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri, mimeType);
@@ -208,7 +208,6 @@ public class IntentParser {
                 } catch (IOException ex) {
                     zipLog.traceMessage("Error reading Data[content-uri='{0}']: {1}", uri, ex.getMessage());
                 }
-
             }
             zipLog.traceMessage("Data[uri='{0}']: not resolved", uri);
 

@@ -25,7 +25,8 @@ Porting from java-file to android-SAF-DocumentFile is a litte more work. I hope 
 
 
 
-ACTION_OPEN_DOCUMENT and ACTION_GET_CONTENT are both "pick a piece of content" actions. ACTION_OPEN_DOCUMENT_TREE is "pick a folder/directory/container/tree of content".
+ACTION_OPEN_DOCUMENT and ACTION_GET_CONTENT are both "pick a piece of content" actions. 
+ACTION_OPEN_DOCUMENT_TREE is "pick a folder/directory/container/tree of content".
 
 
 
