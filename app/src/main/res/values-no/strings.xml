@@ -42,15 +42,15 @@ Vil du bruke standard '% 2 $ s' i stedet? "]]></string>
          and in github homepage.
          -->
   <string name="about_content_about"><![CDATA["
-<b> <i> "Legg til i zip" </ i> </ b>
-  for android <i> 'share' / 'send' </ i> -menyen: <br/>
+<b> <i> "Legg til i zip" </i> </b>
+  for android <i> 'share' / 'send' </i> -menyen: <br/>
   <br/>
   Enkel samling av filer fra hver støttende app inn i
-  en zip-fil mens du er <i> på farten </ i> eller offline. <br/>
+  en zip-fil mens du er <i> på farten </i> eller offline. <br/>
 <br/>
-Denne samlingen <i> 2go.zip </ i> -filen er som en koffert
+Denne samlingen <i> 2go.zip </i> -filen er som en koffert
   hvor du kan sette ting (filer) inn fra nesten overalt (fra
-  hver app som støtter <i> 'share' / 'send' </ i>) og det
+  hver app som støtter <i> 'share' / 'send' </i>) og det
   kan reise & nbsp; overalt (via e-post,
   Bluetooth, og nbsp; Nfc) <br/>.
 <br/>
