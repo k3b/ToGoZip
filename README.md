@@ -20,7 +20,7 @@ and that can travel everywhere (via email, bluetooth, nfc).
 * automatic file-renaming in the zip if the same name with different file-date already exists.
 * if settings/DebugMode is enabled processing is logged to logcat and to clipboard as text.
 * Settings automatically pops up, if the zip folder is not writable.
-* [Translations](https://crowdin.com/project/togozip) : bn, de, en, es, fr, hi, hu, id, ja, nl, no, pt, tr, zh-CN, zh-TW
+* [Translations](https://crowdin.com/project/togozip) : bn, de, en, es, fr, hi, hu, id, ja, nl, no, pl, pt, tr, zh-CN, zh-TW
   * [![Crowdin](https://d322cqt584bo4o.cloudfront.net/togozip/localized.svg)](https://crowdin.com/project/togozip) [Help us to translate into other languages.](https://crowdin.com/project/togozip)
 * Minimal requirements: Works with android-2.1 (api 7) and up. 
 

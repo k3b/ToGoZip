@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?><!--
+/*
+Polish by mejser
+
+ * These Texts will be shown as programdescription in the fdroid app store
+ * https://f-droid.org/app/de.k3b.android.toGoZip.
+ *
+ * The content will be copied to .../fastlane/metadata/android/*.txt
+ *
+ * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>
+ */
+ -->
+<resources>
+
+    <!-- This becomes .../fastlane/metadata/android/full_description.txt.
+    See https://f-droid.org/docs/Build_Metadata_Reference/#Description -->
+    <string name="full_description"><![CDATA["
+Dodaj do Zip Dla androidów 'udostępnij'/'wyślij' menu;
+
+łatwe zbieranie plików z każdej aplikacji pomocniczej w jednym
+pliku zip będąc 'w drodze' lub w trybie offline.
+
+To zbieranie 2go.zip- plik jest jak walizka
+gdzie można umieścic rzeczy (pliki) z każdego miejsca (z każdej
+aplikacji, która obsługuje 'udostępnij'/'wyslij') i które
+mogą podróżować&nbsp; wszędzie (za pośrednictwem email,
+bluetooth,&nbsp;nfc).
+
+Autor programu używa ToGoZip do zbierania nowych wpisów w kalendarz android,
+które powinny być później zaimportowane do kalendarza panelu-psc-s.
+
+
+Required Android Permissions:
+
+* WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.
+
+.
+"]]></string>
+</resources>
