@@ -55,12 +55,6 @@ public class SettingsActivity extends PreferenceActivity
 
     private static final int REQUEST_CODE_GET_ZIP_DIR = 12;
     private static final int FOLDERPICKER_CODE = 1234;
-    /**
-     * if not null: try to execute add2zip on finish
-     */
-    private static CompressItem[] filesToBeAdded = null;
-    private static String textToBeAdded = null;
-    private AndroidCompressJob job = null;
 
     private SharedPreferences prefsInstance = null;
     private ListPreference defaultLocalePreference;  // #6: Support to change locale at runtime
@@ -70,17 +64,19 @@ public class SettingsActivity extends PreferenceActivity
     /**
      * public api to start settings-activity
      */
-    public static void show(Context context, CompressItem[] filesToBeAdded, String textToBeAdded) {
-        final Intent i = new Intent(context, SettingsActivity.class);
+    public static void startActivityForResult(Activity activity, int requestCode) {
+        final Intent i = new Intent(activity, SettingsActivity.class);
 
         if (Global.debugEnabled) {
             Log.d(Global.LOG_CONTEXT, "SettingsActivity.show(startActivity='" + i
                     + "')");
         }
 
-        SettingsActivity.filesToBeAdded = filesToBeAdded;
-        SettingsActivity.textToBeAdded = textToBeAdded;
-        context.startActivity(i);
+        if (requestCode == 0) {
+            activity.startActivity(i);
+        } else {
+            activity.startActivityForResult(i, requestCode);
+        }
 
     }
 
@@ -88,25 +84,8 @@ public class SettingsActivity extends PreferenceActivity
     protected void onCreate(final Bundle savedInstanceState) {
         LocalizedActivity.fixLocale(this);	// #6: Support to change locale at runtime
         super.onCreate(savedInstanceState);
-        if (PermissionHelper.hasPermissionOrRequest(this)) {
-            initActivity();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
-        if (PermissionHelper.receivedPermissionsOrFinish(this, requestCode, permissions, grantResults)) {
-            initActivity();
-        }
-    }
-    private void initActivity() {
         SettingsImpl.init(this);
-        ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
-
-        this.job = new AndroidCompressJob(this, zipLog);
-        this.job.setDestZipFile(SettingsImpl.getCurrentZipStorage(this));
-
+        setResult(RESULT_CANCELED, null);
         this.addPreferencesFromResource(R.xml.preferences);
 
         prefsInstance = PreferenceManager
@@ -134,7 +113,94 @@ public class SettingsActivity extends PreferenceActivity
         // #6: Support to change locale at runtime
         updateSummary();
 
-        showAlertOnError();
+        boolean canWrite = PermissionHelper.hasPermission(this) && SettingsImpl.canWrite(this, SettingsImpl.getZipDocDirUri());
+
+        if (canWrite) {
+            checkRuntimePermission();
+        } else {
+            showNeedPermissionDialog();
+        }
+    }
+
+    /**
+     * return false if no error. else Show Dialog cancel/setToDefault/Edit
+     */
+    private void showNeedPermissionDialog() {
+        String currentZipPath = SettingsImpl.getAbsoluteZipFile().getAbsolutePath();
+        String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
+        boolean canWriteDefault = SettingsImpl.canWrite(this, defaultZipPath);
+
+        String format = (canWriteDefault)
+                ? getString(R.string.ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT)
+                : getString(R.string.ERR_NO_WRITE_PERMISSIONS);
+
+        if (defaultZipPath.compareTo(currentZipPath) == 0) {
+            currentZipPath = ""; // display name only once
+        }
+        String msg = String.format(
+                format,
+                currentZipPath,
+                defaultZipPath);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg);
+        builder.setTitle(R.string.title_activity_add2zip);
+        builder.setIcon(R.drawable.ic_launcher);
+        //builder.setPositiveButton(R.string.delete, this);
+        //builder.setNegativeButton(R.string.cancel, this);
+
+        builder.setNegativeButton(R.string.cmd_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cancel();
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                cancel();
+            }
+        });
+
+        builder.setPositiveButton(R.string.cmd_edit, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                checkRuntimePermission();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void checkRuntimePermission() {
+        if (PermissionHelper.hasPermissionOrRequest(this)) {
+            checkDirPermission();
+        } // else requestPermission
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (PermissionHelper.receivedPermissionsOrFinish(this, requestCode, permissions, grantResults)) {
+            checkDirPermission();
+        } else {
+            cancel();
+        }
+    }
+
+    private void checkDirPermission() {
+        if (!SettingsImpl.canWrite(this, SettingsImpl.getZipDocDirUri())) {
+            onCmdPickFolder();
+        } else {
+            setResult(RESULT_OK, null);
+        }
+    }
+
+    // #6: Support to change locale at runtime
+    // This is used to show the status of some preference in the description
+    private void updateSummary() {
+        final String languageKey = prefsInstance.getString(Global.PREF_KEY_USER_LOCALE, "");
+        setLanguage(languageKey);
     }
 
     private boolean onCmdPickFolder() {
@@ -162,126 +228,16 @@ public class SettingsActivity extends PreferenceActivity
         }
         SettingsImpl.setZipDocDirUri(this, folderLocation);
         folderPickerPreference.setSummary(folderLocation);
-    }
-
-    /**
-     * return false if no error. else Show Dialog cancel/setToDefault/Edit
-     */
-    private boolean showAlertOnError() {
-        boolean canWriteCurrent = SettingsImpl.init(this);
-
-        if (!canWriteCurrent) {
-            String currentZipPath = SettingsImpl.getAbsoluteZipFile().getAbsolutePath();
-            String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
-            boolean canWriteDefault = SettingsImpl.canWrite(this, defaultZipPath);
-
-            String format = (canWriteDefault)
-                    ? getString(R.string.ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT)
-                    : getString(R.string.ERR_NO_WRITE_PERMISSIONS);
-
-            if (defaultZipPath.compareTo(currentZipPath) == 0) {
-                currentZipPath = ""; // display name only once
-            }
-            String msg = String.format(
-                    format,
-                    currentZipPath,
-                    defaultZipPath);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(msg);
-            builder.setTitle(R.string.title_activity_add2zip);
-            builder.setIcon(R.drawable.ic_launcher);
-            //builder.setPositiveButton(R.string.delete, this);
-            //builder.setNegativeButton(R.string.cancel, this);
-
-            if (canWriteDefault) {
-                builder.setNeutralButton(R.string.cmd_use_default, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setDefault();
-                    }
-                });
-            }
-
-            builder.setNegativeButton(R.string.cmd_cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    cancel();
-                }
-            });
-            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialogInterface) {
-                    cancel();
-                }
-            });
-
-            builder.setPositiveButton(R.string.cmd_edit, null);
-
-            builder.show();
-        }
-        return !canWriteCurrent;
-    }
-
-    /**
-     * android os function to end this activity. Hooked to verify that data is valid.
-     */
-    @Override
-    public void finish() {
-        if (Global.debugEnabled) {
-            Log.d(Global.LOG_CONTEXT, "SettingsActivity.finish");
-        }
-
-        if (!showAlertOnError()) {
-            finishWithoutCheck();
-        }
-    }
-
-    /**
-     * executes finish without checking validity. Executes add2Zip source-files are available.
-     */
-    private void finishWithoutCheck() {
-        if ((SettingsActivity.textToBeAdded != null) || (SettingsActivity.filesToBeAdded != null)) {
-            SettingsImpl.init(this);
-            job.addToZip(textToBeAdded, SettingsActivity.filesToBeAdded);
-            SettingsActivity.filesToBeAdded = null;
-        }
-        super.finish();
-    }
-
-    /**
-     * resets zip to default and restart settings activity.
-     */
-    private void setDefault() {
-        String defaultZipPath = SettingsImpl.getDefaultZipDirPath(this);
-        SettingsImpl.setZipDocDirUri(this, defaultZipPath);
-        CompressItem[] fileToBeAdded = SettingsActivity.filesToBeAdded;
-        String textToBeAdded = SettingsActivity.textToBeAdded;
-        SettingsActivity.filesToBeAdded = null; // do not start add2zip
-        SettingsActivity.textToBeAdded = null;
-        finishWithoutCheck();
-        // restart with new settings
-        show(this, fileToBeAdded, textToBeAdded);
+        setResult(RESULT_OK, null);
     }
 
     /**
      * cancel from Dialog cancels SettingsActivity
      */
     private void cancel() {
-        if ((SettingsActivity.textToBeAdded != null) || (SettingsActivity.filesToBeAdded != null)) {
-            Toast.makeText(this, getString(R.string.WARN_ADD_CANCELED), Toast.LENGTH_LONG).show();
-            SettingsActivity.filesToBeAdded = null;
-            SettingsActivity.textToBeAdded = null;
-        }
-
-        finishWithoutCheck();
-    }
-
-    // #6: Support to change locale at runtime
-    // This is used to show the status of some preference in the description
-    private void updateSummary() {
-        final String languageKey = prefsInstance.getString(Global.PREF_KEY_USER_LOCALE, "");
-        setLanguage(languageKey);
+        setResult(RESULT_CANCELED);
+        PermissionHelper.showNowPermissionMessage(this);
+        finish();
     }
 
     // #6: Support to change locale at runtime
@@ -301,21 +257,6 @@ public class SettingsActivity extends PreferenceActivity
         }
         listPreference.setSummary(summary);
 
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static void requestZipDir(Activity ctx, File formerZipDir) {
-        final Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-
-        /*
-        if (formerZipDir != null) {
-            // since API level 26
-            DocumentFile docDir = DocumentFile.fromFile(formerZipDir);
-            intent.putExtra(Intent.EXTRA_INITIAL_URI, docDir.getUri().toString());
-        }
-        */
-
-        ctx.startActivityForResult(intent, REQUEST_CODE_GET_ZIP_DIR);
     }
 
     @Override

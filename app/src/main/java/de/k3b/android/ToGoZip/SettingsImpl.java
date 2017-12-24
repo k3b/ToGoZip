@@ -95,7 +95,7 @@ public class SettingsImpl {
                 .getPrefValue(prefs, KEY_TEXTFILE_LONG_MIN,
                         SettingsImpl.textfile_long_min);
 
-        return canWrite(context, SettingsImpl.zipDocDirUri);
+        return canWrite(context, SettingsImpl.getZipDocDirUri());
     }
 
     private static void fixPathIfNeccessary(Context context) {

@@ -1,79 +1,23 @@
 todo.txt for k3b.add2Zip
 =========
 
-init upgrade data dir/file if upgrading
+* Add2ZipActivity:onCreate
+	* hasRuntimePermission && hasFolderPermission
+		* no: SettingsActivity()
+		* yes: executeZipJob()
+		
 
-file with path => move path to dir
-?? getDefault
+* Add2ZipActivity:onCreate
+	* hasRuntimePermission
+		* no: RequestRuntimePermission onRequestPermissionsResult
+			* fail: aboard finish()
+			* success: checkFolderPermission
+		* yes: checkFolderPermission()
+		
+* Add2ZipActivity:checkFolderPermission
+		
+		
+			* yes: process 2go.zip
+			* no: SettingsActivity
 
-
-
-
--------
-#8 Cannot save zip on android-7.1
-
-Porting from java-file to android-SAF-DocumentFile is a litte more work. I hope to get done by chrissmas 2017
-
-
-* unittests für neue stream-api
-* existing+=new/renamed
-* file-streaming in protected methoden kapseln; Android-overwrite via DocumentFile instead
-* remove _Depricated
-* change milestone 1.0.11 to 2.0.0
-
-------
-
-
-
-ACTION_OPEN_DOCUMENT and ACTION_GET_CONTENT are both "pick a piece of content" actions. 
-ACTION_OPEN_DOCUMENT_TREE is "pick a folder/directory/container/tree of content".
-
-
-
-ToGOZip adds "Add To Zip" for the android system-events View/Send/SendTo/SendMultible
-
-- files will only be added to "2go.zip" if there is not already a file with same name and same last-modified-date inside "2go.zip"
-- if there is a file with the same name but a different last-modified-date inside "2go.zip" the file will be renamed in the zip
--- example: if adding file://sdcard/hello.txt and there is already a /hello.txt inside "2go.zip" with a differend last-modified-date the file will be added as /hello(1).txt
-- Texts with 150 or more chars will be aded to a seperate file /text.txt or a renamed /text(1).txt, /text(2).txt, /text(3).txt, ....
--- example: 
---- after adding "some loo.....ng text" "2go.zip" contains /text.txt which contains "some loo.....ng text"
---- after adding "some ohter loo.....ng text" 2go.zip contains /text.txt with "some loo.....ng text" and /text(1).txt with "some other loo.....ng text"
-- Texts shorter than 150 chars will be prepended to exactly one file /texts.txt. new texts come before old texts.
--- example: 
---- after adding "http://www.url.net/hello.htm" and then adding "this is some text" 2go.zip contains /texts.txt with 
------ this is some text
------ http://www.url.net/hello.htm
-- if short texts are added on different calendar-dates there will be a separation line with date in the /texts.txt so you can see when the text was added.
--- example:
---- this is some text
---- ------------------- 2014-12-02 --------------------------
---- http://www.url.net/hello.htm" 2go.zip contains /texts.txt which contains http://www.url.net/hello.htm
-- every generated file for text gets a banner "Collected with ToGoZip Version w.x.y.z"
-
-The defaultvalues "file://sdcard/copy/2go.zip", text.txt, texts.txt and "150 chars" can be modified in the settings page.
-
-ToGOZip "Add To Zip" iterpretes these types of eventdata
-- if the eventdata is a local file with a file://-uri this local file is added to the rootdirectory of the zip.
-- if the eventdata is a local folder with a file://-uri the content of the folder and all sub-folders are added to the zip with a correspondig zip-directory.
-- if the eventdata is a content://-uri that can be translated to a local file, this file is added to the rootdirectory of the zip. This works for media data of type picture, video or audio.
-- if the eventdata is a contet:// or file://-uri of a local file or folder that does not exist or that is not global readable, this uri is added as text-content to a text-file
-- if the eventdata is some non-local uri (http:, https:, ftp:), this uri is added as text-content to a text-file
-- if the eventdata is text or can be interpretet as text, this text is added as content to a text-file
-
-
-for
-v (2) non file types
-    - content urls
-    - Text
-        v settings: file name
-        v short append to texts
-			v copy/append
-        v long append to seperate text file
-
-
-- Settings-Intent-chooser zip viewer/chooser
-- ? workflow encrypt-sendTo
-- - ? mail with email recipient
-- - ? bluetooth with enable bt?
 

@@ -18,8 +18,8 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import de.k3b.android.AndroidCompressJob;
@@ -32,31 +32,41 @@ import de.k3b.zip.ZipLogImpl;
  * This pseudo activity has no gui. It starts add2zip from intent-data
  * or starts the settings-activity if the zip-output-dir is write-protected
  */
-public class Add2ZipActivity extends LocalizedActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class Add2ZipActivity extends LocalizedActivity {
     /**
      * caption for logging
      */
     private static final String TAG = "Add2ZipActivity";
+    private static final int CODE_SETTIMGS = 1235;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (PermissionHelper.hasPermissionOrRequest(this)) {
-            executeZipJob();
-        }
+
+        executeZipJob();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
-        if (PermissionHelper.receivedPermissionsOrFinish(this, requestCode, permissions, grantResults)) {
-            executeZipJob();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODE_SETTIMGS) { //  && resultCode == RESULT_OK && Global.USE_DOCUMENT_PROVIDER) {
+            if (resultCode == RESULT_OK) {
+                executeZipJob();
+            } else {
+                PermissionHelper.showNowPermissionMessage(this);
+                finish();
+            }
         }
     }
 
     private void executeZipJob() {
-        boolean canWrite = SettingsImpl.init(this);
+        boolean canWrite = PermissionHelper.hasPermission(this) && SettingsImpl.init(this);
+        // on error show settings
+        if (!canWrite) {
+            SettingsActivity.startActivityForResult(this, CODE_SETTIMGS);
+            return;
+        }
+
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
         IntentParser intentParser = new IntentParser(this, getIntent(), zipLog);
 
@@ -66,18 +76,11 @@ public class Add2ZipActivity extends LocalizedActivity
         CompressItem[] filesToBeAdded = intentParser.getFilesToBeAdded();
         String textToBeAdded = intentParser.getTextToBeAdded();
 
-        // on error show settings
-        if (!canWrite) {
-            SettingsActivity.show(this, filesToBeAdded, textToBeAdded);
-            finish();
-            return;
-        }
-
         // no error yet
         if ((textToBeAdded == null) && (filesToBeAdded == null)) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
         } else {
-            job.addToZip(textToBeAdded, filesToBeAdded);
+            job.executeAddToZip(textToBeAdded, filesToBeAdded);
         }
         this.finish();
     }

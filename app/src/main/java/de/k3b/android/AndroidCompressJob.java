@@ -47,7 +47,7 @@ public class AndroidCompressJob extends CompressJob {
     }
     //############ processing ########
 
-    public void addToZip(String textToBeAdded, CompressItem[] filesToBeAdded) {
+    public void executeAddToZip(String textToBeAdded, CompressItem[] filesToBeAdded) {
         if ((textToBeAdded != null) || ((filesToBeAdded != null) && (filesToBeAdded.length > 0))) {
             addToCompressQueue(filesToBeAdded);
             boolean useLongTextFile = false;

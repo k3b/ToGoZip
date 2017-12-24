@@ -53,6 +53,21 @@ public class PermissionHelper {
      * @return true if has-permissions. else false and request permissions
      * */
     public static boolean hasPermissionOrRequest(Activity context) {
+        if (!hasPermission(context)) {
+            // Storage permission has not been requeste yet. Request for first time.
+            ActivityCompat.requestPermissions(context, PERMISSIONS_STORAGE, REQUEST_CODE_STORAGE);
+            // no permission yet
+            return false;
+        } // if android-m
+
+        // already has permission.
+        return true;
+    }
+
+    /**
+     * @return true if has-(runtime-)permissions.
+     * */
+    public static boolean hasPermission(Activity context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean needsRead = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED;
@@ -61,8 +76,6 @@ public class PermissionHelper {
                     != PackageManager.PERMISSION_GRANTED;
 
             if (needsRead || needsWrite) {
-                // Storage permission has not been requeste yet. Request for first time.
-                ActivityCompat.requestPermissions(context, PERMISSIONS_STORAGE, REQUEST_CODE_STORAGE);
                 // no permission yet
                 return false;
             }
@@ -85,17 +98,21 @@ public class PermissionHelper {
                   && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
                 return true;
             } else {
-                String format = activity.getString(R.string.ERR_NO_WRITE_PERMISSIONS);
-
-                String msg = String.format(
-                        format,
-                        "",
-                        "");
-
+                showNowPermissionMessage(activity);
                 activity.finish();
-                Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
             }
         }
         return false;
+    }
+
+    public static void showNowPermissionMessage(Activity activity) {
+        String format = activity.getString(R.string.ERR_NO_WRITE_PERMISSIONS);
+
+        String msg = String.format(
+                format,
+                "",
+                "");
+
+        Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
     }
 }
