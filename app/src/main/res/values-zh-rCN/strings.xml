@@ -57,4 +57,9 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="pref_settings_title">设置</string>
   <string name="settings_locale_title">语言</string>
   <string name="settings_locale_os_language">系统默认</string>
+
+  <!-- #8: for folder picker -->
+  <string name="pref_zipfolder_title">输出 Zip 文件夹</string>
+  <string name="folder_picker_parent_dir">向上</string>
+  <string name="folder_picker_create_new_directory">新建</string>
 </resources>
