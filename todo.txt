@@ -15,9 +15,6 @@ todo.txt for k3b.add2Zip
 		* yes: checkFolderPermission()
 		
 * Add2ZipActivity:checkFolderPermission
-		
-		
-			* yes: process 2go.zip
-			* no: SettingsActivity
-
+	* if not hasFolderPermission
+		* showFolderPicker
 

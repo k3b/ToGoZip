@@ -1,0 +1,5 @@
+Translations:
+
+* new: Vietnamese (100%) 2018 by allen44
+* update: Indonesian by Ryal (ryal)
+* Update: French by Poussinou
