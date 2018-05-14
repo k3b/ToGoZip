@@ -22,8 +22,8 @@ this program. If not, see <http://www.gnu.org/licenses/>
     resources that should NOT be localized
 -->
 <resources>
-    <string name="app_name">ToGoZip</string>
-    <string name="default_zip_path">copy/2go.zip</string>
+    <string name="app_name" translatable="false">ToGoZip</string>
+    <string name="default_zip_path" translatable="false">copy/2go.zip</string>
 
 
     <!-- added to all language specific about boxes as $translate$ -->

@@ -36,26 +36,6 @@ Wilt u standaard  '%2$s ' gebruiken? "]]></string>
   <string name="WARN_ADD_CANCELED">Annuleren: Geen bestanden toegevoegd</string>
   <string name="about_summary">Over ToGoZip</string>
   <string name="banner">Verzameld met ToGoZip versie $versionName$</string>
-  <string name="about_content_about"><![CDATA["
-<b><i>'Toevoegen aan zip'</i></b>
- voor android's <i>'deel'/'verzend'</i> menu: <br/>
- <br/>
-Eenvoudige bestandsverzameling voor ondersteunde applicaties
-in een zip-bestand wanneer je `<i>on the go</i>` bent of niet verbonden bent.<br/>
-<br/>
-Deze bestandsverzamelaar <i>2go.zip</i>-is als een koffertje
- waarin je dingen (bestanden) bijna overal kunt opslaan (van
- toepassingen die <i>'delen'/'verzenden' </i>ondersteunen) en
- overal naartoe&nbsp; kunnen reizen (via email,
- bluetooth,&nbsp;nfc).<br/>
-<br/>
- In het begin is dit programma ontwikkeld om een ​​nieuwe Android-kalender-items te
- verzamelen (<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- dat moet overgebracht worden naar de kalender van desctop-pcs. <br/>
-<br/>
-<br/>
-    "]]></string>
   <string name="pref_debug_title">Foutopsporingsmodus</string>
   <string name="pref_debug_summary">Foutopsporing Berichten gekopieerd naar het klembord en toegevoegd aan LogCat</string>
   <string name="pref_long_text_file_title">Lange tekstbestand in zip</string>

@@ -27,8 +27,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
 %2$s"]]></string>
   <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["
 Aucune autorisation d\'écrire sur %1$s %2$s.
-(Y a-t-il une carte SD, et est-elle montée ?)"]]
-</string>
+"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["
+Aucune autorisation d\'écrire sur %1$s %2$s.
+(Y a-t-il une carte SD, et est-elle montée ?)
+"]]</string>
 
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Les fichiers sont déjà inclus dans 
 %1$s"]]></string>
@@ -38,31 +41,6 @@ Aucune autorisation d\'écrire sur %1$s %2$s.
   <string name="WARN_ADD_CANCELED">Annuler : Aucun fichier ajouté</string>
   <string name="about_summary">À propos de ToGoZip</string>
   <string name="banner">Collecté avec la version $versionName$ de ToGoZip</string>
-  <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
-         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
-         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
-         and in github homepage.
-         -->
-  <string name="about_content_about"><![CDATA["
-<b><i>'Add to Zip'</i></b>
- for android's <i>'share'/'send'</i> menu: <br/>
- <br/>
- Collecte facile de fichiers depuis les apps supportées dans un
- fichier zip, '<i>très efficace</i>' et hors-ligne.<br/>
-<br/>
- Ce fichier <i>2go.zip</i> est comme un coffre
- où vous pouvez ajouter des fichiers depuis n'importe où (depuis toutes les
- Apps qui supportent la fonction <i>'Partager'</i>) et qui peut être
- envoyé&nbsp; partout (par mail,
- bluetooth,&nbsp;nfc).<br/>
-<br/>
- Au début, ce programme était développé pour collecter les nouvelles entrées
- du calendrier Android (<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- qui devaient être transférées vers le calendrier du PC.<br/>
-<br/>
-<br/>
-    "]]></string>
   <string name="pref_debug_title">Mode Débogage</string>
   <string name="pref_debug_summary">Messages de débogage copiés dans le presse-papiers et ajoutés à LogCat</string>
   <string name="pref_long_text_file_title">Long Text File in zip</string>

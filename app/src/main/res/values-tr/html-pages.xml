@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <string name="about_content_about"><![CDATA["
+<b><i>"Zip Dosyasına Ekle"</i></b>
+Android-s <i>paylaşımı / gönderme</i> menüsü için Zip-e ekleyin.
+<br/><br/>
+Her destekleyici uygulamadan dosyaları kolayca toplama
+Bir zip dosyası hareket halindeyken  ya da çevrimdışı.
+(Not ingilizce '<i>to go</i>' yolculuk sırasında 'anlamına gelir').
+<br/><br/>
+Bu toplama '<i>2go.zip</i>' dosyası bir bavul gibidir
+Nereden nereye (dosyalar) nereye
+'<i>paylaş / gönder</i>' i destekleyen her uygulama ve bunu
+her yere gidebilir (e-posta yoluyla,
+bluetooth, nfc).
+<br/>
+<br/>
+    "]]></string>
+
+</resources>

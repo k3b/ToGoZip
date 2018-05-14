@@ -40,26 +40,6 @@ Do you want to use default '%2$s' instead? "]]></string>
     <string name="about_summary">about_summary:About ToGoZip</string>
     <string name="banner">banner:Collected with ToGoZip Version $versionName$</string>
 
-    <string name="about_content_about"><![CDATA["about_content_about:
-<b><i>"Add to Zip"</i></b>
- for android's <i>'share'/'send'</i> menu: <br/>
- <br/>
- Easy collection of files from every supporting app into
- one zip-file while beeing '<i>on the go</i>' or offline.<br/>
-<br/>
-This collecting <i>2go.zip</i>-file is like a suitcase
- where you can put things (files) into from nearly everywhere (from
- every app that supports <i>'share'/'send'</i>) and that
- can travel&nbsp; everywhere (via email,
- bluetooth,&nbsp;nfc).<br/>
-<br/>
- In the beginning this program was developed to collect new android calendar
- entries (<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- that should be transfered to the desctop-pcs-s calendar. <br/>
-<br/>
-<br/>
-    "]]></string>
     <string name="pref_debug_title">pref_debug_title:Debug Mode</string>
     <string name="pref_debug_summary">pref_debug_summary:Debug Messages copied to clipboard and added to LogCat</string>
     <string name="pref_long_text_file_title">pref_long_text_file_title:Long Text File in zip</string>

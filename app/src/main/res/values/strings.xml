@@ -42,30 +42,6 @@ Do you want to use default '%2$s' instead?"]]></string>
     <string name="about_summary">About ToGoZip</string>
     <string name="banner">Collected with ToGoZip Version $versionName$</string>
 
-    <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
-         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
-         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
-         and in github homepage.
-         -->
-    <string name="about_content_about"><![CDATA["
-<b><i>"Add to Zip"</i></b>
- for android's <i>'share'/'send'</i> menu: <br/>
- <br/>
- Easy collection of files from every supporting app into
- one zip-file while being '<i>on the go</i>' or offline.<br/>
-<br/>
-This collecting <i>2go.zip</i>-file is like a suitcase
- where you can put things (files) into from nearly everywhere (from
- every app that supports <i>'share'/'send'</i>) and that
- can travel&nbsp; everywhere (via email,
- bluetooth,&nbsp;nfc).<br/>
-<br/>
-The program's author uses ToGoZip to collect new android calendar entries
- that should be later imported into the desctop-pcs-s calender.
- <br/>
-<br/>
-<br/>
-    "]]></string>
     <string name="pref_debug_title">Debug Mode</string>
     <string name="pref_debug_summary">Debug Messages copied to clipboard and added to LogCat</string>
     <string name="pref_long_text_file_title">Long Text File in zip</string>

@@ -42,26 +42,6 @@ Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
     <string name="about_summary">Info über ToGoZip</string>
     <string name="banner">Gesammelt mit ToGoZip Version $versionName$</string>
 
-    <string name="about_content_about"><![CDATA["
-<b><i>'==&gt; Zip'</i></b>
- f&uuml;r Androids <i>'senden'</i> Men&uuml;: <br/>
- <br/>
- Einfaches Einsammeln von Dateien, Ordnern, Internetaddressen, Texten in eine gemeinsame Zip-Datei
- aus allen Apps heraus, die die Android-Funktion <i>'Senden'</i> unterst&uuml;tzen.<br/>
- <br/>
- Das englische <i>'ToGo'</i> bedeutet frei &uuml;bersetzt <i>'w&auml;hrend man unterwegs oder offline ist'</i>.<br/>
-<br/>
- Diese Einsammeldatei <i>2go.zip</i> ist wie ein Koffer, in den man
- von fast &uuml;berall aus (aus Apps, die <i>'Senden'</i> unterst&uuml;tzen)
- verschiedene Dinge (Dateien) legen kann und der &uuml;berall hin reisen kann (per email,
- bluetooth,&nbsp;nfc).<br/>
-<br/>
- Diese App wurde urspr&uuml;nglich entwickelt, um neue Android Kalender Eintr&auml;ge
-  (<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- zu sammeln, die sp&auml;ter in den Desctop-Pcs-s Kalender &uuml;bertragen werden sollen. <br/>
-<br/>
-    "]]></string>
     <string name="pref_debug_title">Debug Modus</string>
     <string name="pref_debug_summary">Debug Meldung in die Zwischenablage und ins Fehlerprotokoll.</string>
     <string name="pref_long_text_file_title"  >Dateiname langer Text.</string>

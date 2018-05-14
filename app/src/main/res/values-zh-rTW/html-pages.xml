@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <string name="about_content_about"><![CDATA["
+通過安卓設備的<i>'分享'/'發送'</i>菜單<b><i>"添加到 Zip"</i></b>: <br/>
+ <br/>
+ 輕易地從每個支持的應用程序中的文件壓縮為一個 ZIP 文檔，無論是在“<i>途中</i>”或者離線狀態。 <br/>
+<br/>
+這個<i>2go.zip</i> 文件就像是一個箱子，你可以將附近任何地方（每個支持<i>“分享”/“發送”</i>的應用程序）的東西（文件）放進來，並傳送到任何地方（通過Email、藍牙、NFC）。 <br/>
+<br/>
+一開始，開發這個程序是用來收集新的安卓日曆項（<a
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;已被轉移到desctop-pcs-s 日曆。 <br/>
+<br/>
+<br/>
+    "]]></string>
+
+</resources>

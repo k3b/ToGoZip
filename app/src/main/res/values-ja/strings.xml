@@ -37,31 +37,6 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="WARN_ADD_CANCELED">キャンセル: ファイルは追加されません</string>
   <string name="about_summary">ToGoZip について</string>
   <string name="banner">ToGoZip バージョン $versionName$ に集める</string>
-  <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
-         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
-         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
-         and in github homepage.
-         -->
-  <string name="about_content_about"><![CDATA["
-<b><i>"Zip に追加"</i></b>
- Android の <i>'共有'/'送信'</i> メニュー用: <br/>
- <br/>
- それぞれのサポートするアプリから 1 つの zip ファイルに
- '<i>外出中</i>' またはオフラインでも簡単にファイルを集めます。<br/>
-<br/>
-この <i>2go.zip</i> ファイルはスーツケースのように、
- <i>'共有'/'送信'</i> をサポートするすべてのアプリから、
- ほぼどこからでもファイルを入れることができ、
- (メール、Bluetooth、NFC 経由で)
- どこへでも持ち運ぶことができます。<br/>
-<br/>
- 最初このプログラムは、新しい Android のカレンダーのエントリ
- (<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics ファイル)</a>&nbsp;
- をデスクトップ PC のカレンダーに転送するために開発されました。 <br/>
-<br/>
-<br/>
-    "]]></string>
   <string name="pref_debug_title">デバッグモード</string>
   <string name="pref_debug_summary">デバッグメッセージをクリップボードにコピーして、LogCat に追加しました</string>
   <string name="pref_long_text_file_title">zip に長いテキストファイル</string>

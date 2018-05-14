@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
+       strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
+       fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
+       and in github homepage.
+       -->
+    <string name="about_content_about"><![CDATA["
+<b> <i>Hozzáadás Ziphoz</i> </b>
+  az android 's' share '/' send '</i> menüjéhez: <br/>
+  <br/>
+  Egyszerű fájlgyűjtés minden támogató alkalmazásból
+  egy zip-fájl közben '<i> útközben </i>' vagy offline állapotban. <br/>
+<br/>
+Ez a <i> 2go.zip </i> fájl összegyűjtése olyan, mint egy bőrönd
+  ahol a dolgokat (fájlokat) majdnem mindenhol beillesztheti (a
+  minden app, amely támogatja a <i> 'share' /'send' </i>) és ezt
+  utazhat & nbsp; mindenhol (e-mailben,
+  bluetooth, & nbsp; Nfc). <br/>
+<br/>
+A program szerzője a ToGoZip-t használja az új android naptár bejegyzések gyűjtésére
+  amelyet később be kell vinni a desctop-pcs-s kalanderbe.
+  <br/>
+<br/>
+<br/>
+"]]></string>
+
+</resources>

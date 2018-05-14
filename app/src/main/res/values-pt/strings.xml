@@ -34,30 +34,6 @@ Você quer usar o padrão '%2$s' em vez?"]]></string>
   <string name="WARN_ADD_CANCELED">Cancelar: Não há arquivos adicionados</string>
   <string name="about_summary">Sobre ToGoZip</string>
   <string name="banner">Coletados cpm versão ToGoZip $versionName$</string>
-  <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
-         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
-         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
-         and in github homepage.
-         -->
-  <string name="about_content_about"><![CDATA["
-<b><i>'Adicionar a Zip'</i></b>
- para android <i>'Compartilhar'/'enviar'</i> menu: <br/>
- <br/>
-Coleta fácil de arquivos de cada aplicativo de suporte para
- um arquivo zip ao ser '<i>em qualquer lugar</i>'ou offline.<br/>
-<br/>
-Essa coleção <i>2go.zip</i>-arquivo é como uma mala
- onde você pode colocar as coisas (arquivos) em quase todos os lugares (de
- cada app que suporte<i>'compartilhar'/'enviar'</i>) e essa
- Pode viajar&nbsp; em todos os lugares (por e-mail,
- Bluetooth,&nbsp;nfc).<br/>
-<br/>
-O autor do programa usa o ToGoZip para coletar novas entradas do calendário do Android
- que deve ser importado mais tarde na agenda do desctop-pcs.
- <br/>
-<br/>
-<br/>
-    "]]></string>
   <string name="pref_debug_title">Modo de Depuração</string>
   <string name="pref_debug_summary">Depurar mensagens copiadas para a área de transferência e adicionado ao LogCat</string>
   <string name="pref_long_text_file_title">Arquivo de texto longo em zip</string>

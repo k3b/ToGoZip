@@ -36,25 +36,6 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="WARN_ADD_CANCELED">বাতিল: যুক্ত কোন ফাইল নেই</string>
   <string name="about_summary">ToGoZip সম্পর্কে</string>
   <string name="banner">ToGoZip সংস্করণ $versionName$ দ্বারা সংগৃহীত</string>
-  <string name="about_content_about"><![CDATA["
-<b><i>'জিপ যোগ করুন'</i></b>
- for android's <i>'share'/'send'</i> মেনু: <br/>
- <br/>
- যখন প্রতিটি সাপোর্টিং অ্যাপ থেকে ফাইলগুলি সহজে একটি জিপ ফাইলের মধ্যে সংগ্রহ করা হয় '<i>on the go</i>' or offline.<br/>
-<br/>
-This collecting <i>2go.zip</i>-file is like a suitcase
- where you can put things (files) into from nearly everywhere (from
- every app that supports <i>'share'/'send'</i>) and that
- can travel&nbsp; everywhere (via email,
- bluetooth,&nbsp;nfc).<br/>
-<br/>
- শুরুতে এই প্রোগ্রামটি নতুন অ্যান্ড্রয়েড ক্যালেন্ডার সংগ্রহ করতে উন্নত করা হয়েছিল
- এন্ট্রি (<a
- href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
- এটি ডেস্কটপ-পিসি-ক্যাল ক্যালেন্ডারে স্থানান্তর করা উচিত. <br/>
-<br/>
-<br/>
-    "]]></string>
   <string name="pref_debug_title">ডিবাগ মোড</string>
   <string name="pref_debug_summary">ক্লিপবোর্ডে কপি এবং LogCat সাথে যুক্ত বার্তা ডিবাগ করুন</string>
   <string name="pref_long_text_file_title">দীর্ঘ লেখা জিপ ফাইল</string>

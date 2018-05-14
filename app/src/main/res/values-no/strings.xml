@@ -35,30 +35,6 @@ Vil du bruke standard '%2$s' i stedet? "]]></string>
   <string name="WARN_ADD_CANCELED">Avbryt: Ingen filer lagt til</string>
   <string name="about_summary">Om ToGoZip</string>
   <string name="banner">Samles med ToGoZip versjon $versjonnavn$</string>
-  <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
-         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
-         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
-         and in github homepage.
-         -->
-  <string name="about_content_about"><![CDATA["
-<b> <i> 'Legg til i zip' </i> </b>
-  for android <i> 'share' / 'send' </i> -menyen: <br/>
-  <br/>
-  Enkel samling av filer fra hver støttende app inn i
-  en zip-fil mens du er <i> på farten </i> eller offline. <br/>
-<br/>
-Denne samlingen <i> 2go.zip </i> -filen er som en koffert
-  hvor du kan sette ting (filer) inn fra nesten overalt (fra
-  hver app som støtter <i> 'share' / 'send' </i>) og det
-  kan reise & nbsp; overalt (via e-post,
-  Bluetooth, og nbsp; Nfc) <br/>.
-<br/>
-Programmets forfatter bruker ToGoZip til å samle inn nye android kalenderoppføringer
-  Det skal senere importeres til desctop-pcs-kalenderen.
-  <br/>
-<br/>
-<br/>
-     "]]></string>
   <string name="pref_debug_title">Feilsøkingsmodus</string>
   <string name="pref_debug_summary">Feilsøkingsmeldinger kopiert til utklippstavlen og lagt til i LogCat</string>
   <string name="pref_long_text_file_title">Lang tekstfil i zip</string>
