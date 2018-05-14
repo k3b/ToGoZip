@@ -25,9 +25,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="cmd_edit">Modifier</string>
   <string name="ERR_ADD"><![CDATA["Impossible d'actualiser %1$s : 
 %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["Aucune autorisation d'écrire sur %1$s %2$s."]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Aucune autorisation d'écrire dans le zip actuel '%1$s'.
-Voulez-vous utiliser l'emplacement par défaut '%2$s' à la place? "]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS"><![CDATA["
+Aucune autorisation d\'écrire sur %1$s %2$s.
+(Y a-t-il une carte SD, et est-elle montée ?)"]]
+</string>
+
   <string name="WARN_ADD_NO_CHANGES"><![CDATA["Les fichiers sont déjà inclus dans 
 %1$s"]]></string>
   <string name="SUCCESS_ADD"><![CDATA["%2$d fichier(s) ajouté(s) à 
