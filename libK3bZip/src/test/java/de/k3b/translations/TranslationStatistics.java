@@ -84,13 +84,19 @@ public class TranslationStatistics {
                     ;
             return result;
         }
+
+        // ini format has different column order. translators must be 3rd column
+        protected CharSequence toString(Object locale, Object lastModified, Object apps, Object fdroid, Object html, Object translators, Object missing) {
+            return super.toString(locale, lastModified, translators, apps, fdroid, html, missing);
+        }
+
     };
 
 
     public static final Formatter formatterMarkdown = new Formatter("| "," | "," |", "\n", false){
         @Override public CharSequence createHeader() {
             String underscore = "---";
-            return super.createHeader() + newLine + super.toString(underscore,underscore,underscore,underscore,underscore,underscore,underscore);
+            return super.createHeader() + newLine + super.toString(underscore,underscore, underscore, underscore, underscore, underscore, underscore);
         }
 
     } ;
@@ -111,7 +117,7 @@ public class TranslationStatistics {
         }
 
         public CharSequence createHeader() {
-            return toString("language","changed","translated by","app","aboutbox","fdroid", "missing");
+            return toString("language","changed", "app", "fdroid", "aboutbox", "translated by", "missing");
         }
 
         public CharSequence toString(LocaleInfo item, LocaleInfo reference) {
@@ -131,9 +137,11 @@ public class TranslationStatistics {
                 diffArray = ListUtils.asStringArray(diff);
                 if (diffArray != null) Arrays.sort(diffArray);
             }
+
+            // Object locale, Object lastModified, Object apps, Object fdroid, Object html, Object translators, Object missing
             return toString(item.locale, DateUtil.toIsoDateString(item.lastModified),
-                    item.translators, asValue(item.strings, reference.strings), item.html,
-                    asValue(fdroid, fdroidExpected), ListUtils.toString(", ", (Object[]) diffArray));
+                    asValue(item.strings, reference.strings), asValue(fdroid, fdroidExpected), item.html, item.translators,
+                    ListUtils.toString(", ", (Object[]) diffArray));
         }
 
         public CharSequence toString(LocaleInfos infos, LocaleInfo reference) {
@@ -151,11 +159,11 @@ public class TranslationStatistics {
             return result;
         }
 
-        private CharSequence toString(Object locale, Object lastModified, Object translators, Object strings, Object html, Object fdroid, Object missing) {
+        protected CharSequence toString(Object locale, Object lastModified, Object apps, Object fdroid, Object html, Object translators, Object missing) {
             return prefix +
                     locale + infix +
                     lastModified + infix +
-                    strings + infix +
+                    apps + infix +
                     fdroid + infix +
                     html + infix +
                     translators +
