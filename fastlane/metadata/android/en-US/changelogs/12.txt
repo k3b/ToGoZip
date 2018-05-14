@@ -3,10 +3,3 @@ Translations:
 * update (> 95%): id
 * new (100%): Vietnamese vi 
 * update (100%): pl, ja, fr
-
-D:\prj\eve\android\prj\AndroidZip.wrk\ToGoZip\fastlane\metadata\android
-	de-DE\full_description.txt
-D:\prj\eve\android\prj\AndroidZip.wrk\ToGoZip\app\src\debug\res
-	values-de\fdroid.xml
-D:\prj\eve\android\prj\AndroidZip.wrk\ToGoZip\app\src\main\res 
-	values-de\strings.xml
