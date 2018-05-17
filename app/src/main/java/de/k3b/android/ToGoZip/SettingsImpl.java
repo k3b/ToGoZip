@@ -263,7 +263,8 @@ public class SettingsImpl {
         try {
             return Integer.parseInt(prefs.getString(key,
                     Integer.toString(notFoundValue)));
-        } catch (final ClassCastException ex) {
+        } catch (final Exception ex) {
+            // ClassCastException or NumberFormatException
 
             Log.w(Global.LOG_CONTEXT, "getPrefValue-Integer(" + key + ","
                     + notFoundValue + ") failed: " + ex.getMessage());
@@ -275,7 +276,8 @@ public class SettingsImpl {
                                         final String key, final boolean notFoundValue) {
         try {
             return prefs.getBoolean(key, notFoundValue);
-        } catch (final ClassCastException ex) {
+        } catch (final Exception ex) {
+            // ClassCastException or FormatException
             Log.w(Global.LOG_CONTEXT, "getPrefValue-Boolean(" + key + ","
                     + notFoundValue + ") failed: " + ex.getMessage());
             return notFoundValue;
