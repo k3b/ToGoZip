@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Russian translation 2018 by mesnevi,HenriDellal.
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+  <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
+         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
+         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
+         and in github homepage.
+         -->
+  <string name="about_content_about"><![CDATA["<b><i>Пункт "Добавить в Zip"</i></b>
+ для меню Android <i>"поделиться/ отправить"</i><br/>
+ <br/>
+ Собирает файлы из любого поддерживающего эту возможность приложения в один zip архив «<i>на лету</i>» или в автономном режиме.<br/>
+<br/>
+Файл <i>2go.zip</i> похож на чемодан, в который можно сложить вещи (файлы), взятые откуда угодно (из приложения, которое поддерживает функцию <i>"поделиться / отправить"</i>), а  затем послать его куда и как угодно (по электронной почте, Bluetooth или Nfc).<br/>
+<br/>
+Автор приложения собирает с его помощью новые записи из календаря Android, а потом импортирует их в календарь на десктопе.
+ <br/>
+<br/>
+<br/>"]]></string>
+</resources>

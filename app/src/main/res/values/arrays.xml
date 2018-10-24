@@ -35,6 +35,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>Norsk (Norwegian)</item>
         <item>Polskie (Polish)</item>
         <item>Português (Portuguese)</item>
+        <item>Русский (Russian)</item>
         <item>Türk (Turkish)</item>
         <item>Tiếng Việt (Vietnamese)</item>
         <item>日本人 (Japanese)</item>
@@ -56,6 +57,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>no</item>
         <item>pl</item>
         <item>pt</item>
+        <item>ru</item>
         <item>tr</item>
         <item>vi</item>
         <item>ja</item>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Russian translation 2018 by mesnevi,HenriDellal.
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+  <string name="title_activity_add2zip">Добавить в архив</string>
+  <string name="cmd_use_default">Использовать по умолчанию</string>
+  <string name="cmd_cancel">Отмена</string>
+  <string name="cmd_edit">Изменить</string>
+  <string name="ERR_ADD"><![CDATA["Не удалось обновить %1$s:
+%2$s"]]></string>
+  <string name="ERR_NO_WRITE_PERMISSIONS">Нет разрешения на запись %1$s в %2$s.</string>
+  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Нет разрешения на запись в текущий архив '%1$s'. Использовать вместо этого архив по умолчанию '%2$s'?"]]></string>
+  <string name="WARN_ADD_NO_CHANGES"><![CDATA[Файлы уже включены в
+%1$s]]></string>
+  <string name="SUCCESS_ADD"><![CDATA[%2$d файл(ов) добавлен(о) в
+%1$s]]></string>
+  <string name="WARN_ADD_NO_FILES">Ни один файл не выбран</string>
+  <string name="WARN_ADD_CANCELED">Отмена: файлы не добавлены</string>
+  <string name="about_summary">О приложении</string>
+  <string name="banner">Собрано с ToGoZip версии $versionName$</string>
+  <string name="pref_debug_title">Режим отладки</string>
+  <string name="pref_debug_summary">Копировать отладочные сообщения в буфер обмена и добавлять их в LogCat</string>
+  <string name="pref_long_text_file_title">Длинный текстовый файл в архиве</string>
+  <string name="pref_long_text_file_len_min">Длинный текст: символов больше</string>
+  <string name="pref_short_text_file_title">Короткий текстовый файл в архиве</string>
+  <string name="pref_zipfile_title">Название файла архива</string>
+  <string name="pref_settings_title">Настройки</string>
+  <string name="settings_locale_title">Язык</string>
+  <string name="settings_locale_os_language">Системный</string>
+  <!-- #8: for folder picker -->
+  <string name="pref_zipfolder_title">Путь сохранения архива</string>
+  <string name="folder_picker_parent_dir">Наверх</string>
+  <string name="folder_picker_create_new_directory">Новая папка</string>
+</resources>
