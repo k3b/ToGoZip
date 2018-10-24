@@ -21,6 +21,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <!-- #6: which gui language to use ? pref_locale_names must correspond with pref_locale_values -->
     <string-array name="pref_locale_names" translatable="false">
         <item>@string/settings_locale_os_language</item>
+        <item>العربية (Arabic)</item>
         <item>简体中文 (simplified Chinese)</item>
 		<item>繁体中文 (traditional Chinese)</item>
         <item>বাঙালি (Bengali)</item>
@@ -43,6 +44,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
     </string-array>
     <string-array name="pref_locale_values" translatable="false">
         <item></item>
+        <item>ar</item>
         <item>zh-CN</item>
 		<item>zh-TW</item>
         <item>bn</item>
