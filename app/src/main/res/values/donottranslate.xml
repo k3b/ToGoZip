@@ -30,6 +30,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string name="about_translate" translatable="false"><![CDATA["
 	App and internet homepage available in these languages:<ul>
 	<li>
+<a href="https://github.com/k3b/toGoZip/wiki/ar-home">ar</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/bn-home">bn</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/de-home">de</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/home"   >en</a>,&nbsp;
@@ -41,8 +42,9 @@ hi,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/ja-home">ja</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/nl-home">nl</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/no-home">no</a>,&nbsp;
-<a href="https://github.com/k3b/toGoZip/wiki/pt-home">pt</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/pl-home">pl</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/pt-home">pt</a>,&nbsp;
+<a href="https://github.com/k3b/toGoZip/wiki/ru-home">ru</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/tr-home">tr</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/vi-home">vi</a>,&nbsp;
 <a href="https://github.com/k3b/toGoZip/wiki/zh-CN-home">zh-CN</a>,&nbsp;

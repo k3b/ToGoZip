@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+  <string name="about_content_about"><![CDATA["
+<b><i>'Agregar a Zip'</i></b>
+para android <i>'compartir'/'enviar'</i> menú: <br/>
+<br/>
+Fácil recolección de archivos de cada aplicación soportada,
+en un archivo zip cuando estás '<i>en el camino</i>' o desconectado.<br/>
+<br/>
+Este archivo recolector <i>2go.zip</i>-es como un maletín
+que puedes poner cosas (archivos) desde casi cualquier parte (desde
+aplicaciones que lo soporten <i>'compartir'/'enviar'</i>) y pueden
+ viajar&nbsp; a cualquier parte (via email,
+ bluetooth,&nbsp;nfc).<br/>
+<br/>
+En un principio este programa fue creado para recolectar entradas de
+calendario (<a
+ href='http://f-droid.org/wiki/page/de.k3b.android.calendar.ics.adapter'>ics-files)</a>&nbsp;
+ que se pudiera transferir al calendario de una PC de escritorio. <br/>
+<br/>
+<br/>
+    "]]></string>
+
+</resources>
