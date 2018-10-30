@@ -56,4 +56,7 @@ Do you want to use default '%2$s' instead?"]]></string>
     <string name="pref_zipfolder_title">Output Zip Folder</string>
     <string name="folder_picker_parent_dir">Up</string>
     <string name="folder_picker_create_new_directory">New</string>
+
+    <string name="pref_log_file_in_zip_debug_summary">Update ToGoZip.log in Zip</string>
+    <string name="pref_log_file_in_zip_debug_title">Log full source file paths of added files.</string>
 </resources>

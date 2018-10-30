@@ -57,7 +57,7 @@ public class CompressJobTests {
     }
 
     private CompressJob createCompressJob(ZipStorage testZip) {
-        return new CompressJob(null).setDestZipFile(testZip);
+        return new CompressJob(null, null).setDestZipFile(testZip);
     }
 
     private File createMockFile(String name, long date) {
@@ -73,7 +73,7 @@ public class CompressJobTests {
         CompressJob sut = createCompressJob(null);
         File mockedFile = createMockFile("a.txt", 300000l);
 
-        sut.addItemToCompressQue("", mockedFile);
+        sut.addItemToCompressQue("", mockedFile, null);
 
         List<CompressItem> result = sut.handleDuplicates(this.existingZipFileEntries);
 
@@ -84,8 +84,8 @@ public class CompressJobTests {
     public void shouldNotAddDuplicate() {
 
         CompressJob sut = createCompressJob(null);
-        sut.addItemToCompressQue("", new File("a.txt"));
-        CompressItem result = sut.addItemToCompressQue("", new File("a.txt"));
+        sut.addItemToCompressQue("", new File("a.txt"), null);
+        CompressItem result = sut.addItemToCompressQue("", new File("a.txt"), null);
 
         Assert.assertEquals(null, result);
     }

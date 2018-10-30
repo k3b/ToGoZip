@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -21,18 +21,18 @@ package de.k3b.zip;
 import java.io.*;
 
 /**
- * One dto-item that should be compressed.<br/>
+ * One android independant, java.io.File based  dto-item that should be compressed.<br/>
  * <p/>
  * Author k3b
  */
 public class FileCompressItem extends CompressItem {
     private File file;
 
-
-    public FileCompressItem(String destZipPath, File srcFile) {
+    public FileCompressItem(String destZipPath, File srcFile, String zipEntryComment) {
         if (destZipPath == null) destZipPath = "";
         setFile(srcFile);
         setZipEntryFileName(destZipPath + srcFile.getName());
+        setZipEntryComment(zipEntryComment);
     }
 
     public FileCompressItem setFile(File file) {

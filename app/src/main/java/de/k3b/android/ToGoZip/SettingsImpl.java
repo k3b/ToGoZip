@@ -73,6 +73,9 @@ public class SettingsImpl {
         Global.debugEnabled = SettingsImpl.getPrefValue(prefs,
                 "isDebugEnabled", Global.debugEnabled);
 
+        Global.isWriteLogFile2Zip = SettingsImpl.getPrefValue(prefs,
+                "isWriteLogFile2Zip", Global.isWriteLogFile2Zip);
+
         SettingsImpl.zipfile = SettingsImpl
                 .getPrefValue(prefs, KEY_ZIPFILE,
                         SettingsImpl.zipfile);

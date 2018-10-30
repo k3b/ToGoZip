@@ -33,8 +33,8 @@ public class TextCompressItem extends FileCompressItem {
     private StringBuilder text = new StringBuilder();
     private long lastModified;
 
-    public TextCompressItem(String destZipPath, File srcFile) {
-        super(destZipPath, srcFile);
+    public TextCompressItem(String destZipPath, File srcFile, String zipEntryComment) {
+        super(destZipPath, srcFile, zipEntryComment);
     }
 
     public InputStream getFileInputStream() throws IOException {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -23,7 +23,6 @@ import android.net.Uri;
 import android.support.v4.provider.DocumentFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,8 +37,9 @@ public class DocumentFileCompressItem extends FileCompressItem {
     private final Context context;
     private final Uri uri;
 
-    public DocumentFileCompressItem(Context context, String destZipPath, File srcFile, Uri uri) {
-        super(destZipPath, srcFile);
+    public DocumentFileCompressItem(Context context, String destZipPath, File srcFile, Uri uri,
+                                    String zipEntryComment) {
+        super(destZipPath, srcFile, zipEntryComment);
         this.context = context;
         this.uri = uri;
     }

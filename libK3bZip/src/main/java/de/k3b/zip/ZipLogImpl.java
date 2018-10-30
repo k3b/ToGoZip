@@ -24,6 +24,9 @@ import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 
 /**
+ /**
+ * A slf4j based, android inependant consumer that can receive log messages that shows what is going on.
+ *
  * Created by k3b on 25.11.2014.
  */
 public class ZipLogImpl  implements ZipLog {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2018 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -19,7 +19,9 @@
 package de.k3b.zip;
 
 /**
- * Created by EVE on 25.11.2014.
+ * Interface for a consumer that can receive log messages that shows what is going on.
+ *
+ * Created by k3b on 25.11.2014.
  */
 public interface ZipLog {
     /**

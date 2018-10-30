@@ -1,6 +1,14 @@
 todo.txt for k3b.add2Zip
 =========
 
+
+* #13: Add to Settings: save with full path
+    * comment
+        * uri, source-path
+    * path relative to
+    * logfile zip-path,source-file-path,source-uri-path
+
+
 * Add2ZipActivity:onCreate
 	* hasRuntimePermission && hasFolderPermission
 		* no: SettingsActivity()

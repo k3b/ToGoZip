@@ -40,9 +40,10 @@ public class AndroidCompressJob extends CompressJob {
     /**
      * Creates a job.
      * @param zipLog if true collect diagnostics/debug messages to debugLogMessages.
+     * @param fileLogInZip
      */
-    public AndroidCompressJob(Context context, ZipLog zipLog) {
-        super(zipLog);
+    public AndroidCompressJob(Context context, ZipLog zipLog, String fileLogInZip) {
+        super(zipLog, fileLogInZip);
         this.context = context;
     }
     //############ processing ########

@@ -66,6 +66,12 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:summary="@string/pref_debug_summary"
             android:title="@string/pref_debug_title" />
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="isWriteLogFile2Zip"
+            android:summary="@string/pref_log_file_in_zip_debug_summary"
+            android:title="@string/pref_log_file_in_zip_debug_title" />
+
         <de.k3b.android.widget.AboutDialogPreference
             android:key="about"
             android:title="@string/about_summary" />

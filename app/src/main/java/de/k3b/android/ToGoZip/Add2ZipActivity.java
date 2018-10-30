@@ -70,7 +70,8 @@ public class Add2ZipActivity extends LocalizedActivity {
         ZipLog zipLog = new ZipLogImpl(Global.debugEnabled);
         IntentParser intentParser = new IntentParser(this, getIntent(), zipLog);
 
-        AndroidCompressJob job = new AndroidCompressJob(this, zipLog);
+        AndroidCompressJob job = new AndroidCompressJob(this, zipLog,
+                Global.isWriteLogFile2Zip ? (this.getString(R.string.app_name) + ".log") : null);
         job.setDestZipFile(SettingsImpl.getCurrentZipStorage(this));
 
         CompressItem[] filesToBeAdded = intentParser.getFilesToBeAdded();

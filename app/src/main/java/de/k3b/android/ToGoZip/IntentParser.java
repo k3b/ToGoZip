@@ -34,10 +34,10 @@ import java.util.List;
 
 import de.k3b.android.MediaUtil;
 import de.k3b.zip.CompressItem;
-import de.k3b.zip.FileCompressItem;
 import de.k3b.zip.ZipLog;
 
 /**
+ * retrieve files/text/... to be added from intent (view/send/sendTo/sendMultible/.... )
  * Created by k3b on 25.11.2014.
  */
 public class IntentParser {
@@ -183,21 +183,22 @@ public class IntentParser {
     private CompressItem getCompressItem(Uri uri, String mimeType) {
         if (uri != null) {
             String scheme = uri.getScheme();
+            String zipEntryComment = null; //!!!
 
             if ("file".equalsIgnoreCase(scheme)) {
                 File file = new File(uri.getPath());
                 if (file.exists()) {
                     zipLog.traceMessage("Data[file-uri={0}]: {1}", uri, file);
-                    return new DocumentFileCompressItem(context, null, file, uri);
+                    return new DocumentFileCompressItem(context, null, file, uri, zipEntryComment);
                 }
             } else if ("content".equalsIgnoreCase(scheme)) {
                 String path = MediaUtil.convertMediaUriToPath(context, uri);
                 if (path != null) {
                     zipLog.traceMessage("Data[file-content-uri={0}]: {1}", uri, path);
-                    return new DocumentFileCompressItem(context, null, new File(path), uri);
+                    return new DocumentFileCompressItem(context, null, new File(path), uri, zipEntryComment);
                 }
 
-                final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri, mimeType);
+                final AndroidUriCompressItem item = new AndroidUriCompressItem(this.context, uri, mimeType, zipEntryComment);
                 try {
                     InputStream is = item.getFileInputStream();
                     if (is != null) {

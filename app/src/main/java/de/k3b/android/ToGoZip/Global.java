@@ -41,4 +41,7 @@ public class Global {
 
     /** Remember initial language settings. This allows setting "switch back to device language" after changing app locale */
     public static Locale systemLocale = Locale.getDefault();
+
+    /** if not null added files will be logged in this zip-entry-text-file */
+    public static boolean isWriteLogFile2Zip = false;
 }
