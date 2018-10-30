@@ -11,8 +11,8 @@ apply plugin: 'maven-publish'
 publishing {
     publications {
         maven(MavenPublication) {
-			groupId 'com.github.k3b.ToGoZip'
-            artifactId 'libK3bZip'
+			groupId 'com.github.k3b'
+            artifactId 'ToGoZip.libK3bZip'
 			
 			from components.java
         }
