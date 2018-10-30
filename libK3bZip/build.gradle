@@ -3,21 +3,11 @@ apply plugin: 'jacoco'
 
 // ---------------
 // required for jitpack
-apply plugin: 'maven-publish' 
-// group = 'com.github.k3b'
-// artifactId = 'ToGoZip.libK3bZip'
-// ---------------
+apply plugin: 'maven' 
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-			groupId 'com.github.k3b'
-            artifactId 'ToGoZip.libK3bZip'
-			
-			from components.java
-        }
-    }
-}
+group = "com.github.k3b"
+version = "L2.0.14"
+// ---------------
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

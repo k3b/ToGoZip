@@ -1,11 +1,10 @@
 // apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.android.application'
-apply plugin: 'maven-publish' 
 
 // ---------------
 // required for jitpack
-// apply plugin: 'maven' 
-// group = 'com.github.k3b'
+// apply plugin: 'maven-publish' 
+apply plugin: 'maven' 
 // ---------------
 
 android {
