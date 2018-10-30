@@ -1,6 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
 
+// ---------------
+// required for jitpack
+apply plugin: 'maven' 
+group = 'com.github.k3b'
+// ---------------
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
