@@ -23,65 +23,89 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Encapsulates all storage related operations that relate to a java.io.File.
- * The method-name are nearly the same as for java.io.File except
- * that String parameters named suffixXXXX are variations of the original name.
+ * Encapsulates all storage related operations that relate to a Zipfile.
+ *
+ * Goal  Having two implementations for zipiing:
+ * * an android-independant {@link ZipStorageFile} based on java.io.File
+ * * ab android saf implementation ZipStorageDocumentFile based on android.support.v4.provider.DocumentFile
+ *
+ * The method-names are nearly the same as for java.io.File except
+ * that there is an additional parameter {@link ZipInstance}
+ * that tells which current zip file to be used.
  *
  * Created by k3b on 12.12.2017.
  */
 public interface ZipStorage {
+    /** return true if ZipInstance.current exists */
     boolean exists();
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").delete(".tmp") will
-     *  delete "/path/to/file.zip.tmp"
+     * deletes the zip file.
+     *  i.e. new ZipStorage("/path/to/file.zip").delete(ZipStorage.ZipInstance.new_) will
+     *  delete "/path/to/file.tmp.zip"
      */
-    boolean delete(Instance suffix);
+    boolean delete(ZipInstance zipInstance);
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").createOutputStream(".tmp") will
-     *  delete exisit "/path/to/file.zip.tmp", create dirs "/path/to" and
-     *  create outputstream for "/path/to/file.zip.tmp"
+     * Creates an output stream that reperesents an empty zip file where files can be added to.
+     *  i.e. new ZipStorage("/path/to/file.zip").createOutputStream(ZipStorage.ZipInstance.new_) will
+     *  delete exisit "/path/to/file.tmp.zip", create dirs "/path/to" and
+     *  create outputstream for "/path/to/file.tmp.zip"
      */
-    OutputStream createOutputStream(Instance suffix) throws FileNotFoundException;
+    OutputStream createOutputStream(ZipInstance zipInstance) throws FileNotFoundException;
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").createInputStream(".tmp") will
-     *  create intputstream for "/path/to/file.zip.tmp"
+     * Creates an input stream that reperesents a zip file where files can be extracted from.
+     *  i.e. new ZipStorage("/path/to/file.zip").createInputStream() will
+     *  create intputstream for "/path/to/file.zip"
      */
     InputStream createInputStream() throws FileNotFoundException;
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").getName() will
+     * get zip filename for zipInstance
+     *  i.e. new ZipStorage("/path/to/file.zip").getName(ZipStorage.ZipInstance.current) will
      *  return "file.zip"
-     * @param suffix
+     * @param zipInstance
      */
-    String getName(Instance suffix);
+    String getName(ZipInstance zipInstance);
 
     /**
+     * get absolute path of zipFile
      *  i.e. new ZipStorage("/path/to/file.zip").getAbsolutePath() will
      *  return "/path/to/file.zip"
      */
     String getAbsolutePath();
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").rename(".tmp","") will
-     *  rename from "/path/to/file.zip.tmp" to from "/path/to/file.zip"
+     * rename zipfile.
+     *  i.e. new ZipStorage("/path/to/file.zip").rename(ZipStorage.ZipInstance.new_,ZipStorage.ZipInstance.current) will
+     *  rename from "/path/to/file.tmp.zip" to from "/path/to/file.zip"
      */
-    boolean rename(Instance suffixFrom, Instance suffixTo);
+    boolean rename(ZipInstance zipInstanceFrom, ZipInstance zipInstanceTo);
 
-    public enum Instance {
+    /** While processing a zip-file there can be 3 different instances of the zip:
+     * current, old, new */
+    public enum ZipInstance {
         /** path of the zip when CompressJob has finished i.e. /path/to/file.zip */
-        current,
+        current(SUFFIX_CURRENT_ZIP),
 
-        /** path of the original unmodified zip while CompressJob is active /path/to/file.zip.bak */
-        old,
-        /** path of the new updated zip while CompressJob is active /path/to/file.zip.tmp */
-        new_}
+        /** path of the original unmodified zip while CompressJob is active /path/to/file.bak.zip */
+        old(SUFFIX_OLD_ZIP),
+        /** path of the new updated zip while CompressJob is active /path/to/file.tmp.zip */
+        new_(SUFFIX_NEW_ZIP);
+
+        private final String zipFileSuffix;
+
+        private ZipInstance(String zipFileSuffix) {
+            this.zipFileSuffix = zipFileSuffix;
+        }
+
+        public String getZipFileSuffix() {
+            return zipFileSuffix;
+        }
+    }
 
     static final String SUFFIX_NEW_ZIP = ".tmp.zip";
     static final String SUFFIX_OLD_ZIP = ".bak.zip";
     static final String SUFFIX_CURRENT_ZIP = "";
-
-
 }

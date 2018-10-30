@@ -26,9 +26,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Encapsulates all storage related operations that relate to a java.io.File.
- * The method-name are nearly the same as for java.io.File except
- * that String parameters named suffixXXXX are variations of the original name.
+ * Encapsulates all storage related operations that relate to Zipfile.
+ * 
+ * This is a java.io.File based implementation for j2se junittests and for android-4.4 and below.
+ * 
+ * The method-names are nearly the same as for java.io.File except
+ * that there is an additional parameter {@link ZipInstance}
+ * that tells which current zip file to be used.
  *
  * Created by k3b on 12.12.2017.
  */
@@ -39,9 +43,9 @@ public class ZipStorageFile implements ZipStorage {
     private final File fileOld;
 
     /**
-     * Constructs a new file using the specified path.
+     * Constructs a new zip-file-storage using the specified path.
      *
-     * @param path the path to be used for the file.
+     * @param path the path to be used for the zip-file.
      * @throws NullPointerException if {@code path} is {@code null}.
      */
     public ZipStorageFile(String path) {
@@ -50,41 +54,40 @@ public class ZipStorageFile implements ZipStorage {
         this.fileOld = new File(path + SUFFIX_OLD_ZIP);
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public boolean exists() {
         return fileCur.exists();
     }
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").delete(".tmp") will
-     *  delete "/path/to/file.zip.tmp"
+     *  {@inheritDoc}
      */
     @Override
-    public boolean delete(Instance suffix) {
-        return file(suffix).delete();
+    public boolean delete(ZipInstance zipInstance) {
+        return file(zipInstance).delete();
     }
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").createOutputStream(".tmp") will
-     *  delete exisit "/path/to/file.zip.tmp", create dirs "/path/to" and
-     *  create outputstream for "/path/to/file.zip.tmp"
+     *  {@inheritDoc}
      */
     @Override
-    public OutputStream createOutputStream(Instance suffix) throws FileNotFoundException {
+    public OutputStream createOutputStream(ZipInstance zipInstance) throws FileNotFoundException {
         // create parent dirs if not exist
         fileCur.getParentFile().mkdirs();
 
-        // i.e. /path/to/somefile.zip.tmp
-        File newZip1 = file(suffix);
+        // i.e. /path/to/somefile.tmp.zip
+        File newZip = file(zipInstance);
 
         // replace existing
-        newZip1.delete();
-        return new FileOutputStream(newZip1);
+        newZip.delete();
+        return new FileOutputStream(newZip);
     }
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").createInputStream(".tmp") will
-     *  create intputstream for "/path/to/file.zip.tmp"
+     *  {@inheritDoc}
      */
     @Override
     public InputStream createInputStream() throws FileNotFoundException {
@@ -93,18 +96,15 @@ public class ZipStorageFile implements ZipStorage {
     }
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").getName() will
-     *  return "file.zip"
-     * @param suffix
+     *  {@inheritDoc}
      */
     @Override
-    public String getName(Instance suffix) {
-        return file(suffix).getName();
+    public String getName(ZipInstance zipInstance) {
+        return file(zipInstance).getName();
     }
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").getAbsolutePath() will
-     *  return "/path/to/file.zip"
+     *  {@inheritDoc}
      */
     @Override
     public String getAbsolutePath() {
@@ -112,22 +112,19 @@ public class ZipStorageFile implements ZipStorage {
     }
 
     /**
-     *  i.e. new ZipStorage("/path/to/file.zip").rename(".tmp","") will
-     *  rename from "/path/to/file.zip.tmp" to from "/path/to/file.zip"
+     *  {@inheritDoc}
      */
     @Override
-    public boolean rename(Instance suffixFrom, Instance suffixTo) {
-        return file(suffixFrom).renameTo(file(suffixTo));
+    public boolean rename(ZipInstance zipInstanceFrom, ZipInstance zipInstanceTo) {
+        return file(zipInstanceFrom).renameTo(file(zipInstanceTo));
     }
 
 
-    private File file(Instance suffix) {
-        switch (suffix) {
+    private File file(ZipInstance zipInstance) {
+        switch (zipInstance) {
             case new_: return fileNew;
             case old: return fileOld;
             default: return fileCur;
         }
     }
-
-
 }

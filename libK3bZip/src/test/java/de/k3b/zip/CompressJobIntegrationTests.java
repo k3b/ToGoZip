@@ -82,7 +82,7 @@ public class CompressJobIntegrationTests {
 
     @Before
     public void setup() throws IOException {
-        testZip.delete(ZipStorage.Instance.current);
+        testZip.delete(ZipStorage.ZipInstance.current);
         CompressJob sut = createCompressJob(testZip);
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress(false);

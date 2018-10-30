@@ -28,6 +28,14 @@ import java.io.OutputStream;
 import de.k3b.io.ZipStorage;
 
 /**
+ * Encapsulates all storage related operations that relate to a Zipfile.
+ *
+ * This is a android.support.v4.provider.DocumentFile based implementation for android-5.0ff.
+ *
+ * The method-names are nearly the same as for java.io.File except
+ * that there is an additional parameter {@link ZipInstance}
+ * that tells which current zip file to be used.
+ *
  * Created by k3b on 22.12.2017.
  */
 
@@ -44,6 +52,9 @@ public class ZipStorageDocumentFile implements ZipStorage {
         this.filename = filename;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public boolean exists() {
 
@@ -51,46 +62,42 @@ public class ZipStorageDocumentFile implements ZipStorage {
     }
 
     /**
-     * i.e. new ZipStorage("/path/to/file.zip").delete(".tmp") will
-     * delete "/path/to/file.zip.tmp"
-     *
-     * @param suffix
+     *  {@inheritDoc}
      */
     @Override
-    public boolean delete(Instance suffix) {
-        DocumentFile doc = directory.findFile(getName(suffix));
-        return (doc != null) && doc.delete();
+    public boolean delete(ZipInstance zipInstance) {
+        DocumentFile zipFile = directory.findFile(getName(zipInstance));
+        return (zipFile != null) && zipFile.delete();
     }
 
     /**
-     * i.e. new ZipStorage("/path/to/file.zip").createOutputStream(".tmp") will
-     * delete exisit "/path/to/file.zip.tmp", create dirs "/path/to" and
-     * create outputstream for "/path/to/file.zip.tmp"
-     *
-     * @param suffix
+     *  {@inheritDoc}
      */
     @Override
-    public OutputStream createOutputStream(Instance suffix) throws FileNotFoundException {
-        DocumentFile doc = directory.findFile(getName(suffix));
-        if (doc == null) doc = directory.createFile(MIMETYPE_ZIP, getName(suffix));
-        if (doc != null) return context.getContentResolver().openOutputStream(doc.getUri(), "w");
+    public OutputStream createOutputStream(ZipInstance zipInstance) throws FileNotFoundException {
+        // find existing
+        DocumentFile zipFile = directory.findFile(getName(zipInstance));
+
+        // if not found create it.
+        if (zipFile == null) zipFile = directory.createFile(MIMETYPE_ZIP, getName(zipInstance));
+
+        if (zipFile != null) return context.getContentResolver().openOutputStream(zipFile.getUri(), "w");
+
         return null;
     }
 
     /**
-     * i.e. new ZipStorage("/path/to/file.zip").createInputStream(".tmp") will
-     * create intputstream for "/path/to/file.zip.tmp"
+     *  {@inheritDoc}
      */
     @Override
     public InputStream createInputStream() throws FileNotFoundException {
-        DocumentFile doc = directory.findFile(filename);
-        if (doc != null) return context.getContentResolver().openInputStream(doc.getUri());
+        DocumentFile zipFile = directory.findFile(filename);
+        if (zipFile != null) return context.getContentResolver().openInputStream(zipFile.getUri());
         return null;
     }
 
     /**
-     * i.e. new ZipStorage("/path/to/file.zip").getAbsolutePath() will
-     * return "/path/to/file.zip"
+     *  {@inheritDoc}
      */
     @Override
     public String getAbsolutePath() {
@@ -98,31 +105,20 @@ public class ZipStorageDocumentFile implements ZipStorage {
     }
 
     /**
-     * i.e. new ZipStorage("/path/to/file.zip").rename(".tmp","") will
-     * rename from "/path/to/file.zip.tmp" to from "/path/to/file.zip"
-     *
-     * @param suffixFrom
-     * @param suffixTo
+     *  {@inheritDoc}
      */
     @Override
-    public boolean rename(Instance suffixFrom, Instance suffixTo) {
-        DocumentFile doc = directory.findFile(getName(suffixFrom));
-        if (doc != null) return doc.renameTo(getName(suffixTo));
+    public boolean rename(ZipInstance zipInstanceFrom, ZipInstance zipInstanceTo) {
+        DocumentFile zipFile = directory.findFile(getName(zipInstanceFrom));
+        if (zipFile != null) return zipFile.renameTo(getName(zipInstanceTo));
         return false;
     }
 
     /**
-     * i.e. new ZipStorage("/path/to/file.zip").getName() will
-     * return "file.zip"
-     *
-     * @param suffix
+     *  {@inheritDoc}
      */
     @Override
-    public String getName(Instance suffix) {
-        switch (suffix) {
-            case new_: return filename + SUFFIX_NEW_ZIP;
-            case old: return filename + SUFFIX_OLD_ZIP;
-            default: return filename;
-        }
+    public String getName(ZipInstance zipInstance) {
+        return filename + zipInstance.getZipFileSuffix();
     }
 }

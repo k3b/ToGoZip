@@ -351,15 +351,16 @@ public class CompressJob implements ZipLog {
      * Processes the compressQue: renaming duplicates and add items to zip.
      *
      * @param renameDuplicateTextFile true: add an additional renamed entry for the texts.
-     *                                 False: append to existing enty
+     *                                 False: append to existing entry
      * @return number of modified items (compressQue and/or text appended)
      */
     public int compress(boolean renameDuplicateTextFile) {
-        // to make shure that orginal is not broken if there is an error:
-        // 1) Workflow addToCompressQue to somefile.zip.tmp, (a) old content, (b) new content
-        // 2) rename existing to somefile.zip.bak
-        // 3) rename somefile.zip.tmp to somefile.zip
-        // 4) delete existing to somefile.zip.bak
+        // Workflow (that makes shure that orginal is not broken if there is an error):
+        // 1) addToCompressQue to somefile.tmp.zip, (a) old content from somefile.zip, (b) new content
+        // 2) rename existing somefile.zip to somefile.bak.zip
+        // 3) rename somefile.tmp.zip to somefile.zip
+        // 4) delete existing somefile.bak.zip
+        // 5) free resources
 
         boolean preventTextFromRenaming = (!renameDuplicateTextFile) && (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
 
@@ -379,11 +380,11 @@ public class CompressJob implements ZipLog {
             // map from path to lastModifiedDate used to find the duplicates
             Map<String, Long> existingEntries = new HashMap<>();
 
-            String curZipFileName = this.destZipFile.getName(ZipStorage.Instance.current);
-            String newZipFileName = this.destZipFile.getName(ZipStorage.Instance.new_);
+            String curZipFileName = this.destZipFile.getName(ZipStorage.ZipInstance.current);
+            String newZipFileName = this.destZipFile.getName(ZipStorage.ZipInstance.new_);
 
             context = traceMessage("(0) create new result file {0}", newZipFileName);
-            zipOutputStream = new ZipOutputStream(this.destZipFile.createOutputStream(ZipStorage.Instance.new_));
+            zipOutputStream = new ZipOutputStream(this.destZipFile.createOutputStream(ZipStorage.ZipInstance.new_));
 
             String oldZipFileName = null;
             if (this.destZipFile.exists()) {
@@ -411,8 +412,8 @@ public class CompressJob implements ZipLog {
                 }
                 zipInputStream.close();
                 zipInputStream = null;
-                // i.e. /path/to/somefile.zip.bak
-                oldZipFileName = this.destZipFile.getName(ZipStorage.Instance.old);
+                // i.e. /path/to/somefile.bak.zip
+                oldZipFileName = this.destZipFile.getName(ZipStorage.ZipInstance.old);
             }
 
             boolean oldProcessed = false;
@@ -450,39 +451,39 @@ public class CompressJob implements ZipLog {
             zipOutputStream = null;
 
             // no exception yet: Assume it is save to change the old zip
-            // (2) rename existing-old somefile.zip to somefile.zip.bak
+            // (2) rename existing-old somefile.zip to somefile.bak.zip
             if (oldZipFileName != null) {
-                this.destZipFile.delete(ZipStorage.Instance.old);
+                this.destZipFile.delete(ZipStorage.ZipInstance.old);
 
                 context = traceMessage(
                         "(2) rename old zip file from {0}  to {1}",
                         curZipFileName, oldZipFileName);
-                // i.e. /path/to/somefile.zip => /path/to/somefile.zip.bak
+                // i.e. /path/to/somefile.zip => /path/to/somefile.bak.zip
 
-                if (!destZipFile.rename(ZipStorage.Instance.current, ZipStorage.Instance.old)) {
+                if (!destZipFile.rename(ZipStorage.ZipInstance.current, ZipStorage.ZipInstance.old)) {
                     thowrError(context);
                 }
             }
 
-            // 3) rename new created somefile.zip.tmp to somefile.zip
+            // 3) rename new created somefile.tmp.zip to somefile.zip
             context = traceMessage("(3) rename new created zip file {0} to {1}",
                     newZipFileName, curZipFileName);
 
-            if (!destZipFile.rename(ZipStorage.Instance.new_, ZipStorage.Instance.current)) {
+            if (!destZipFile.rename(ZipStorage.ZipInstance.new_, ZipStorage.ZipInstance.current)) {
                 // something went wrong. try to restore old zip
-                // i.e. somefile.zip.bak => somefile.zip
+                // i.e. somefile.bak.zip => somefile.zip
                 if (oldZipFileName != null) {
-                    destZipFile.rename(ZipStorage.Instance.old, ZipStorage.Instance.current);
+                    destZipFile.rename(ZipStorage.ZipInstance.old, ZipStorage.ZipInstance.current);
                 }
 
                 thowrError(context);
             }
 
-            // 4) delete existing renamed old somefile.zip.bak
+            // 4) delete existing renamed old somefile.bak.zip
             if ((optDeleteBakFileWhenFinished) && (oldZipFileName != null)) {
                 context = traceMessage(
                         "(4) delete existing renamed old zip file {0}", oldZipFileName);
-                this.destZipFile.delete(ZipStorage.Instance.old);
+                this.destZipFile.delete(ZipStorage.ZipInstance.old);
             }
             context = traceMessage("(5a) successfull updated zip file {0}",
                     curZipFileName);
@@ -496,7 +497,6 @@ public class CompressJob implements ZipLog {
             addError(errorMessage);
             return RESULT_ERROR_ABOART;
         } finally {
-            // 3) rename new created somefile.zip.tmp to somefile.zip
             context = traceMessage("(5b) free resources");
 
             try {
