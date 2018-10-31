@@ -33,4 +33,4 @@ before_install:
  
 script:
   - jdk_switcher use oraclejdk8
-  - ./gradlew assemble libK3bZip:test
+  - ./gradlew assemble  libK3b:test libK3bZip:test

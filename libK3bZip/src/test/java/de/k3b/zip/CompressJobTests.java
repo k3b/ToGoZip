@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 
-import de.k3b.io.ZipStorage;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

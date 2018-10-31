@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.io;
+package de.k3b.zip;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +37,7 @@ import java.io.OutputStream;
  * Created by k3b on 12.12.2017.
  */
 
-public class ZipStorageFile implements ZipStorage {
+public class ZipStorageFile implements de.k3b.zip.ZipStorage {
     private final File fileCur;
     private final File fileNew;
     private final File fileOld;

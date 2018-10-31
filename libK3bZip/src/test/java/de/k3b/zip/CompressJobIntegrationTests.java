@@ -34,9 +34,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import de.k3b.io.ZipStorage;
-import de.k3b.io.ZipStorageFile;
-
 /**
  * Integration-Tests using real zip files in the temp-folder<br/>
  * <br/>

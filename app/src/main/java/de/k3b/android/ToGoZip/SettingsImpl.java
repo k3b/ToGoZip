@@ -31,8 +31,8 @@ import android.util.Log;
 
 import java.io.File;
 
-import de.k3b.io.ZipStorage;
-import de.k3b.io.ZipStorageFile;
+import de.k3b.zip.ZipStorage;
+import de.k3b.zip.ZipStorageFile;
 
 /**
  * implements SettingsData from android preferences

@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import de.k3b.io.ZipStorage;
+import de.k3b.zip.ZipStorage;
 
 /**
  * Encapsulates all storage related operations that relate to a Zipfile.
