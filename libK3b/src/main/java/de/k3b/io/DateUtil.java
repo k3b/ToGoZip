@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2016-2017 by k3b.
+ * Copyright (c) 2016-2018 by k3b.
  *
- * This file is part of AndroFotoFinder / #APhotoManager.
+ * This file is part of AndroFotoFinder / #APhotoManager and toGoZip.
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
@@ -58,11 +58,13 @@ public class DateUtil {
 
     private static Date parseDateTime(String dateString, DateFormat... formatCandidates) {
         Date result = null;
-        for (DateFormat formatCandidate : formatCandidates) {
-            try {
-                result = formatCandidate.parse(dateString);
-                if (result != null) break;
-            } catch (ParseException e) {
+        if (dateString != null) {
+            for (DateFormat formatCandidate : formatCandidates) {
+                try {
+                    result = formatCandidate.parse(dateString);
+                    if (result != null) break;
+                } catch (ParseException e) {
+                }
             }
         }
         return result;

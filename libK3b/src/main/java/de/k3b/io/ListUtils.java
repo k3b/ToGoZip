@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2017 by k3b.
+ * Copyright (c) 2017-2018 by k3b.
  *
- * This file is part of AndroFotoFinder / #APhotoManager.
+ * This file is part of AndroFotoFinder / #APhotoManager and toGoZip.
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by
@@ -52,8 +52,11 @@ public class ListUtils {
 
     public static List<String> toStringList(Object... list) {
         ArrayList<String> result = new ArrayList<String>();
-        for (Object item : list) {
-            if (item != null) result.add(item.toString());
+
+        if (list != null) {
+            for (Object item : list) {
+                if (item != null) result.add(item.toString());
+            }
         }
         return result;
     }
