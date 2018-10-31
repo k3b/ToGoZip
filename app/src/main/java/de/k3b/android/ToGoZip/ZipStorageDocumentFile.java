@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import de.k3b.io.ZipStorage;
+import de.k3b.zip.ZipStorage;
 
 /**
  * Created by k3b on 22.12.2017.

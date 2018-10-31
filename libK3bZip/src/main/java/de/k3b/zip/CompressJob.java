@@ -38,8 +38,6 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import de.k3b.io.ZipStorage;
-
 /**
  * Android independant enginge that adds files to a zip file via a compressQue.
  */

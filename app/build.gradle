@@ -64,6 +64,7 @@ dependencies {
     // compile 'com.android.support:support-v4:26.2.1'
     compile 'com.android.support:support-v4:23.2.1'
     compile project(':libK3bZip')
+    compile project(':libK3b')
     //  compile 'org.slf4j:slf4j-android:1.7.7@jar' // replaces cellInfoLib.'slf4j-api'
     compile 'eu.lp0.slf4j:slf4j-android:1.7.7-1@jar'
     // using slf4j-android-1.7.6-1-SNAPSHOT.jar from libs
