@@ -45,7 +45,15 @@ public class DocumentFileCompressItem extends FileCompressItem {
     }
 
     public InputStream getFileInputStream() throws IOException {
-        DocumentFile doc = DocumentFile.fromFile(getFile());
         return context.getContentResolver().openInputStream(uri);
     }
+
+    @Override
+    public StringBuilder getLogEntry(StringBuilder _result) {
+        StringBuilder result = super.getLogEntry(_result);
+        result.append(FIELD_DELIMITER);
+        if (uri != null) result.append(uri);
+        return result;
+    }
+
 }

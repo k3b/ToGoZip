@@ -26,6 +26,7 @@ import java.io.InputStream;
  * Created by k3b on 16.02.2015.
  */
 abstract public class CompressItem {
+    protected static final String FIELD_DELIMITER = ";";
     protected boolean processed;
 
     /** the antry may contain path within zip file */
@@ -40,15 +41,15 @@ abstract public class CompressItem {
 
     public boolean isSame(CompressItem other) {
         if (other == null) return false;
-        return this.getClass().equals(other.getClass());
+        return this.zipEntryFileName.equals(other.zipEntryFileName);
     }
 
-    /** the antry may contain path within zip file */
+    /** the entry may contain path within zip file */
     public String getZipEntryFileName() {
         return zipEntryFileName;
     }
 
-    /** the antry may contain path within zip file */
+    /** the entry may contain path within zip file */
     public CompressItem setZipEntryFileName(String zipEntryFileName) {
         this.zipEntryFileName = zipEntryFileName;
         return this;
@@ -69,5 +70,20 @@ abstract public class CompressItem {
 
     public void setZipEntryComment(String zipEntryComment) {
         this.zipEntryComment = zipEntryComment;
+    }
+
+    public StringBuilder getLogEntry(StringBuilder _result) {
+        StringBuilder result = (_result == null) ? new StringBuilder() : _result;
+        result.append(getZipEntryFileName());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = getLogEntry(null);
+        result.insert(0, FIELD_DELIMITER);
+        result.insert(0,this.getClass().getSimpleName());
+        result.insert(0, processed ? "[v] " : "[ ] ");
+        return result.toString();
     }
 }

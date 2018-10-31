@@ -54,9 +54,11 @@ public class AndroidUriCompressItem extends CompressItem {
         return MediaUtil.getDateModified(this.context, this.uri);
     }
 
-
     @Override
-    public String toString() {
-        return (this.uri != null) ? this.uri.toString() : super.toString();
+    public StringBuilder getLogEntry(StringBuilder _result) {
+        StringBuilder result = super.getLogEntry(_result);
+        result.append(FIELD_DELIMITER);
+        if (uri != null) result.append(uri);
+        return result;
     }
 }

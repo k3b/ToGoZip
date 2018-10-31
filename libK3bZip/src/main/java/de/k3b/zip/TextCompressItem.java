@@ -19,7 +19,6 @@
 package de.k3b.zip;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,13 +27,14 @@ import java.io.InputStream;
  *
  * Created by k3b on 24.11.2014.
  */
-public class TextCompressItem extends FileCompressItem {
+public class TextCompressItem extends CompressItem {
 
     private StringBuilder text = new StringBuilder();
     private long lastModified;
 
-    public TextCompressItem(String destZipPath, File srcFile, String zipEntryComment) {
-        super(destZipPath, srcFile, zipEntryComment);
+    public TextCompressItem(String zipEntryFileName, String zipEntryComment) {
+        setZipEntryFileName(zipEntryFileName);
+        setZipEntryComment(zipEntryComment);
     }
 
     public InputStream getFileInputStream() throws IOException {
@@ -43,7 +43,7 @@ public class TextCompressItem extends FileCompressItem {
 
     public TextCompressItem addText(String text) {
         if ((text != null) && (text.length() > 0)) {
-            this.text.append(text).append("\n\n");
+            this.text.append(text).append("\n");
         }
         return this;
     }
@@ -59,4 +59,19 @@ public class TextCompressItem extends FileCompressItem {
     public long getLastModified() {
         return lastModified;
     }
+
+    @Override
+    public StringBuilder getLogEntry(StringBuilder _result) {
+        StringBuilder result = super.getLogEntry(_result);
+        result.append(FIELD_DELIMITER);
+        if (text.length() > 0) {
+            String firstText = text.substring(0, Math.min(10, text.length() - 1));
+            result
+                    .append("'")
+                    .append(firstText.replaceAll("[\\n\\r\\t;\\\"\\\']+"," "))
+                    .append("...'");
+        }
+        return result;
+    }
+
 }

@@ -91,10 +91,12 @@ public class CompressJob implements ZipLog {
     public CompressJob(ZipLog zipLog, String fileLogInZip) {
         this.zipLog = zipLog;
         if (!StringUtils.isNullOrEmpty(fileLogInZip)) {
-            this.compressLogItem = addLofToCompressQue(fileLogInZip, null);
+            this.compressLogItem = addLog2CompressQue(fileLogInZip, null);
+
+            // do not process this item in qoueOutPutLoop
+            this.compressLogItem.setProcessed(true);
         }
     }
-
 
     public static String readAll(InputStream is, byte[] buffer) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -183,15 +185,16 @@ public class CompressJob implements ZipLog {
         return this.compressTextItem;
     }
 
-    public TextCompressItem addLofToCompressQue(String textfile, String textToBeAdded) {
+    public TextCompressItem addLog2CompressQue(String textfile, String textToBeAdded) {
         this.compressLogItem = addTextToCompressQue(this.compressLogItem, textfile, textToBeAdded);
         return this.compressLogItem;
     }
 
-    private TextCompressItem addTextToCompressQue(TextCompressItem textItem, String textfile, String textToBeAdded) {
+    private TextCompressItem addTextToCompressQue(TextCompressItem textItem, String zipEntryPath,
+                                                  String textToBeAdded) {
         if (textItem == null) {
-            File srcFile = new File("/" + textfile);
-            textItem = new TextCompressItem("", srcFile, null);
+
+            textItem = new TextCompressItem(zipEntryPath, null);
             textItem.setLastModified(new Date().getTime());
             addToCompressQueue(textItem);
         }
@@ -393,7 +396,8 @@ public class CompressJob implements ZipLog {
 
         boolean preventTextFromRenaming = (!renameDuplicateTextFile) && (this.compressTextItem != null) && !this.compressTextItem.isProcessed();
 
-        if (compressQue.size() == 0) {
+        int emptyCount = (compressLogItem != null) ? 1 : 0;
+        if (compressQue.size() <= emptyCount) {
             logger.debug("aboard: no (more) files to addToCompressQue to zip");
             return RESULT_NO_CHANGES;
         }
@@ -472,6 +476,10 @@ public class CompressJob implements ZipLog {
                 // itemCount++;
             }
 
+            if (this.compressLogItem != null) {
+                this.compressLogItem.addText(";;;;;---");
+            }
+
             // (1b) copy new compressQue
             for (CompressItem item : this.compressQue) {
                 if (!item.isProcessed()) {
@@ -486,7 +494,25 @@ public class CompressJob implements ZipLog {
                     zipEntryInputStream = null;
                     itemCount++;
                     item.setProcessed(true);
+
+                    if (this.compressLogItem != null) {
+                        this.compressLogItem.addText(item.getLogEntry(null).toString());
+                    }
                 }
+            }
+
+            if (compressLogItem != null) {
+                CompressItem item = compressLogItem;
+                String newFullDestZipItemName = item.getZipEntryFileName();
+                context = traceMessage("(1b) copy new item {0} as {1} to {2}",
+                        item, newFullDestZipItemName, newZipFileName);
+                zipEntryInputStream = item.getFileInputStream();
+                ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
+                        item.getLastModified(), item.getZipEntryComment());
+                add(zipOutputStream, zipEntry, null, zipEntryInputStream);
+                zipEntryInputStream.close();
+                zipEntryInputStream = null;
+                itemCount++;
             }
 
             zipOutputStream.close();

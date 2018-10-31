@@ -28,10 +28,16 @@ import java.io.*;
 public class FileCompressItem extends CompressItem {
     private File file;
 
-    public FileCompressItem(String destZipPath, File srcFile, String zipEntryComment) {
-        if (destZipPath == null) destZipPath = "";
+    /**
+     *
+     * @param destZipPathWithoutFileName directory with trailing "/" (without filename) where the entry goes to. null==root dir.
+     * @param srcFile full path to source file
+     * @param zipEntryComment
+     */
+    public FileCompressItem(String destZipPathWithoutFileName, File srcFile, String zipEntryComment) {
+        if (destZipPathWithoutFileName == null) destZipPathWithoutFileName = "";
         setFile(srcFile);
-        setZipEntryFileName(destZipPath + srcFile.getName());
+        setZipEntryFileName(destZipPathWithoutFileName + srcFile.getName());
         setZipEntryComment(zipEntryComment);
     }
 
@@ -60,8 +66,11 @@ public class FileCompressItem extends CompressItem {
     }
 
     @Override
-    public String toString() {
-        return (this.file != null) ? this.file.toString() : super.toString();
+    public StringBuilder getLogEntry(StringBuilder _result) {
+        StringBuilder result = super.getLogEntry(_result);
+        result.append(FIELD_DELIMITER);
+        if (getFile() != null) result.append(getFile());
+        return result;
     }
 
 }
