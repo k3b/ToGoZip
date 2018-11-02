@@ -21,6 +21,7 @@ package de.k3b.zip;
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -84,13 +85,17 @@ public class CompressJobIntegrationTests {
     }
 
     private CompressJob createCompressJob(String testName) {
+        return createCompressJob(testName, "", testContent);
+    }
+
+    private CompressJob createCompressJob(String testName, String destZipPath, File... srcFiles) {
         ZipStorage testZip = new ZipStorageFile(root+ testName + ".zip");
         testZip.delete(ZipStorage.ZipInstance.current);
 
         CompressJob initialContent = createCompressJob(testZip);
-        initialContent.addToCompressQue("", testContent.getAbsolutePath());
+        initialContent.addToCompressQue(destZipPath, srcFiles);
         int itemCount = initialContent.compress(false);
-        Assert.assertEquals("exampleItem + log == 2", 2, itemCount);
+        Assert.assertEquals("exampleItem + log == 2", srcFiles.length + NUMBER_OF_LOG_ENTRIES, itemCount);
 
         return createCompressJob(testZip);
     }
@@ -129,6 +134,18 @@ public class CompressJobIntegrationTests {
         Assert.assertEquals("testFile(1).txt", item.getZipEntryFileName());
     }
 
+    /** bug #14: Duplicate file detection/renaming does not work correctly for files in zip-subdirectories */
+    @Test
+    @Ignore("todo fixme #14:")
+    public void shouldRenameSameFileNameInSubfolderWithDifferentDate() {
+        CompressJob sut = createCompressJob("shouldRenameSameFileNameInSubfolderWithDifferentDate", "testdir", testContent);
+        CompressItem item = sut.addToCompressQue("testdir", testContent2);
+        item.setZipEntryFileName(testContent.getName());
+        int itemCount = sut.compress(false) - NUMBER_OF_LOG_ENTRIES;
+        Assert.assertEquals(1, itemCount);
+        Assert.assertEquals("testdir/testFile(1).txt", fixPathDelimiter(item.getZipEntryFileName()));
+    }
+
     @Test
     public void shouldAppendTextAsFile() {
         CompressJob sut = createCompressJob("shouldAppendTextAsFile");
@@ -161,6 +178,10 @@ public class CompressJobIntegrationTests {
                 FileCompressItem.getCanonicalPath(new File(refPath)));
 
         // fix windows path seperator
+        return fixPathDelimiter(result);
+    }
+
+    private static String fixPathDelimiter(String result) {
         return result.replaceAll("\\\\","/");
     }
 
@@ -176,5 +197,4 @@ public class CompressJobIntegrationTests {
         Assert.assertEquals(2, itemCount);
         Assert.assertEquals(false, sut.getCompressItemAt(1).getZipEntryFileName().contains("ignore"));
     }
-
 }
