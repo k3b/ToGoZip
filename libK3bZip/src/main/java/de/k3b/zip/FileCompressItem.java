@@ -20,13 +20,20 @@ package de.k3b.zip;
 
 import java.io.*;
 
+import de.k3b.io.FileUtils;
+import de.k3b.io.StringUtils;
+
 /**
  * One android independant, java.io.File based  dto-item that should be compressed.<br/>
  * <p/>
  * Author k3b
  */
 public class FileCompressItem extends CompressItem {
+    /** source file to be compressed */
     private File file;
+
+    /** if not null file adds will be relative to this path if file is below this path */
+    private static String zipRelPath = null;
 
     /**
      *
@@ -35,36 +42,92 @@ public class FileCompressItem extends CompressItem {
      * @param zipEntryComment
      */
     public FileCompressItem(String destZipPathWithoutFileName, File srcFile, String zipEntryComment) {
-        if (destZipPathWithoutFileName == null) destZipPathWithoutFileName = "";
+        String zipEntryName = calculateZipEntryName(destZipPathWithoutFileName, srcFile, FileCompressItem.zipRelPath);
         setFile(srcFile);
-        setZipEntryFileName(destZipPathWithoutFileName + srcFile.getName());
+        setZipEntryFileName(zipEntryName);
         setZipEntryComment(zipEntryComment);
     }
 
+    /**
+     * Calculates the path within the zip file.
+     *
+     * Scope: package to allow unittesting.
+     *
+     * @param destZipPathWithoutFileName
+     * @param srcFile
+     * @param zipRelPath
+     * @return
+     */
+    static String calculateZipEntryName(String destZipPathWithoutFileName, File srcFile, String zipRelPath) {
+        if (!StringUtils.isNullOrEmpty(zipRelPath)) {
+            String srcPath = getCanonicalPath(srcFile);
+            if (srcPath.startsWith(zipRelPath)) {
+                String result = srcPath.substring(zipRelPath.length()+1);
+                return result;
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        if (destZipPathWithoutFileName != null) result.append(destZipPathWithoutFileName);
+        result.append(srcFile.getName());
+        return result.toString();
+    }
+
+    /** if not null file adds will be relative to this path if file is below this path */
+    public static void setZipRelPath(File zipRelPath) {
+        FileCompressItem.zipRelPath = getCanonicalPath(zipRelPath);
+    }
+
+    /** so that files are comparable */
+    static String getCanonicalPath(File zipRelPath) {
+        File canonicalFile = FileUtils.tryGetCanonicalFile(zipRelPath);
+        if (canonicalFile != null) {
+            return FileUtils.fixPath(canonicalFile.getAbsolutePath());
+        }
+        return null;
+    }
+
+
+    /** source file to be compressed */
     public FileCompressItem setFile(File file) {
         this.file = file;
         this.processed = false;
         return this;
     }
 
+    /** source file to be compressed */
     public File getFile() {
         return file;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public InputStream getFileInputStream() throws IOException {
         return new FileInputStream(file);
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public long getLastModified() {
         return this.getFile().lastModified();
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public boolean isSame(CompressItem other) {
         return super.isSame(other) && (this.file.equals(((FileCompressItem) other).file));
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public StringBuilder getLogEntry(StringBuilder _result) {
         StringBuilder result = super.getLogEntry(_result);

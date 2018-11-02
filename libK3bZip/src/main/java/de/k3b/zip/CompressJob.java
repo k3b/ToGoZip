@@ -253,7 +253,7 @@ public class CompressJob implements ZipLog {
 
         // remove the ithems that are marked with null filename
         for (int i = this.compressQue.size() - 1; i >= 0; i--) {
-            if (this.compressQue.get(i).getZipEntryFileName() == null) {
+            if (getCompressItemAt(i).getZipEntryFileName() == null) {
                 this.compressQue.remove(i);
             }
         }
@@ -262,6 +262,11 @@ public class CompressJob implements ZipLog {
             return renamedItems;
         }
         return null;
+    }
+
+    /** scope package to allow unittests */
+    CompressItem getCompressItemAt(int i) {
+        return this.compressQue.get(i);
     }
 
     /**
@@ -307,60 +312,6 @@ public class CompressJob implements ZipLog {
 
             id++;
         }
-    }
-    /**
-     * package to allow unittesting: <br/>
-     * gets a fixed (renamed) name for the zip entry or null if file
-     * should not be added to zip.
-     */
-    String getRenamedZipEntryFileName_Deprecated(ZipFile zipFile, ZipEntry zipEntry,
-                                                 long lastModified) {
-        String zipEntryFileName = zipEntry.getName();
-        if (!optRenameExistingOldEntry) {
-            logger.debug("do not include: optRenameExistingOldEntry disabled {}", zipEntryFileName);
-            return null;
-        }
-
-        if (sameDate_Deprecated(zipEntry, lastModified)) {
-            logger.debug("do not include: duplicate with same datetime found {}", zipEntryFileName);
-            return null;
-        }
-
-        String extension = ")";
-        int extensionPosition = zipEntryFileName.lastIndexOf(".");
-        if (extensionPosition >= 0) {
-            extension = ")" + zipEntryFileName.substring(extensionPosition);
-            zipEntryFileName = zipEntryFileName.substring(0, extensionPosition) + "(";
-        }
-        int id = 1;
-        while (true) {
-            String newZifFileName = zipEntryFileName + id + extension;
-            ZipEntry newZipEntry = zipFile.getEntry(newZifFileName);
-            if (newZipEntry == null) {
-                logger.debug("renamed zipentry from '{}' to '{}'", zipEntry.getName(), newZifFileName);
-                return newZifFileName;
-            }
-
-            if (sameDate_Deprecated(newZipEntry, lastModified)) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("do not include: duplicate with same datetime found '{}' for '{}'",
-                            newZifFileName, zipEntryFileName);
-                }
-                return null;
-            }
-
-            id++;
-        }
-    }
-
-    /**
-     * return true, if zipEntry has same date as fileLastModified
-     */
-    private boolean sameDate_Deprecated(ZipEntry zipEntry, long fileLastModified) {
-        // may varay in millisec
-        long zipLastModified = zipEntry.getTime();
-        final String zipEntryFileName = zipEntry.getName();
-        return sameDate(zipEntryFileName, fileLastModified, zipLastModified);
     }
 
     private boolean sameDate(String zipEntryFileName, long fileLastModified, long zipLastModified) {

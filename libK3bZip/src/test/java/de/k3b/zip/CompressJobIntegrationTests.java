@@ -20,7 +20,6 @@ package de.k3b.zip;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,6 +33,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.k3b.io.FileUtils;
+
 /**
  * Integration-Tests using real zip files in the temp-folder<br/>
  * <br/>
@@ -43,8 +44,8 @@ public class CompressJobIntegrationTests {
     private static final int NUMBER_OF_LOG_ENTRIES = 1;
     static private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
     // static private File root = new File(System.getProperty("java.io.tmpdir")
-    static private String root = System.getProperty("java.io.tmpdir")
-            + "/k3bZipTests/CompressJobIntegrationTests/";
+    static private String root = FileUtils.fixPath(System.getProperty("java.io.tmpdir")
+            + "/k3bZipTests/CompressJobIntegrationTests/");
     static private String rootInput = root + "inputFiles/";
     static private File testContent = new File(rootInput + "testFile.txt");
     static private File testContent2 = new File(rootInput + "testFile2.txt");
@@ -144,4 +145,36 @@ public class CompressJobIntegrationTests {
         int itemCount = sut.compress(false) - NUMBER_OF_LOG_ENTRIES;
         Assert.assertEquals(1, itemCount);
     }
+
+    @Test
+    public void shouldCalculateRelPath() {
+        File srcFile = new File("/path/to/my/source/file.txt");
+
+        Assert.assertEquals("source/file.txt",
+                getCalRelPath("root/", srcFile, "/path/to/my/"));
+        Assert.assertEquals("root/file.txt",
+                getCalRelPath("root/", srcFile, "/path/to/other/"));
+    }
+
+    private static String getCalRelPath(String notFoundRelPath, File srcFile, String refPath) {
+        String result = FileCompressItem.calculateZipEntryName(notFoundRelPath, srcFile,
+                FileCompressItem.getCanonicalPath(new File(refPath)));
+
+        // fix windows path seperator
+        return result.replaceAll("\\\\","/");
+    }
+
+    @Test
+    public void shouldAddWithRelPath() {
+        CompressJob sut = createCompressJob("shouldAddWithRelPath");
+
+        FileCompressItem.setZipRelPath(new File(root));
+        sut.addToCompressQue("ignoredPath/", testContent2, testContent4);
+        FileCompressItem.setZipRelPath(null);
+
+        int itemCount = sut.compress(false) - NUMBER_OF_LOG_ENTRIES;
+        Assert.assertEquals(2, itemCount);
+        Assert.assertEquals(false, sut.getCompressItemAt(1).getZipEntryFileName().contains("ignore"));
+    }
+
 }

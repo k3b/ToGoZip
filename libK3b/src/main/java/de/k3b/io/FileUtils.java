@@ -29,6 +29,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Helper functions for java.io.File.
+ * Changes here should also be added to https://github.com/k3b/APhotoManager/
+ *
  * Created by k3b on 06.10.2015.
  */
 public class FileUtils {
@@ -56,4 +59,51 @@ public class FileUtils {
         });
     }
 
+    // #118 app specific content uri convert
+    // from {content://approvider}//storage/emulated/0/DCIM/... to /storage/emulated/0/DCIM/
+    public static String fixPath(String path) {
+        if (path != null) {
+            while (path.startsWith("//")) {
+                path = path.substring(1);
+            }
+        }
+        return path;
+    }
+
+    /** tryGetCanonicalFile without exception */
+    public static File tryGetCanonicalFile(String path) {
+        if (path == null) return null;
+
+        final File file = new File(path);
+        return tryGetCanonicalFile(file, file);
+    }
+
+    /** tryGetCanonicalFile without exception */
+    public static File tryGetCanonicalFile(File file, File errorValue) {
+        if (file == null) return null;
+
+        try {
+            return file.getCanonicalFile();
+        } catch (IOException ex) {
+            logger.warn(DBG_CONTEXT + "Error tryGetCanonicalFile('" + file.getAbsolutePath() + "') => '" + errorValue + "' exception " + ex.getMessage(), ex);
+            return errorValue;
+        }
+    }
+
+    /** tryGetCanonicalFile without exception */
+    public static File tryGetCanonicalFile(File file) {
+        return tryGetCanonicalFile(file, file);
+    }
+
+    /** tryGetCanonicalFile without exception */
+    public static String tryGetCanonicalPath(File file, String errorValue) {
+        if (file == null) return null;
+
+        try {
+            return file.getCanonicalPath();
+        } catch (IOException ex) {
+            logger.warn(DBG_CONTEXT + "Error tryGetCanonicalPath('" + file.getAbsolutePath() + "') => '" + errorValue + "' exception " + ex.getMessage(), ex);
+            return errorValue;
+        }
+    }
 }
