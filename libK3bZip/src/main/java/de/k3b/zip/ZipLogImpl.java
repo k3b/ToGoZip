@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 
+import de.k3b.LibGlobal;
+
 /**
  /**
  * A slf4j based, android inependant consumer that can receive log messages that shows what is going on.
@@ -30,7 +32,7 @@ import java.text.MessageFormat;
  * Created by k3b on 25.11.2014.
  */
 public class ZipLogImpl  implements ZipLog {
-    private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(LibGlobal.LOG_TAG);
     /**
      * last errormessage
      */

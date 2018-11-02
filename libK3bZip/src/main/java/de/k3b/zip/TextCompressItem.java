@@ -37,6 +37,10 @@ public class TextCompressItem extends CompressItem {
         setZipEntryComment(zipEntryComment);
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public InputStream getFileInputStream() throws IOException {
         return new ByteArrayInputStream(getText().getBytes("UTF-8"));
     }
@@ -56,10 +60,17 @@ public class TextCompressItem extends CompressItem {
         this.lastModified = lastModified;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public long getLastModified() {
         return lastModified;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public StringBuilder getLogEntry(StringBuilder _result) {
         StringBuilder result = super.getLogEntry(_result);

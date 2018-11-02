@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 /**
  * Something that can be added to a zip file via a {@link CompressJob}.
+ *
  * Created by k3b on 16.02.2015.
  */
 abstract public class CompressItem {
@@ -35,10 +36,13 @@ abstract public class CompressItem {
     /** if not null this will become the zip entry comment */
     private String zipEntryComment;
 
+    /** stream where the source file can be read from. */
     abstract public InputStream getFileInputStream() throws IOException ;
 
+    /** when source file was last modified. */
     abstract public long getLastModified();
 
+    /** return true if both refer to the same entry in zip file */
     public boolean isSame(CompressItem other) {
         if (other == null) return false;
         return this.zipEntryFileName.equals(other.zipEntryFileName);

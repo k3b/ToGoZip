@@ -25,6 +25,7 @@ import android.widget.Toast;
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
 import de.k3b.zip.CompressItem;
+import de.k3b.zip.FileCompressItem;
 import de.k3b.zip.ZipLog;
 import de.k3b.zip.ZipLogImpl;
 
@@ -81,6 +82,7 @@ public class Add2ZipActivity extends LocalizedActivity {
         if ((textToBeAdded == null) && (filesToBeAdded == null)) {
             Toast.makeText(this, getString(R.string.WARN_ADD_NO_FILES), Toast.LENGTH_LONG).show();
         } else {
+            FileCompressItem.setZipRelPath(SettingsImpl.getZipRelPathAsFile());
             job.executeAddToZip(textToBeAdded, filesToBeAdded);
         }
         this.finish();

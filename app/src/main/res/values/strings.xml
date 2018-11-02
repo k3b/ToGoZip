@@ -57,6 +57,13 @@ Do you want to use default '%2$s' instead?"]]></string>
     <string name="folder_picker_parent_dir">Up</string>
     <string name="folder_picker_create_new_directory">New</string>
 
+    <!-- generate a changelogfile within zip file -->
     <string name="pref_log_file_in_zip_debug_summary">Update ToGoZip.log in Zip</string>
     <string name="pref_log_file_in_zip_debug_title">Log full source file paths of added files.</string>
+
+    <!-- #13: if not empty: create subfolders in zip relative to this path -->
+    <string name="pref_short_text_zip_rel_path_title">Generate Zip-Subfolders below</string>
+    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/subfolder/file.txt')
+    ==> Zip: 'subfolder/file.txt'"]]></string>
+    <string name="pref_short_text_zip_rel_path_disabled_summayr">-- Disabled --</string>
 </resources>

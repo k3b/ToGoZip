@@ -18,8 +18,12 @@
  */
 package de.k3b.zip;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
+import de.k3b.LibGlobal;
 import de.k3b.io.FileUtils;
 import de.k3b.io.StringUtils;
 
@@ -29,6 +33,9 @@ import de.k3b.io.StringUtils;
  * Author k3b
  */
 public class FileCompressItem extends CompressItem {
+    private static final Logger logger = LoggerFactory.getLogger(LibGlobal.LOG_TAG);
+    private static final String DBG_CONTEXT = "FileCompressItem:";
+
     /** source file to be compressed */
     private File file;
 
@@ -59,19 +66,30 @@ public class FileCompressItem extends CompressItem {
      * @return
      */
     static String calculateZipEntryName(String destZipPathWithoutFileName, File srcFile, String zipRelPath) {
+        boolean match = false;
+        String result = null;
+        String srcPath = "";
         if (!StringUtils.isNullOrEmpty(zipRelPath)) {
-            String srcPath = getCanonicalPath(srcFile);
-            if (srcPath.startsWith(zipRelPath)) {
-                String result = srcPath.substring(zipRelPath.length()+1);
-                return result;
+            srcPath = getCanonicalPath(srcFile);
+            match = srcPath.startsWith(zipRelPath);
+            if (match) {
+                result = srcPath.substring(zipRelPath.length()+1);
             }
         }
 
-        StringBuilder result = new StringBuilder();
+        if (result == null) {
+            StringBuilder resultMessage = new StringBuilder();
 
-        if (destZipPathWithoutFileName != null) result.append(destZipPathWithoutFileName);
-        result.append(srcFile.getName());
-        return result.toString();
+            if (destZipPathWithoutFileName != null)
+                resultMessage.append(destZipPathWithoutFileName);
+            resultMessage.append(srcFile.getName());
+            result = resultMessage.toString();
+        }
+        if (LibGlobal.debugEnabled) {
+            logger.info(DBG_CONTEXT + "calculateZipEntryName(... , srcFile='{}' '{}', zipRelPath='{}') ==> [match={}] '{}'",
+                    srcFile, srcPath, zipRelPath, match, result);
+        }
+        return result;
     }
 
     /** if not null file adds will be relative to this path if file is below this path */

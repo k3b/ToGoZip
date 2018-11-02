@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -455,7 +454,7 @@ public class CompressJob implements ZipLog {
             if (compressLogItem != null) {
                 CompressItem item = compressLogItem;
                 String newFullDestZipItemName = item.getZipEntryFileName();
-                context = traceMessage("(1b) copy new item {0} as {1} to {2}",
+                context = traceMessage("(1c) copy log item {0} as {1} to {2}",
                         item, newFullDestZipItemName, newZipFileName);
                 zipEntryInputStream = item.getFileInputStream();
                 ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,

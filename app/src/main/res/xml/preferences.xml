@@ -40,9 +40,17 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:key="zip.dir"
             android:title="@string/pref_zipfolder_title" >
         </Preference>
+
         <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="zip.file"
             android:title="@string/pref_zipfile_title" />
+
+        <Preference
+            android:key="zip.rel_path"
+            android:summary="@string/pref_short_text_zip_rel_path_disabled_summayr"
+            android:title="@string/pref_short_text_zip_rel_path_title" >
+        </Preference>
+
         <!-- EditTextPreference -->
         <de.k3b.android.widget.EditTextPreferenceWithSummary
             android:key="textfile_short"

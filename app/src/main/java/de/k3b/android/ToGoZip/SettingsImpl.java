@@ -31,6 +31,8 @@ import android.util.Log;
 
 import java.io.File;
 
+import de.k3b.LibGlobal;
+import de.k3b.io.StringUtils;
 import de.k3b.zip.ZipStorage;
 import de.k3b.zip.ZipStorageFile;
 
@@ -47,6 +49,10 @@ public class SettingsImpl {
     /** file name of the zipfile (without path) where "Add To Zip" goes to. */
     private static String zipfile = "2go.zip";
     static final String KEY_ZIPFILE = "zip.file";
+
+    /** #13: if not empty: create subfolders in zip relative to this path. */
+    public static final String PREF_KEY_ZIP_REL_PATH = "zip.rel_path";
+    private static String zipRelPath = null;
 
     /** short texts like urls are prepended to this zip entry */
     private static String textfile_short = "texts.txt";
@@ -72,6 +78,7 @@ public class SettingsImpl {
 
         Global.debugEnabled = SettingsImpl.getPrefValue(prefs,
                 "isDebugEnabled", Global.debugEnabled);
+        LibGlobal.debugEnabled = Global.debugEnabled;
 
         Global.isWriteLogFile2Zip = SettingsImpl.getPrefValue(prefs,
                 "isWriteLogFile2Zip", Global.isWriteLogFile2Zip);
@@ -83,6 +90,10 @@ public class SettingsImpl {
         SettingsImpl.zipDocDirUri = SettingsImpl
                 .getPrefValue(prefs, PREF_KEY_ZIP_DOC_DIR_URI,
                         SettingsImpl.zipDocDirUri);
+
+        SettingsImpl.zipRelPath = SettingsImpl
+                .getPrefValue(prefs, PREF_KEY_ZIP_REL_PATH,
+                        SettingsImpl.zipRelPath);
 
         fixPathIfNeccessary(context);
 
@@ -299,6 +310,24 @@ public class SettingsImpl {
     }
 
     /** full path of the zipfile where "Add To Zip" goes to. */
+    public static String getZipRelPath() {
+        return zipRelPath;
+    }
+    public static File getZipRelPathAsFile() {
+        String rel = getZipRelPath();
+        if (StringUtils.isNullOrEmpty(rel)) return null;
+        return new File(rel);
+    }
+
+    public static void setZipRelPath(final Context context, String zipRelPath) {
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+
+        setValue(prefs, PREF_KEY_ZIP_REL_PATH, zipRelPath);
+        SettingsImpl.zipRelPath = zipRelPath;
+    }
+	
+	    /** full path of the zipfile where "Add To Zip" goes to. */
     public static String getZipDocDirUri() {
         return zipDocDirUri;
     }
@@ -310,4 +339,5 @@ public class SettingsImpl {
         setValue(prefs, PREF_KEY_ZIP_DOC_DIR_URI, zipDocDirUri);
         SettingsImpl.zipDocDirUri = zipDocDirUri;
     }
+
 }

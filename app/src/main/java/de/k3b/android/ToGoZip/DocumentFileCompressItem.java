@@ -32,7 +32,6 @@ import de.k3b.zip.FileCompressItem;
  * same as FileCompressItem but using DocumentFile instead of File
  * Created by k3b on 22.12.2017.
  */
-
 public class DocumentFileCompressItem extends FileCompressItem {
     private final Context context;
     private final Uri uri;
@@ -44,10 +43,17 @@ public class DocumentFileCompressItem extends FileCompressItem {
         this.uri = uri;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public InputStream getFileInputStream() throws IOException {
         return context.getContentResolver().openInputStream(uri);
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public StringBuilder getLogEntry(StringBuilder _result) {
         StringBuilder result = super.getLogEntry(_result);

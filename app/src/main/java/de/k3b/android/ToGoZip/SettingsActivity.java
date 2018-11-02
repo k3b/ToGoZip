@@ -35,16 +35,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 import android.support.v4.provider.DocumentFile;
 
-import java.io.File;
-
-import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
-import de.k3b.zip.CompressItem;
-import de.k3b.zip.ZipLog;
-import de.k3b.zip.ZipLogImpl;
 import lib.folderpicker.FolderPicker;
 
 /**
@@ -55,12 +48,16 @@ public class SettingsActivity extends PreferenceActivity
 
     private static final int REQUEST_CODE_GET_ZIP_DIR = 12;
     private static final int FOLDERPICKER_CODE = 1234;
+    private static final int ZIP_SUB_FOLDERPICKER_CODE = 1235;
 
     private SharedPreferences prefsInstance = null;
     private ListPreference defaultLocalePreference;  // #6: Support to change locale at runtime
 
-    // #8: pick folder
+	// #8: pick folder
     private Preference folderPickerPreference = null;
+
+    // #13: pick zip rel path folder
+    private Preference zipRelPathFolderPickerPreference = null;
     /**
      * public api to start settings-activity
      */
@@ -102,6 +99,15 @@ public class SettingsActivity extends PreferenceActivity
             }
         });
 
+        zipRelPathFolderPickerPreference = (Preference) findPreference(SettingsImpl.PREF_KEY_ZIP_REL_PATH);
+        zipRelPathFolderPickerPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                return onCmdPickRelPathFolder();
+            }
+        });
+        zipRelPathFolderPickerPreference.setSummary(getZipRelPathSummary());
+
         folderPickerPreference = (Preference) findPreference(SettingsImpl.PREF_KEY_ZIP_DOC_DIR_URI);
         folderPickerPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -110,6 +116,8 @@ public class SettingsActivity extends PreferenceActivity
             }
         });
         folderPickerPreference.setSummary(SettingsImpl.getZipDocDirUri());
+
+
         // #6: Support to change locale at runtime
         updateSummary();
 
@@ -120,6 +128,14 @@ public class SettingsActivity extends PreferenceActivity
         } else {
             showNeedPermissionDialog();
         }
+    }
+
+    private String getZipRelPathSummary() {
+        String zipRelPath = SettingsImpl.getZipRelPath();
+        return (zipRelPath == null)
+                ? getString(R.string.pref_short_text_zip_rel_path_disabled_summayr)
+                : getString(R.string.pref_short_text_zip_rel_path_enabled_summayr, zipRelPath)
+                ;
     }
 
     /**
@@ -203,6 +219,26 @@ public class SettingsActivity extends PreferenceActivity
         setLanguage(languageKey);
     }
 
+    private boolean onCmdPickRelPathFolder() {
+        CharSequence folder = SettingsImpl.getZipRelPath();
+
+            Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
+            if ((folder != null) && (folder.length() > 0)) {
+                intent.putExtra("location", folder); // initial dir
+            }
+            startActivityForResult(intent, ZIP_SUB_FOLDERPICKER_CODE);
+        return true;
+    }
+
+    private void onZipRelPathFolderPickResult(String folderLocation, boolean ok) {
+        if (Global.debugEnabled) {
+            Log.d(Global.LOG_CONTEXT, "Picked ZipRelPathFolder " + ok + " " + folderLocation);
+        }
+        SettingsImpl.setZipRelPath(this, (ok) ? folderLocation : null);
+        zipRelPathFolderPickerPreference.setSummary(getZipRelPathSummary());
+        setResult(RESULT_OK, null);
+    }
+
     private boolean onCmdPickFolder() {
         CharSequence folder = folderPickerPreference.getSummary();
 
@@ -274,6 +310,12 @@ public class SettingsActivity extends PreferenceActivity
                 String folderLocation = data.getExtras().getString("data");
                 onFolderPickResult(folderLocation);
             }
+        }
+		
+        if (requestCode == ZIP_SUB_FOLDERPICKER_CODE) {
+			// folder picker specific implementation
+			String folderLocation = data.getExtras().getString("data");
+			onZipRelPathFolderPickResult(folderLocation, resultCode == Activity.RESULT_OK);
         }
     }
 
