@@ -29,7 +29,7 @@ package de.k3b;
  */
 public class LibGlobal {
     /** LOG_CONTEXT is used as logging source for filtering logging messages that belong to this */
-    public static final String LOG_TAG = "toGoZip";
+    public static final String LOG_TAG = "toGoZip-dbg";
 
     /**
      * Global.xxxxx. Non final values may be changed from outside (SettingsActivity or commandline parameter)

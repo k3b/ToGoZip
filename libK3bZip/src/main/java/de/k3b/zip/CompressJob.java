@@ -120,7 +120,7 @@ public class CompressJob implements ZipLog {
      * Remember files that should be added to the zip.
      * Used in unittests.
      *
-     * @param destZipPath where the files will go to
+     * @param destZipPath directory within zip where the files will go to (either empty or with trailing "/"
      * @param srcFiles    path where new-toBeZipped-compressQue come from
      */
     void addToCompressQue(String destZipPath, String... srcFiles) {
@@ -134,13 +134,16 @@ public class CompressJob implements ZipLog {
 
     /**
      * Remember files that should be added to the zip.
+     * @param destZipPath directory within zip where the files will go to (either empty or with trailing "/"
      */
     public CompressItem addToCompressQue(String destZipPath, File... srcFiles) {
         CompressItem item = null;
         if (srcFiles != null) {
             for (File srcFile : srcFiles) {
                 if (srcFile.isDirectory()) {
-                    String subDir = (destZipPath.length() > 0) ? destZipPath + "/" + srcFile.getName() + "/" : srcFile.getName() + "/";
+                    String subDir = (!StringUtils.isNullOrEmpty(destZipPath))
+                            ? destZipPath + srcFile.getName() + "/"
+                            : srcFile.getName() + "/";
                     addToCompressQue(subDir, srcFile.listFiles());
                 } else if (srcFile.isFile()) {
                     item = addItemToCompressQue(destZipPath, srcFile, null);
@@ -162,6 +165,7 @@ public class CompressJob implements ZipLog {
 
     /**
      * adds one file to the CompressQue
+     * @param destZipPath directory within zip where the files will go to (either empty or with trailing "/"
      */
     CompressItem addItemToCompressQue(String destZipPath, File srcFile, String zipEntryComment) {
         CompressItem item = new FileCompressItem(destZipPath, srcFile, zipEntryComment);
@@ -237,6 +241,7 @@ public class CompressJob implements ZipLog {
                     // else new entry gets a new name
                     final String newEntryName = getRenamedZipEntryFileName(existingZipEntries, itemToAdd,
                             zipEntryFileLastModified);
+
                     itemToAdd.setZipEntryFileName(newEntryName);
                     // itemToAdd.setZipEntryComment(createItemComment());
                     renamedItems.add(itemToAdd);
@@ -276,13 +281,17 @@ public class CompressJob implements ZipLog {
     String getRenamedZipEntryFileName(Map<String, Long> existingZipEntries, CompressItem itemToAdd,
                                                  long zipEntryFileLastModified) {
         String zipEntryFileName = itemToAdd.getZipEntryFileName();
+
+        String traceMassgeFormat = "new {0} is already in zip: {1}";
         if (!optRenameExistingOldEntry) {
-            logger.debug("do not include: optRenameExistingOldEntry disabled {}", zipEntryFileName);
+            traceMessage(traceMassgeFormat,itemToAdd,
+                    "do not include: optRenameExistingOldEntry disabled.");
             return null;
         }
 
         if (sameDate(zipEntryFileName, itemToAdd.getLastModified(), zipEntryFileLastModified)) {
-            logger.debug("do not include: duplicate with same datetime found {}", zipEntryFileName);
+           traceMessage(traceMassgeFormat,itemToAdd,
+                   "do not include: duplicate with same datetime found.");
             return null;
         }
 
@@ -297,15 +306,14 @@ public class CompressJob implements ZipLog {
             String newZifFileName = zipEntryFileName + id + extension;
             Long fileLastModified = existingZipEntries.get(newZifFileName);
             if (fileLastModified == null) {
-                logger.debug("renamed zipentry from '{}' to '{}'", itemToAdd.getZipEntryFileName(), newZifFileName);
+                traceMessage(traceMassgeFormat,itemToAdd,
+                        newZifFileName);
                 return newZifFileName;
             }
 
             if (sameDate(newZifFileName, fileLastModified.longValue(), zipEntryFileLastModified)) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("do not include: duplicate with same datetime found '{}' for '{}'",
-                            newZifFileName, zipEntryFileName);
-                }
+                traceMessage(traceMassgeFormat,itemToAdd,
+                        "do not include: duplicate with same datetime found.");
                 return null;
             }
 

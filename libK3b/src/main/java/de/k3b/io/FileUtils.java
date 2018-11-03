@@ -99,7 +99,7 @@ public class FileUtils {
 
         try {
             return file.getCanonicalFile();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             logger.warn(DBG_CONTEXT + "Error tryGetCanonicalFile('" + file.getAbsolutePath() + "') => '" + errorValue + "' exception " + ex.getMessage(), ex);
             return errorValue;
         }

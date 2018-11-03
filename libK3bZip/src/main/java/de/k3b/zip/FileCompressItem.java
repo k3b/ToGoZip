@@ -86,8 +86,8 @@ public class FileCompressItem extends CompressItem {
             result = resultMessage.toString();
         }
         if (LibGlobal.debugEnabled) {
-            logger.info(DBG_CONTEXT + "calculateZipEntryName(... , srcFile='{}' '{}', zipRelPath='{}') ==> [match={}] '{}'",
-                    srcFile, srcPath, zipRelPath, match, result);
+            logger.info(DBG_CONTEXT + "[match={}] '{}' <== calculateZipEntryName(... , srcFile='{}' '{}', zipRelPath='{}')",
+                    result, match, srcFile, srcPath, zipRelPath);
         }
         return result;
     }
@@ -95,6 +95,9 @@ public class FileCompressItem extends CompressItem {
     /** if not null file adds will be relative to this path if file is below this path */
     public static void setZipRelPath(File zipRelPath) {
         FileCompressItem.zipRelPath = getCanonicalPath(zipRelPath);
+        if (LibGlobal.debugEnabled) {
+            logger.info(DBG_CONTEXT + "setZipRelPath('{}') from '{}'",FileCompressItem.zipRelPath, zipRelPath );
+        }
     }
 
     /** so that files are comparable */
