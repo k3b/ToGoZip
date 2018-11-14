@@ -2,11 +2,12 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
         // see https://jcenter.bintray.com/com/android/tools/build/gradle/
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.2.1'
 
         // markdown & unl-diagrams in javadoc
         // https://github.com/Abnaxos/pegdown-doclet
@@ -19,6 +20,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
 }
