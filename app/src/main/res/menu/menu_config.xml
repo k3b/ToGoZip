@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/cmd_view_zip"
+        android:title="@string/view_zip_menu_title"
+        android:orderInCategory="5"
+        android:showAsAction="never"
+        />
+
+    <item android:id="@+id/cmd_delete"
+        android:title="@string/delete_menu_title"
+        android:orderInCategory="10"
+        android:showAsAction="never"
+        />
+
+    <item android:id="@+id/cmd_filemanager"
+        android:title="@string/show_in_filemanager_menu_title"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        />
+
+    <item android:id="@+id/cmd_about"
+        android:title="@string/about_summary"
+        android:orderInCategory="10000"
+        android:showAsAction="never"
+        />
+
+</menu>

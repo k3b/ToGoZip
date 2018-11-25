@@ -66,7 +66,7 @@ public class ZipStorageDocumentFile implements ZipStorage {
      */
     @Override
     public boolean delete(ZipInstance zipInstance) {
-        DocumentFile zipFile = directory.findFile(getName(zipInstance));
+        DocumentFile zipFile = directory.findFile(getZipFileNameWithoutPath(zipInstance));
         return (zipFile != null) && zipFile.delete();
     }
 
@@ -76,14 +76,36 @@ public class ZipStorageDocumentFile implements ZipStorage {
     @Override
     public OutputStream createOutputStream(ZipInstance zipInstance) throws FileNotFoundException {
         // find existing
-        DocumentFile zipFile = directory.findFile(getName(zipInstance));
+        DocumentFile zipFile = getDocumentFile(zipInstance);
 
         // if not found create it.
-        if (zipFile == null) zipFile = directory.createFile(MIMETYPE_ZIP, getName(zipInstance));
+        if (zipFile == null) zipFile = directory.createFile(MIMETYPE_ZIP, getZipFileNameWithoutPath(zipInstance));
 
         if (zipFile != null) return context.getContentResolver().openOutputStream(zipFile.getUri(), "w");
 
         return null;
+    }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
+    public String getFullZipUriOrNull() {
+        DocumentFile zipFile = getDocumentFile(ZipStorage.ZipInstance.current);
+        if (zipFile != null) return zipFile.getUri().toString();
+        return null;
+    }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
+    public String getFullZipDirUriOrNull() {
+        return directory.getUri().toString();
+    }
+
+    private DocumentFile getDocumentFile(ZipInstance zipInstance) {
+        return directory.findFile(getZipFileNameWithoutPath(zipInstance));
     }
 
     /**
@@ -109,8 +131,8 @@ public class ZipStorageDocumentFile implements ZipStorage {
      */
     @Override
     public boolean rename(ZipInstance zipInstanceFrom, ZipInstance zipInstanceTo) {
-        DocumentFile zipFile = directory.findFile(getName(zipInstanceFrom));
-        if (zipFile != null) return zipFile.renameTo(getName(zipInstanceTo));
+        DocumentFile zipFile = directory.findFile(getZipFileNameWithoutPath(zipInstanceFrom));
+        if (zipFile != null) return zipFile.renameTo(getZipFileNameWithoutPath(zipInstanceTo));
         return false;
     }
 
@@ -118,7 +140,7 @@ public class ZipStorageDocumentFile implements ZipStorage {
      *  {@inheritDoc}
      */
     @Override
-    public String getName(ZipInstance zipInstance) {
+    public String getZipFileNameWithoutPath(ZipInstance zipInstance) {
         return filename + zipInstance.getZipFileSuffix();
     }
 }

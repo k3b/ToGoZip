@@ -27,7 +27,7 @@ import java.io.OutputStream;
  *
  * Goal  Having two implementations for zipiing:
  * * an android-independant {@link ZipStorageFile} based on java.io.File
- * * ab android saf implementation ZipStorageDocumentFile based on android.support.v4.provider.DocumentFile
+ * * an android saf implementation ZipStorageDocumentFile based on android.support.v4.provider.DocumentFile
  *
  * The method-names are nearly the same as for java.io.File except
  * that there is an additional parameter {@link ZipInstance}
@@ -67,7 +67,7 @@ public interface ZipStorage {
      *  return "file.zip"
      * @param zipInstance
      */
-    String getName(ZipInstance zipInstance);
+    String getZipFileNameWithoutPath(ZipInstance zipInstance);
 
     /**
      * get absolute path of zipFile
@@ -77,10 +77,20 @@ public interface ZipStorage {
     String getAbsolutePath();
 
     /**
-     * rename zipfile.
-     *  i.e. new ZipStorage("/path/to/file.zip").rename(ZipStorage.ZipInstance.new_,ZipStorage.ZipInstance.current) will
-     *  rename from "/path/to/file.tmp.zip" to from "/path/to/file.zip"
+     * get absolute path zipFile as Uri-string or null if zip does not exist
      */
+    String getFullZipUriOrNull();
+
+    /**
+     * get absolute path to directory of zipFile as Uri-string or null if zip does not exist
+     */
+    String getFullZipDirUriOrNull();
+
+    /**
+         * rename zipfile.
+         *  i.e. new ZipStorage("/path/to/file.zip").rename(ZipStorage.ZipInstance.new_,ZipStorage.ZipInstance.current) will
+         *  rename from "/path/to/file.tmp.zip" to from "/path/to/file.zip"
+         */
     boolean rename(ZipInstance zipInstanceFrom, ZipInstance zipInstanceTo);
 
     /** While processing a zip-file there can be 3 different instances of the zip:

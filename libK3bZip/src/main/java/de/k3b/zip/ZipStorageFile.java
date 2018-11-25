@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 
 /**
  * Encapsulates all storage related operations that relate to Zipfile.
@@ -99,7 +100,7 @@ public class ZipStorageFile implements de.k3b.zip.ZipStorage {
      *  {@inheritDoc}
      */
     @Override
-    public String getName(ZipInstance zipInstance) {
+    public String getZipFileNameWithoutPath(ZipInstance zipInstance) {
         return file(zipInstance).getName();
     }
 
@@ -109,6 +110,22 @@ public class ZipStorageFile implements de.k3b.zip.ZipStorage {
     @Override
     public String getAbsolutePath() {
         return fileCur.getAbsolutePath();
+    }
+
+    /**
+     * get absolute path zipFile as Uri-string or null if zip does not exist
+     */
+    @Override
+    public String getFullZipUriOrNull() {
+        return "file://" + getAbsolutePath();
+    }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
+    public String getFullZipDirUriOrNull() {
+        return "file://" + fileCur.getParentFile().getAbsolutePath();
     }
 
     /**

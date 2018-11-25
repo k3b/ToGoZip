@@ -371,8 +371,8 @@ public class CompressJob implements ZipLog {
             // map from path to lastModifiedDate used to find the duplicates
             Map<String, Long> existingEntries = new HashMap<>();
 
-            String curZipFileName = this.destZipFile.getName(ZipStorage.ZipInstance.current);
-            String newZipFileName = this.destZipFile.getName(ZipStorage.ZipInstance.new_);
+            String curZipFileName = this.destZipFile.getZipFileNameWithoutPath(ZipStorage.ZipInstance.current);
+            String newZipFileName = this.destZipFile.getZipFileNameWithoutPath(ZipStorage.ZipInstance.new_);
 
             context = traceMessage("(0) create new result file {0}", newZipFileName);
             zipOutputStream = new ZipOutputStream(this.destZipFile.createOutputStream(ZipStorage.ZipInstance.new_));
@@ -417,7 +417,7 @@ public class CompressJob implements ZipLog {
                 zipInputStream.close();
                 zipInputStream = null;
                 // i.e. /path/to/somefile.bak.zip
-                oldZipFileName = this.destZipFile.getName(ZipStorage.ZipInstance.old);
+                oldZipFileName = this.destZipFile.getZipFileNameWithoutPath(ZipStorage.ZipInstance.old);
             }
 
             boolean oldProcessed = false;

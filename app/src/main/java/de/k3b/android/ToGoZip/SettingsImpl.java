@@ -231,6 +231,11 @@ public class SettingsImpl {
     }
 
     /** full path of the zipfile where "Add To Zip" goes to. */
+    public static String getZipFile() {
+        return zipfile;
+    }
+
+    /** full path of the zipfile where "Add To Zip" goes to. */
     public static File getAbsoluteZipFile() {
         return new File(zipDocDirUri, zipfile);
     }

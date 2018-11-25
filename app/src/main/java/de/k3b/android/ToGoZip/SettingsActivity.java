@@ -36,8 +36,16 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.support.v4.provider.DocumentFile;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.io.File;
+
+import de.k3b.android.util.FileManagerUtil;
+import de.k3b.android.widget.AboutDialogPreference;
 import de.k3b.android.widget.LocalizedActivity;
+import de.k3b.zip.ZipStorage;
 import lib.folderpicker.FolderPicker;
 
 /**
@@ -330,4 +338,115 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean result = super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_config, menu);
+        return result;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
+
+        updateMenuItem(menu, R.id.cmd_delete, R.string.delete_menu_title, storage.exists());
+        updateMenuItem(menu, R.id.cmd_view_zip, R.string.view_zip_menu_title, storage.exists());
+        updateMenuItem(menu, R.id.cmd_filemanager, 0,
+                FileManagerUtil.hasShowInFilemanager(this, storage.getFullZipDirUriOrNull()));
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void updateMenuItem(Menu menu, int cmd, int menuTitle, boolean visible) {
+        MenuItem item = menu.findItem(cmd);
+
+        if (item != null) {
+            if ((visible) && (menuTitle != 0)) {
+                item.setTitle(getString(menuTitle, SettingsImpl.getZipFile()));
+            }
+            item.setVisible(visible);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cmd_delete:
+                return onCmdDeleteQuestion();
+            case R.id.cmd_view_zip:
+                return onShowZip();
+            case R.id.cmd_filemanager:
+                ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
+                return FileManagerUtil.showInFilemanager(this, storage.getFullZipDirUriOrNull());
+            case R.id.cmd_about:
+                AboutDialogPreference.createAboutDialog(this).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private boolean onShowZip() {
+        ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
+        Intent startIntent = new Intent(Intent.ACTION_VIEW);
+        Uri contentUri = Uri.parse(storage.getFullZipUriOrNull());
+        Uri fileUri = Uri.fromFile(new File(contentUri.getPath()));
+        String mime = "application/zip";
+
+        // try different combinations. first matching wins
+        boolean success = tryStartActivity(startIntent, contentUri, mime)
+                || tryStartActivity(startIntent, contentUri, null)
+                || tryStartActivity(startIntent, fileUri, mime)
+                || tryStartActivity(startIntent, fileUri, null);
+        if (!success) {
+            String message = getString(R.string.viewer_not_installed, contentUri.toString());
+            Toast
+               .makeText(this, message, Toast.LENGTH_LONG)
+               .show();
+        }
+        return true;
+    }
+
+    private boolean tryStartActivity(Intent startIntent, Uri contentUri, String mime) {
+        boolean result = false;
+        startIntent.setDataAndType(contentUri, mime);
+        try {
+            startActivity(startIntent);
+            result = true;
+        } catch (Exception ignore) {
+        }
+
+        if (Global.debugEnabled) {
+            Log.d(Global.LOG_CONTEXT, "tryStartActivity() returns " + result +
+                    " for "
+                    + startIntent.toUri(0));
+        }
+        return result;
+    }
+
+    private boolean onCmdDeleteQuestion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.delete_menu_title, SettingsImpl.getZipFile()));
+
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onCmdDeleteAnswer();
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        return true;
+    }
+
+    private void onCmdDeleteAnswer() {
+        SettingsImpl.getCurrentZipStorage(this).delete(ZipStorage.ZipInstance.current);
+    }
 }
