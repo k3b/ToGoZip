@@ -55,7 +55,7 @@ Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
     <!-- #8: for folder picker -->
     <string name="pref_zipfolder_title">Zip-Directory</string>
     <string name="folder_picker_parent_dir">Zurück</string>
-    <string name="folder_picker_create_new_directory">Anlegen</string><br/>
+    <string name="folder_picker_create_new_directory">Anlegen</string>
 
 
     <!-- generate a changelogfile within zip file -->
@@ -64,8 +64,8 @@ Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
 
     <!-- #13: if not empty: create subfolders in zip relative to this path -->
     <string name="pref_short_text_zip_rel_path_title">Zipdatei mit Unterverzeichnissen unterhalb von</string>
-    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/subfolder/file.txt')
-    ==> Zip: 'subfolder/file.txt'"]]></string>
+    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/unterordner/datei.txt')
+    ==> Zip: 'unterordner/datei.txt'"]]></string>
     <string name="pref_short_text_zip_rel_path_disabled_summayr">-- Deaktiviert --</string>
 
     <string name="delete_menu_title">Lösche %1$s</string>
@@ -73,6 +73,6 @@ Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
     <string name="send_zip_menu_title">Sende/Teile %1$s</string>
 
     <string name="show_in_filemanager_menu_title">In Dateimanager öffnen</string>
-    <string name="viewer_not_installed">Kein App zur anzeige von %1$s installiert</string>
+    <string name="viewer_not_installed">Kein App zur Anzeige von %1$s installiert.</string>
 	
 </resources>
