@@ -55,5 +55,24 @@ Möchten Sie statt dessen den Standardwert '%2$s' verwenden? "]]></string>
     <!-- #8: for folder picker -->
     <string name="pref_zipfolder_title">Zip-Directory</string>
     <string name="folder_picker_parent_dir">Zurück</string>
-    <string name="folder_picker_create_new_directory">Anlegen</string>
+    <string name="folder_picker_create_new_directory">Anlegen</string><br/>
+
+
+    <!-- generate a changelogfile within zip file -->
+    <string name="pref_log_file_in_zip_debug_summary">Logdatei ToGoZip.log in Zip</string>
+    <string name="pref_log_file_in_zip_debug_title">Logdatei mit vollständigen Pfad aller Änderungen.</string>
+
+    <!-- #13: if not empty: create subfolders in zip relative to this path -->
+    <string name="pref_short_text_zip_rel_path_title">Zipdatei mit Unterverzeichnissen unterhalb von</string>
+    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/subfolder/file.txt')
+    ==> Zip: 'subfolder/file.txt'"]]></string>
+    <string name="pref_short_text_zip_rel_path_disabled_summayr">-- Deaktiviert --</string>
+
+    <string name="delete_menu_title">Lösche %1$s</string>
+    <string name="view_zip_menu_title">Ansicht %1$s</string>
+    <string name="send_zip_menu_title">Sende/Teile %1$s</string>
+
+    <string name="show_in_filemanager_menu_title">In Dateimanager öffnen</string>
+    <string name="viewer_not_installed">Kein App zur anzeige von %1$s installiert</string>
+	
 </resources>

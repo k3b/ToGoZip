@@ -71,6 +71,7 @@ Do you want to use default '%2$s' instead?"]]></string>
 
     <string name="delete_menu_title">Delete %1$s</string>
     <string name="view_zip_menu_title">View %1$s</string>
+    <string name="send_zip_menu_title">Share/Send %1$s to</string>
 
     <string name="show_in_filemanager_menu_title">Open in Filemanager</string>
     <string name="viewer_not_installed">No viewer installed for %1$s</string>
