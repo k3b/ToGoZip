@@ -352,9 +352,18 @@ public class SettingsActivity extends PreferenceActivity
         updateMenuItem(menu, R.id.cmd_delete, R.string.delete_menu_title, storage.exists());
         updateMenuItem(menu, R.id.cmd_view_zip, R.string.view_zip_menu_title, storage.exists());
         updateMenuItem(menu, R.id.cmd_filemanager, 0,
-                FileManagerUtil.hasShowInFilemanager(this, storage.getFullZipDirUriOrNull()));
+                FileManagerUtil.hasShowInFilemanager(this, getZipFolder(storage)));
 
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private String getZipFolder(ZipStorage storage) {
+        String path = storage.getAbsolutePath();
+        if (path != null) {
+            File filePath = new File(path);
+            return filePath.getParent();
+        }
+        return null;
     }
 
     private void updateMenuItem(Menu menu, int cmd, int menuTitle, boolean visible) {
@@ -377,7 +386,7 @@ public class SettingsActivity extends PreferenceActivity
                 return onShowZip();
             case R.id.cmd_filemanager:
                 ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
-                return FileManagerUtil.showInFilemanager(this, storage.getFullZipDirUriOrNull());
+                return FileManagerUtil.showInFilemanager(this, getZipFolder(storage));
             case R.id.cmd_about:
                 AboutDialogPreference.createAboutDialog(this).show();
                 return true;
@@ -388,15 +397,15 @@ public class SettingsActivity extends PreferenceActivity
     private boolean onShowZip() {
         ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
         Intent startIntent = new Intent(Intent.ACTION_VIEW);
-        Uri contentUri = Uri.parse(storage.getFullZipUriOrNull());
-        Uri fileUri = Uri.fromFile(new File(contentUri.getPath()));
+        Uri contentUri = Global.USE_DOCUMENT_PROVIDER ? Uri.parse(storage.getFullZipUriOrNull()) : null;
+        Uri fileUri = Uri.fromFile(new File(storage.getAbsolutePath()));
         String mime = "application/zip";
 
         // try different combinations. first matching wins
-        boolean success = tryStartActivity(startIntent, contentUri, mime)
-                || tryStartActivity(startIntent, contentUri, null)
-                || tryStartActivity(startIntent, fileUri, mime)
-                || tryStartActivity(startIntent, fileUri, null);
+        boolean success = tryStartActivity(startIntent, fileUri, mime)
+                || tryStartActivity(startIntent, fileUri, null)
+                || tryStartActivity(startIntent, contentUri, mime)
+                || tryStartActivity(startIntent, contentUri, null);
         if (!success) {
             String message = getString(R.string.viewer_not_installed, contentUri.toString());
             Toast
@@ -408,17 +417,19 @@ public class SettingsActivity extends PreferenceActivity
 
     private boolean tryStartActivity(Intent startIntent, Uri contentUri, String mime) {
         boolean result = false;
-        startIntent.setDataAndType(contentUri, mime);
-        try {
-            startActivity(startIntent);
-            result = true;
-        } catch (Exception ignore) {
-        }
+        if (contentUri != null) {
+            startIntent.setDataAndType(contentUri, mime);
+            try {
+                startActivity(startIntent);
+                result = true;
+            } catch (Exception ignore) {
+            }
 
-        if (Global.debugEnabled) {
-            Log.d(Global.LOG_CONTEXT, "tryStartActivity() returns " + result +
-                    " for "
-                    + startIntent.toUri(0));
+            if (Global.debugEnabled) {
+                Log.d(Global.LOG_CONTEXT, "tryStartActivity() returns " + result +
+                        " for "
+                        + startIntent.toUri(0));
+            }
         }
         return result;
     }

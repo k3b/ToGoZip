@@ -124,14 +124,6 @@ public class ZipStorageFile implements de.k3b.zip.ZipStorage {
      *  {@inheritDoc}
      */
     @Override
-    public String getFullZipDirUriOrNull() {
-        return "file://" + fileCur.getParentFile().getAbsolutePath();
-    }
-
-    /**
-     *  {@inheritDoc}
-     */
-    @Override
     public boolean rename(ZipInstance zipInstanceFrom, ZipInstance zipInstanceTo) {
         return file(zipInstanceFrom).renameTo(file(zipInstanceTo));
     }

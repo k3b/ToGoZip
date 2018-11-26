@@ -19,6 +19,9 @@
 package de.k3b.android.toGoZip;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.support.v4.provider.DocumentFile;
 
 import java.io.FileNotFoundException;
@@ -86,6 +89,10 @@ public class ZipStorageDocumentFile implements ZipStorage {
         return null;
     }
 
+    private DocumentFile getDocumentFile(ZipInstance zipInstance) {
+        return directory.findFile(getZipFileNameWithoutPath(zipInstance));
+    }
+
     /**
      *  {@inheritDoc}
      */
@@ -94,18 +101,6 @@ public class ZipStorageDocumentFile implements ZipStorage {
         DocumentFile zipFile = getDocumentFile(ZipStorage.ZipInstance.current);
         if (zipFile != null) return zipFile.getUri().toString();
         return null;
-    }
-
-    /**
-     *  {@inheritDoc}
-     */
-    @Override
-    public String getFullZipDirUriOrNull() {
-        return directory.getUri().toString();
-    }
-
-    private DocumentFile getDocumentFile(ZipInstance zipInstance) {
-        return directory.findFile(getZipFileNameWithoutPath(zipInstance));
     }
 
     /**
@@ -123,7 +118,7 @@ public class ZipStorageDocumentFile implements ZipStorage {
      */
     @Override
     public String getAbsolutePath() {
-        return directory.getUri().getPath() + "/" + filename;
+        return getPath(this.context, directory.getUri()) + "/" + filename;
     }
 
     /**
@@ -142,5 +137,35 @@ public class ZipStorageDocumentFile implements ZipStorage {
     @Override
     public String getZipFileNameWithoutPath(ZipInstance zipInstance) {
         return filename + zipInstance.getZipFileSuffix();
+    }
+
+    public static String getPath(final Context context, final Uri uri) {
+        // DocumentProvider
+        if (Global.USE_DOCUMENT_PROVIDER && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+                // TODO handle non-primary volumes
+            }
+        }
+        if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 }

@@ -70,7 +70,7 @@ public interface ZipStorage {
     String getZipFileNameWithoutPath(ZipInstance zipInstance);
 
     /**
-     * get absolute path of zipFile
+     * get absolute path of zipFile that is compatible with File.
      *  i.e. new ZipStorage("/path/to/file.zip").getAbsolutePath() will
      *  return "/path/to/file.zip"
      */
@@ -80,11 +80,6 @@ public interface ZipStorage {
      * get absolute path zipFile as Uri-string or null if zip does not exist
      */
     String getFullZipUriOrNull();
-
-    /**
-     * get absolute path to directory of zipFile as Uri-string or null if zip does not exist
-     */
-    String getFullZipDirUriOrNull();
 
     /**
          * rename zipfile.

@@ -12,7 +12,7 @@ android {
     // compileSdkVersion 26
     compileSdkVersion 23
     defaultConfig {
-        applicationId 'de.k3b.android.toGoZip.dev'
+        applicationId 'de.k3b.android.toGoZip'
         minSdkVersion 7
         // targetSdkVersion 26
         targetSdkVersion 23
@@ -63,7 +63,11 @@ dependencies {
     //  implementation 'eu.lp0.slf4j:slf4j-android:1.7.7-1'
     // implementation 'com.android.support:appcompat-v7:20.0.0'
     // implementation 'com.android.support:support-v4:26.2.1'
-    implementation 'com.android.support:support-v4:23.2.1'
+
+    // workaround: android-studio-3.2.1 editor marks "DocumentFile" as unknown if using api or implementation
+    // implementation 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
+
     implementation project(':libK3bZip')
     implementation project(':libK3b')
     //  implementation 'org.slf4j:slf4j-android:1.7.7@jar' // replaces cellInfoLib.'slf4j-api'
