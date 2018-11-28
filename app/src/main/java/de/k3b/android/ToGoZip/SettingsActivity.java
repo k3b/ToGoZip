@@ -349,8 +349,11 @@ public class SettingsActivity extends PreferenceActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
 
-        updateMenuItem(menu, R.id.cmd_delete, R.string.delete_menu_title, storage.exists());
-        updateMenuItem(menu, R.id.cmd_view_zip, R.string.view_zip_menu_title, storage.exists());
+        final boolean zipExists = storage.exists();
+        updateMenuItem(menu, R.id.cmd_delete, R.string.delete_menu_title, zipExists);
+        updateMenuItem(menu, R.id.cmd_view_zip, R.string.view_zip_menu_title, zipExists);
+        updateMenuItem(menu, R.id.cmd_send, R.string.send_zip_menu_title, zipExists);
+
         updateMenuItem(menu, R.id.cmd_filemanager, 0,
                 FileManagerUtil.hasShowInFilemanager(this, getZipFolder(storage)));
 
@@ -380,6 +383,8 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.cmd_send:
+                return onCmdSend(item.getTitle());
             case R.id.cmd_delete:
                 return onCmdDeleteQuestion();
             case R.id.cmd_view_zip:
@@ -432,6 +437,47 @@ public class SettingsActivity extends PreferenceActivity
             }
         }
         return result;
+    }
+
+    private boolean onCmdSend(CharSequence title) {
+        ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        Uri contentUri = Uri.parse(storage.getFullZipUriOrNull());
+        String mime = "application/zip";
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+
+
+        // EXTRA_CC, EXTRA_BCC
+        // intent.putExtra(Intent.EXTRA_EMAIL, new String[]{toAddress});
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, SettingsImpl.getZipFile());
+
+        // intent.putExtra(Intent.EXTRA_TEXT, body);
+
+        intent.putExtra(Intent.EXTRA_STREAM, contentUri);
+
+        intent.setType(mime);
+
+        final String debugMessage = "SettingsActivity.onCmdSend(" +
+                title +
+                ", startActivity='" + intent.toUri(0)
+                + "')";
+        try {
+            final Intent chooser = Intent.createChooser(intent, title);
+            chooser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+            this.startActivity(chooser);
+            if (Global.debugEnabled) {
+                Log.d(Global.LOG_CONTEXT, debugMessage);
+            }
+        }
+        catch(Exception ex) {
+            Log.w(Global.LOG_CONTEXT, debugMessage, ex);
+        }
+
+        return true;
     }
 
     private boolean onCmdDeleteQuestion() {

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/cmd_send"
+        android:title="@string/send_zip_menu_title"
+        android:orderInCategory="5"
+        android:showAsAction="never"
+        />
+
     <item android:id="@+id/cmd_view_zip"
         android:title="@string/view_zip_menu_title"
         android:orderInCategory="5"
