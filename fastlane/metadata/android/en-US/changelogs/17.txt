@@ -1,0 +1,4 @@
+* New: Settings-Menu send/view/edit/delete zip
+* New Option to have logfile in zip; 
+* New Option for automatic zip-subfolder-path creation
+* bugfix if duplicate file in zip-subfolder
