@@ -19,35 +19,48 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>
 -->
 <resources>
-  <string name="title_activity_add2zip">Zip に追加</string>
-  <string name="cmd_use_default">デフォルトを使用する</string>
-  <string name="cmd_cancel">キャンセル</string>
-  <string name="cmd_edit">編集</string>
-  <string name="ERR_ADD"><![CDATA["更新できません %1$s : 
+    <string name="title_activity_add2zip">Zip に追加</string>
+    <string name="cmd_use_default">デフォルトを使用する</string>
+    <string name="cmd_cancel">キャンセル</string>
+    <string name="cmd_edit">編集</string>
+    <string name="ERR_ADD"><![CDATA["更新できません %1$s : 
 %2$s"]]></string>
-  <string name="ERR_NO_WRITE_PERMISSIONS">\"書き込みアクセス許可がありません %1$s %2$s。
+    <string name="ERR_NO_WRITE_PERMISSIONS">\"書き込みアクセス許可がありません %1$s %2$s。
 (SD カードが挿入されて、かつマウントされていますか?)\"</string>
-  <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["現在の zip に書き込みアクセス許可がありません '%1$s'。
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["現在の zip に書き込みアクセス許可がありません '%1$s'。
 代わりに、デフォルトの '%2$s' を使用しますか? "]]></string>
-  <string name="WARN_ADD_NO_CHANGES"><![CDATA["ファイルはすでに含まれています 
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA["ファイルはすでに含まれています 
 %1$s"]]></string>
-  <string name="SUCCESS_ADD"><![CDATA["%2$d ファイルを追加しました 
+    <string name="SUCCESS_ADD"><![CDATA["%2$d ファイルを追加しました 
 %1$s"]]></string>
-  <string name="WARN_ADD_NO_FILES">ファイルは選択されていません</string>
-  <string name="WARN_ADD_CANCELED">キャンセル: ファイルは追加されません</string>
-  <string name="about_summary">ToGoZip について</string>
-  <string name="banner">ToGoZip バージョン $versionName$ に集める</string>
-  <string name="pref_debug_title">デバッグモード</string>
-  <string name="pref_debug_summary">デバッグメッセージをクリップボードにコピーして、LogCat に追加しました</string>
-  <string name="pref_long_text_file_title">zip に長いテキストファイル</string>
-  <string name="pref_long_text_file_len_min">長いファイル: 最小テキスト長</string>
-  <string name="pref_short_text_file_title">zip に短いテキストファイル</string>
-  <string name="pref_zipfile_title">出力 Zip ファイル</string>
-  <string name="pref_settings_title">設定</string>
-  <string name="settings_locale_title">言語</string>
-  <string name="settings_locale_os_language">(デバイスの言語)</string>
-  <!-- #8: for folder picker -->
-  <string name="pref_zipfolder_title">出力 Zip フォルダー</string>
-  <string name="folder_picker_parent_dir">上</string>
-  <string name="folder_picker_create_new_directory">新規</string>
+    <string name="WARN_ADD_NO_FILES">ファイルは選択されていません</string>
+    <string name="WARN_ADD_CANCELED">キャンセル: ファイルは追加されません</string>
+    <string name="about_summary">ToGoZip について</string>
+    <string name="banner">ToGoZip バージョン $versionName$ に集める</string>
+    <string name="pref_debug_title">デバッグモード</string>
+    <string name="pref_debug_summary">デバッグメッセージをクリップボードにコピーして、LogCat に追加しました</string>
+    <string name="pref_long_text_file_title">zip に長いテキストファイル</string>
+    <string name="pref_long_text_file_len_min">長いファイル: 最小テキスト長</string>
+    <string name="pref_short_text_file_title">zip に短いテキストファイル</string>
+    <string name="pref_zipfile_title">出力 Zip ファイル</string>
+    <string name="pref_settings_title">設定</string>
+    <string name="settings_locale_title">言語</string>
+    <string name="settings_locale_os_language">(デバイスの言語)</string>
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">出力 Zip フォルダー</string>
+    <string name="folder_picker_parent_dir">上</string>
+    <string name="folder_picker_create_new_directory">新規</string>
+    <!-- generate a changelogfile within zip file -->
+    <string name="pref_log_file_in_zip_debug_summary">Zip 形式で ToGoZip.log を更新します</string>
+    <string name="pref_log_file_in_zip_debug_title">追加されたファイルの、元のファイルのフルパスをログに記録します。</string>
+    <!-- #13: if not empty: create subfolders in zip relative to this path -->
+    <string name="pref_short_text_zip_rel_path_title">Zip のサブフォルダーの下に生成</string>
+    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/subfolder/file.txt')
+    ==> Zip: 'subfolder/file.txt'"]]></string>
+    <string name="pref_short_text_zip_rel_path_disabled_summayr">-- 無効 --</string>
+    <string name="delete_menu_title">%1$s を削除</string>
+    <string name="view_zip_menu_title">%1$s を表示</string>
+    <string name="send_zip_menu_title">%1$s を共有/送信...</string>
+    <string name="show_in_filemanager_menu_title">ファイルマネージャーで開く</string>
+    <string name="viewer_not_installed">%1$s のビューアーがインストールされていません</string>
 </resources>
