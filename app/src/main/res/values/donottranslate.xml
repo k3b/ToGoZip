@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2018 k3b
+Copyright (C) 2014-2019 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -25,6 +25,8 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string name="app_name" translatable="false">ToGoZip</string>
     <string name="default_zip_path" translatable="false">copy/2go.zip</string>
 
+    <string name="settings_debug_clear_title" translatable="false">Clear LogCat</string>
+    <string name="settings_debug_save_title" translatable="false">Save LogCat to file</string>
 
     <!-- added to all language specific about boxes as $translate$ -->
     <string name="about_translate" translatable="false"><![CDATA["

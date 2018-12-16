@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2018 k3b
+ * Copyright (C) 2017-2019 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -18,11 +18,14 @@
  */
 package de.k3b.android.toGoZip;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.support.v4.provider.DocumentFile;
+import android.webkit.MimeTypeMap;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -42,9 +45,13 @@ import de.k3b.zip.ZipStorage;
  * Created by k3b on 22.12.2017.
  */
 
+@TargetApi(Build.VERSION_CODES.KITKAT)
 public class ZipStorageDocumentFile implements ZipStorage {
-
     private static final String MIMETYPE_ZIP = "application/zip";
+
+    /** used by logfile*/
+    private static final String MIMETYPE_TEXT = "text/plain";
+
     private final Context context;
     private final DocumentFile directory;
     private final String filename;
@@ -82,7 +89,10 @@ public class ZipStorageDocumentFile implements ZipStorage {
         DocumentFile zipFile = getDocumentFile(zipInstance);
 
         // if not found create it.
-        if (zipFile == null) zipFile = directory.createFile(MIMETYPE_ZIP, getZipFileNameWithoutPath(zipInstance));
+        if (zipFile == null) {
+            final String mimetype = (zipInstance == ZipInstance.logfile) ? MIMETYPE_TEXT : MIMETYPE_ZIP;
+            zipFile = directory.createFile(mimetype, getZipFileNameWithoutPath(zipInstance));
+        }
 
         if (zipFile != null) return context.getContentResolver().openOutputStream(zipFile.getUri(), "w");
 

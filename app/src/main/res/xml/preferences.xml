@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2018 k3b
+Copyright (C) 2014-2019 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -79,6 +79,13 @@ this program. If not, see <http://www.gnu.org/licenses/>
             android:key="isWriteLogFile2Zip"
             android:summary="@string/pref_log_file_in_zip_debug_summary"
             android:title="@string/pref_log_file_in_zip_debug_title" />
+
+        <Preference
+            android:key="debugClearLog"
+            android:title="@string/settings_debug_clear_title" />
+        <Preference
+            android:key="debugSaveLog"
+            android:title="@string/settings_debug_save_title" />
 
         <de.k3b.android.widget.AboutDialogPreference
             android:key="about"

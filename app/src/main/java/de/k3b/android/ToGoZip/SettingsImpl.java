@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014-2019 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -33,6 +33,7 @@ import java.io.File;
 
 import de.k3b.LibGlobal;
 import de.k3b.io.StringUtils;
+import de.k3b.zip.LibZipGlobal;
 import de.k3b.zip.ZipStorage;
 import de.k3b.zip.ZipStorageFile;
 
@@ -79,6 +80,7 @@ public class SettingsImpl {
         Global.debugEnabled = SettingsImpl.getPrefValue(prefs,
                 "isDebugEnabled", Global.debugEnabled);
         LibGlobal.debugEnabled = Global.debugEnabled;
+        LibZipGlobal.debugEnabled = Global.debugEnabled;
 
         Global.isWriteLogFile2Zip = SettingsImpl.getPrefValue(prefs,
                 "isWriteLogFile2Zip", Global.isWriteLogFile2Zip);
@@ -167,12 +169,16 @@ public class SettingsImpl {
     }
 
     public static ZipStorage getCurrentZipStorage(Context context) {
+        return getCurrentStorage(context, SettingsImpl.zipfile);
+    }
+
+    public static ZipStorage getCurrentStorage(Context context, String baseFileName) {
         if (Global.USE_DOCUMENT_PROVIDER) {
             DocumentFile docDir = getDocFile(context, zipDocDirUri);
-            return new ZipStorageDocumentFile(context, docDir,zipfile);
+            return new ZipStorageDocumentFile(context, docDir, baseFileName);
 
         } else {
-            File absoluteZipFile = getAbsoluteZipFile();
+            File absoluteZipFile = getAbsoluteFile(baseFileName);
             return new ZipStorageFile(absoluteZipFile.getAbsolutePath());
         }
     }
@@ -235,9 +241,13 @@ public class SettingsImpl {
         return zipfile;
     }
 
-    /** full path of the zipfile where "Add To Zip" goes to. */
     public static File getAbsoluteZipFile() {
-        return new File(zipDocDirUri, zipfile);
+        return getAbsoluteFile(SettingsImpl.zipfile);
+    }
+
+    /** full path of the zipfile where "Add To Zip" goes to. */
+    protected static File getAbsoluteFile(String fileName) {
+        return new File(zipDocDirUri, fileName);
     }
 
     public static String getTextfile(boolean useLongTextFile) {

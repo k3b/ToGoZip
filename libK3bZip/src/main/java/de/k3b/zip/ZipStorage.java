@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2018 k3b
+ * Copyright (C) 2017-2019 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -97,7 +97,10 @@ public interface ZipStorage {
         /** path of the original unmodified zip while CompressJob is active /path/to/file.bak.zip */
         old(SUFFIX_OLD_ZIP),
         /** path of the new updated zip while CompressJob is active /path/to/file.tmp.zip */
-        new_(SUFFIX_NEW_ZIP);
+        new_(SUFFIX_NEW_ZIP),
+
+        /** path of the crash log file if something goes wrong (or save logcat in settings is pressed) /path/to/file.crash.log */
+        logfile(SUFFIX_CRASH_LOG);
 
         private final String zipFileSuffix;
 
@@ -113,4 +116,5 @@ public interface ZipStorage {
     static final String SUFFIX_NEW_ZIP = ".tmp.zip";
     static final String SUFFIX_OLD_ZIP = ".bak.zip";
     static final String SUFFIX_CURRENT_ZIP = "";
+    static final String SUFFIX_CRASH_LOG = ".crash.log";
 }

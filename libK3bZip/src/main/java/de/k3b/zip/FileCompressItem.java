@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014-2019 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
-import de.k3b.LibGlobal;
 import de.k3b.io.FileUtils;
 import de.k3b.io.StringUtils;
 
@@ -33,7 +32,7 @@ import de.k3b.io.StringUtils;
  * Author k3b
  */
 public class FileCompressItem extends CompressItem {
-    private static final Logger logger = LoggerFactory.getLogger(LibGlobal.LOG_TAG);
+    private static final Logger logger = LoggerFactory.getLogger(LibZipGlobal.LOG_TAG);
     private static final String DBG_CONTEXT = "FileCompressItem:";
 
     /** source file to be compressed */
@@ -85,7 +84,7 @@ public class FileCompressItem extends CompressItem {
             resultMessage.append(srcFile.getName());
             result = resultMessage.toString();
         }
-        if (LibGlobal.debugEnabled) {
+        if (LibZipGlobal.debugEnabled) {
             logger.info(DBG_CONTEXT + "[match={}] '{}' <== calculateZipEntryName(... , srcFile='{}' '{}', zipRelPath='{}')",
                     result, match, srcFile, srcPath, zipRelPath);
         }
@@ -95,7 +94,7 @@ public class FileCompressItem extends CompressItem {
     /** if not null file adds will be relative to this path if file is below this path */
     public static void setZipRelPath(File zipRelPath) {
         FileCompressItem.zipRelPath = getCanonicalPath(zipRelPath);
-        if (LibGlobal.debugEnabled) {
+        if (LibZipGlobal.debugEnabled) {
             logger.info(DBG_CONTEXT + "setZipRelPath('{}') from '{}'",FileCompressItem.zipRelPath, zipRelPath );
         }
     }

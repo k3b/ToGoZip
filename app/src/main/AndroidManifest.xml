@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2018 k3b
+Copyright (C) 2014-2019 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -19,13 +19,21 @@ this program. If not, see <http://www.gnu.org/licenses/>
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.k3b.android.toGoZip"
     android:installLocation="auto"
 	
     >
 	<!-- manifest.versionXXX are used by fdroid to trigger rebuild "Update Check Mode:RepoManifest" -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- after app crash the logcat is written to /mnt/sdcard/copy/log/androFotofinder.logcat*.txt
+            on old android versions this allows to read logcat -->
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
+        android:name=".ToGoZipApp"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">

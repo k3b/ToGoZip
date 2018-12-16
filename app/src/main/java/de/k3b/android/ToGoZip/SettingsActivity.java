@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014-2019 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -124,6 +124,21 @@ public class SettingsActivity extends PreferenceActivity
             }
         });
         folderPickerPreference.setSummary(SettingsImpl.getZipDocDirUri());
+
+        findPreference("debugClearLog").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                onDebugClearLogCat();
+                return false; // donot close
+            }
+        });
+        findPreference("debugSaveLog").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                onDebugSaveLogCat();
+                return false; // donot close
+            }
+        });
 
 
         // #6: Support to change locale at runtime
@@ -274,6 +289,18 @@ public class SettingsActivity extends PreferenceActivity
         folderPickerPreference.setSummary(folderLocation);
         setResult(RESULT_OK, null);
     }
+
+    private void onDebugClearLogCat() {
+        ((ToGoZipApp) getApplication()).clear();
+        Toast.makeText(this, R.string.settings_debug_clear_title, Toast.LENGTH_SHORT).show();
+        Log.e(Global.LOG_CONTEXT, "SettingsActivity-ClearLogCat()");
+    }
+
+    private void onDebugSaveLogCat() {
+        Log.e(Global.LOG_CONTEXT, "SettingsActivity-SaveLogCat(): ");
+        ((ToGoZipApp) getApplication()).saveToFile();
+    }
+
 
     /**
      * cancel from Dialog cancels SettingsActivity

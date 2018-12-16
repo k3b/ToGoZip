@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 k3b
+ * Copyright (C) 2014-2019 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -32,7 +32,7 @@ import de.k3b.LibGlobal;
  * Created by k3b on 25.11.2014.
  */
 public class ZipLogImpl  implements ZipLog {
-    private static final Logger logger = LoggerFactory.getLogger(LibGlobal.LOG_TAG);
+    private static final Logger logger = LoggerFactory.getLogger(LibZipGlobal.LOG_TAG);
     /**
      * last errormessage
      */
