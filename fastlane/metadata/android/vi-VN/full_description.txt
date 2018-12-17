@@ -9,7 +9,7 @@ vào từ gần như mọi nơi (từ mọi ứng dụng hỗ trợ 'share' / 's
 nơi (qua email, bluetooth, nfc).
 
 Tác giả của chương trình sử dụng ToGoZip để thu thập các mục lịch mới của Android mà
-sau này phải được nhập khẩu vào lịch của desctop-pcs.
+sau này phải được nhập khẩu vào lịch của desktop-pcs.
 
 Yêu cầu quyền của Android:
 

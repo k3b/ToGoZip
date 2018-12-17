@@ -11,7 +11,7 @@ pode viajar em qualquer lugar (via e-mail,
 bluetooth, nfc).
 
 O autor do programa usa o ToGoZip para coletar novas entradas do calendário do Android
-que deve ser importado mais tarde na agenda do desctop-pcs.
+que deve ser importado mais tarde na agenda do desktop-pcs.
 
 Permissões requeridas do Android:
 

@@ -11,7 +11,7 @@ kan reise overalt (via e-post,
 bluetooth, nfc).
 
 Programmets forfatter bruker ToGoZip til å samle inn nye android kalenderoppføringer
-Det skal senere importeres til desctop-pcs-kalenderen.
+Det skal senere importeres til desktop-pcs-kalenderen.
 
 Påkrevde Android Tillatelser:
 
