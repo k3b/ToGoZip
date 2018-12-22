@@ -48,7 +48,8 @@ verschiedene Dinge (Dateien) legen kann und der überall hin reisen kann (per em
 
 Erforderliche Android Berechtigungen:
 
-* WRITE_EXTERNAL_STORAGE zum Speichern/Aktualisieren von \'2go.zip\'.
+* WRITE_EXTERNAL_STORAGE: Zum Speichern/Aktualisieren von \'2go.zip\'.
+* READ_LOGS: Bei Programmabsturz wird ein fehlerlog in die datei toGoZip.logcat-*.txt oder in die zwischenablage geschrieben.
 
 .
 "]]></string>

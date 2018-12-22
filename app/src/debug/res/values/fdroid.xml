@@ -58,6 +58,7 @@ that should be later imported into the desktop-pcs-s calender.
 Required Android Permissions:
 
 * WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.
+* READ_LOGS: after app crash the errorlog is written to {last-zip-dir}/toGoZip.logcat-*.txt or clipboard
 
 .
 "]]></string>

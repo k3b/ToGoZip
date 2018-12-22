@@ -16,9 +16,10 @@ android {
         minSdkVersion 7
         // targetSdkVersion 26
         targetSdkVersion 23
-        versionCode 17
-        versionName '2.0.17.181130'
+        versionCode 18
+        versionName '2.0.18.181224'
 
+        // 2.0.18.181224 (18) Crashlog support (via Settings-Menu)
         // 2.0.17.181130 (17) Settings-Menu send/view/edit/delete zip;zip-subfolder-path; logfile in zip; bugfix duplicate in zip-subfolder
         // 2.0.13.18130  (13) new translation ru ar updates bn ja
         // 2.0.12.180516 (12) translation updates id, vi, pl, ja, fr

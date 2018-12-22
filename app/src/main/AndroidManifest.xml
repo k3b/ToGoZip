@@ -27,7 +27,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
 	<!-- manifest.versionXXX are used by fdroid to trigger rebuild "Update Check Mode:RepoManifest" -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- after app crash the logcat is written to /mnt/sdcard/copy/log/androFotofinder.logcat*.txt
+    <!-- after app crash the errorlog is written to {last-zip-dir}/toGoZip.logcat-*.txt or clipboard
             on old android versions this allows to read logcat -->
     <uses-permission android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -55,7 +55,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
                 <data android:scheme="file" />
             </intent-filter>
             <!-- same as before but data is null so data is from extras Intent.EXTRA_STREAM -->
-            <intent-filter>
+            <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
