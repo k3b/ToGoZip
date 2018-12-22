@@ -58,6 +58,9 @@ public class SettingsActivity extends PreferenceActivity
     private static final int FOLDERPICKER_CODE = 1234;
     private static final int ZIP_SUB_FOLDERPICKER_CODE = 1235;
 
+    /** false: old style folder picker for subfolder; true use new android Docprovider-Folder-picker */
+    private static boolean allowDocProvider4Subfolder = false;
+
     private SharedPreferences prefsInstance = null;
     private ListPreference defaultLocalePreference;  // #6: Support to change locale at runtime
 
@@ -243,14 +246,18 @@ public class SettingsActivity extends PreferenceActivity
     }
 
     private boolean onCmdPickRelPathFolder() {
-        CharSequence folder = SettingsImpl.getZipRelPath();
+        try {
+            return openPicker(SettingsImpl.getZipRelPath(), ZIP_SUB_FOLDERPICKER_CODE,
+                    Global.USE_DOCUMENT_PROVIDER && allowDocProvider4Subfolder);
+        } catch (RuntimeException ex) {
+            final String msg = "onCmdPickRelPathFolder('" + SettingsImpl.getZipRelPath() +
+                    "')";
+            Log.e(Global.LOG_CONTEXT, msg, ex);
 
-            Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
-            if ((folder != null) && (folder.length() > 0)) {
-                intent.putExtra("location", folder); // initial dir
-            }
-            startActivityForResult(intent, ZIP_SUB_FOLDERPICKER_CODE);
-        return true;
+            // do not use old api again
+            allowDocProvider4Subfolder = true;
+            throw new RuntimeException(msg, ex);
+        }
     }
 
     private void onZipRelPathFolderPickResult(String folderLocation, boolean ok) {
@@ -263,20 +270,22 @@ public class SettingsActivity extends PreferenceActivity
     }
 
     private boolean onCmdPickFolder() {
-        CharSequence folder = folderPickerPreference.getSummary();
+        return openPicker(folderPickerPreference.getSummary(), FOLDERPICKER_CODE, Global.USE_DOCUMENT_PROVIDER);
+    }
 
-        if (!Global.USE_DOCUMENT_PROVIDER) {
+    private boolean openPicker(CharSequence oldFolder, int folderpickerCode, boolean useDocumentProvider) {
+        if (!useDocumentProvider) {
             Intent intent = new Intent(SettingsActivity.this, FolderPicker.class);
-            if ((folder != null) && (folder.length() > 0)) {
-                intent.putExtra("location", folder); // initial dir
+            if ((oldFolder != null) && (oldFolder.length() > 0)) {
+                intent.putExtra("location", oldFolder); // initial dir
             }
-            startActivityForResult(intent, FOLDERPICKER_CODE);
+            startActivityForResult(intent, folderpickerCode);
         } else {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
             intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            startActivityForResult(intent, FOLDERPICKER_CODE);
+            startActivityForResult(intent, folderpickerCode);
         }
         return true;
     }
@@ -330,6 +339,24 @@ public class SettingsActivity extends PreferenceActivity
 
     }
 
+    private String getPickerUriAsString(Intent data, boolean useDocumentProvider, boolean convert2File) {
+        if (data != null) {
+            if (useDocumentProvider) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    return (convert2File)
+                            ? ZipStorageDocumentFile.getPath(this, uri)
+                            : uri.toString();
+                }
+            } else {
+                // folder picker specific implementation
+                final Bundle extras = data.getExtras();
+                if (extras != null) return extras.getString("data");
+            }
+        }
+        return null;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_GET_ZIP_DIR && resultCode == RESULT_OK && Global.USE_DOCUMENT_PROVIDER) {
@@ -337,19 +364,13 @@ public class SettingsActivity extends PreferenceActivity
         }
 
         if (requestCode == FOLDERPICKER_CODE && resultCode == Activity.RESULT_OK) {
-            if (Global.USE_DOCUMENT_PROVIDER) {
-                Uri uri = data.getData();
-                onFolderPickResult(uri.toString());
-            } else {
-                // folder picker specific implementation
-                String folderLocation = data.getExtras().getString("data");
-                onFolderPickResult(folderLocation);
-            }
+            final String folderLocation = getPickerUriAsString(data, Global.USE_DOCUMENT_PROVIDER, false);
+            onFolderPickResult(folderLocation);
         }
 		
         if (requestCode == ZIP_SUB_FOLDERPICKER_CODE) {
-			// folder picker specific implementation
-			String folderLocation = data.getExtras().getString("data");
+            final String folderLocation = getPickerUriAsString(data,
+                    Global.USE_DOCUMENT_PROVIDER && allowDocProvider4Subfolder, true);
 			onZipRelPathFolderPickResult(folderLocation, resultCode == Activity.RESULT_OK);
         }
     }

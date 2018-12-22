@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.support.v4.provider.DocumentFile;
-import android.webkit.MimeTypeMap;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

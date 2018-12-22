@@ -34,6 +34,7 @@ import de.k3b.android.widget.Clipboard;
 import de.k3b.io.FileUtils;
 import de.k3b.zip.LibZipGlobal;
 import de.k3b.zip.ZipStorage;
+import lib.folderpicker.FolderPicker;
 
 public class ToGoZipApp extends Application {
     private static final String FILE_NAME_PREFIX = "toGoZip.logcat-";
@@ -46,7 +47,7 @@ public class ToGoZipApp extends Application {
         //         SettingsActivity.prefs2Global(this);
 
         mCrashSaveToFile = new LogCat(Global.LOG_CONTEXT,
-                LibGlobal.LOG_TAG, LibZipGlobal.LOG_TAG) {
+                LibGlobal.LOG_TAG, LibZipGlobal.LOG_TAG, FolderPicker.LOG_TAG) {
             public void saveToFile() {
                 final ToGoZipApp context = ToGoZipApp.this;
                 ZipStorage logStorage = SettingsImpl.getCurrentStorage(

@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -39,6 +40,8 @@ import de.k3b.android.toGoZip.R;
 import de.k3b.android.widget.LocalizedActivity;
 
 public class FolderPicker extends LocalizedActivity {
+    /** LOG_CONTEXT is used as logging source for filtering logging messages that belong to this */
+    public static final String LOG_TAG = "FolderPicker";
 
     ArrayList<String> namesList;
     ArrayList<String> typesList;
@@ -59,7 +62,10 @@ public class FolderPicker extends LocalizedActivity {
         setContentView(R.layout.fp_main_layout);
 
         if( !isExternalStorageReadable() ){
-            Toast.makeText(this, "Storage access permission not given", Toast.LENGTH_LONG).show();
+            final String msg = "Storage access permission not given";
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+            Log.w(LOG_TAG, msg);
+
             finish();
         }
 
@@ -94,7 +100,7 @@ public class FolderPicker extends LocalizedActivity {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, "onCreate", e);
         }
 
         loadLists(location);
@@ -156,7 +162,8 @@ public class FolderPicker extends LocalizedActivity {
             showList();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, "loadLists(" +
+                    location + ")", e);
         }
 
     } // load List
@@ -177,7 +184,7 @@ public class FolderPicker extends LocalizedActivity {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, "showList", e);
         }
 
     }
@@ -216,7 +223,8 @@ public class FolderPicker extends LocalizedActivity {
             loadLists(location);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, "newFolder(" +
+                    filename + ")", e);
             Toast.makeText(this, "Error:" + e.toString(), Toast.LENGTH_LONG)
                     .show();
         }
