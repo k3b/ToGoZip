@@ -24,11 +24,23 @@ package de.k3b.io;
  */
 
 public class StringUtils {
+    /// @Deprecated use Verson with CharSequence parameter instead of string
+    @Deprecated
     public static int length(String str) {
         return (str != null) ? str.length() : 0;
     }
 
+    /// @Deprecated use Verson with CharSequence parameter instead of string
+    @Deprecated
     public static boolean isNullOrEmpty(String str) {
         return (0 == length(str));
     }
+
+    public static int length(CharSequence str) {
+        return (str != null) ? str.length() : 0;
+    }
+    public static boolean isNullOrEmpty(CharSequence str) {
+        return (0 == length(str));
+    }
+
 }

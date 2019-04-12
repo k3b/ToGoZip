@@ -16,9 +16,10 @@ android {
         minSdkVersion 7
         // targetSdkVersion 26
         targetSdkVersion 23
-        versionCode 18
-        versionName '2.0.18.181224'
+        versionCode 19
+        versionName '2.0.19.190413'
 
+        // 2.0.19.190413 (19) Minified reduced apk-size from 536kb to 178kb
         // 2.0.18.181224 (18) Crashlog support (via Settings-Menu)
         // 2.0.17.181130 (17) Settings-Menu send/view/edit/delete zip;zip-subfolder-path; logfile in zip; bugfix duplicate in zip-subfolder
         // 2.0.13.18130  (13) new translation ru ar updates bn ja
@@ -39,11 +40,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            // shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
+            // shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
