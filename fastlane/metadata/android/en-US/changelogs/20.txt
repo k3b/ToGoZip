@@ -1,1 +1,2 @@
+* Bugfix crash when trying to write to root directory #20
 * Translation update ar

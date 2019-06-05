@@ -26,6 +26,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.support.v4.provider.DocumentFile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -158,7 +159,11 @@ public class ZipStorageDocumentFile implements ZipStorage {
                 final String type = split[0];
 
                 if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                    final File externalStorageDirectory = Environment.getExternalStorageDirectory();
+
+                    // split[1] results in index out of bound exception in storage root dir
+                    if (split.length == 1) return externalStorageDirectory.toString();
+                    return externalStorageDirectory + "/" + split[1];
                 }
 
                 // TODO handle non-primary volumes
