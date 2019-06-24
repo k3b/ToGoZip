@@ -21,9 +21,8 @@ package de.k3b.android;
 import android.content.Context;
 import android.widget.Toast;
 
-import de.k3b.android.zip.Global;
-import de.k3b.android.toGoZip.R;
 import de.k3b.android.toGoZip.SettingsImpl;
+import de.k3b.android.zip.Global;
 import de.k3b.android.widget.Clipboard;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.CompressJob;
@@ -36,15 +35,27 @@ import de.k3b.zip.ZipLog;
  */
 public class AndroidCompressJob extends CompressJob {
     private final Context context;
+    private final int resStringBanner;
+    private final int resStringSuccessAdd;
+    private final int resStringWarnAddNoChanges;
+    private final int resStringErrAdd;
 
     /**
      * Creates a job.
      * @param zipLog if true collect diagnostics/debug messages to debugLogMessages.
      * @param fileLogInZip
      */
-    public AndroidCompressJob(Context context, ZipLog zipLog, String fileLogInZip) {
+    public AndroidCompressJob(
+            Context context,
+            ZipLog zipLog,
+            String fileLogInZip,
+            int resStringBanner, int resStringSuccessAdd, int resStringWarnAddNoChanges, int resStringErrAdd) {
         super(zipLog, fileLogInZip);
         this.context = context;
+        this.resStringBanner = resStringBanner;
+        this.resStringSuccessAdd = resStringSuccessAdd;
+        this.resStringWarnAddNoChanges = resStringWarnAddNoChanges;
+        this.resStringErrAdd = resStringErrAdd;
     }
     //############ processing ########
 
@@ -70,18 +81,18 @@ public class AndroidCompressJob extends CompressJob {
     private String getResultMessage(int convertResult) {
         String currentZipFileAbsolutePath = getAbsolutePath();
         if (convertResult == CompressJob.RESULT_ERROR_ABOART) {
-            return String.format(context.getString(R.string.ERR_ADD),
+            return String.format(context.getString(resStringErrAdd),
                     currentZipFileAbsolutePath, getLastError(false));
         } else if (convertResult == CompressJob.RESULT_NO_CHANGES) {
-            return String.format(context.getString(R.string.WARN_ADD_NO_CHANGES), currentZipFileAbsolutePath);
+            return String.format(context.getString(resStringWarnAddNoChanges), currentZipFileAbsolutePath);
         } else {
-            return String.format(context.getString(R.string.SUCCESS_ADD), currentZipFileAbsolutePath, getAddCount());
+            return String.format(context.getString(resStringSuccessAdd), currentZipFileAbsolutePath, getAddCount());
         }
     }
 
     /** footer added to text collector. null means no text. */
     @Override protected String getTextFooter() {
-        String result = this.context.getResources().getString(R.string.banner); // "Collected with ToGoZip version ...";
+        String result = this.context.getResources().getString(resStringBanner); // "Collected with ToGoZip version ...";
 
         final String versionName = GuiUtil.getAppVersionName(context);
         if (versionName != null) {
