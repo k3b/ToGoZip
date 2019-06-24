@@ -45,6 +45,7 @@ import java.io.File;
 import de.k3b.android.util.FileManagerUtil;
 import de.k3b.android.widget.AboutDialogPreference;
 import de.k3b.android.widget.LocalizedActivity;
+import de.k3b.android.zip.Global;
 import de.k3b.zip.ZipStorage;
 import lib.folderpicker.FolderPicker;
 
@@ -345,7 +346,7 @@ public class SettingsActivity extends PreferenceActivity
                 Uri uri = data.getData();
                 if (uri != null) {
                     return (convert2File)
-                            ? ZipStorageDocumentFile.getPath(this, uri)
+                            ? de.k3b.android.zip.ZipStorageDocumentFile.getPath(this, uri)
                             : uri.toString();
                 }
             } else {

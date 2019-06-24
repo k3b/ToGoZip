@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.android.toGoZip;
+package de.k3b.android.zip;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -31,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import de.k3b.android.zip.Global;
 import de.k3b.zip.ZipStorage;
 
 /**

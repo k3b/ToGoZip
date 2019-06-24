@@ -21,7 +21,7 @@ package de.k3b.android;
 import android.content.Context;
 import android.widget.Toast;
 
-import de.k3b.android.toGoZip.Global;
+import de.k3b.android.zip.Global;
 import de.k3b.android.toGoZip.R;
 import de.k3b.android.toGoZip.SettingsImpl;
 import de.k3b.android.widget.Clipboard;

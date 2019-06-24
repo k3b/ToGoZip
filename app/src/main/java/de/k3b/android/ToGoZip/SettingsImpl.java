@@ -32,6 +32,7 @@ import android.util.Log;
 import java.io.File;
 
 import de.k3b.LibGlobal;
+import de.k3b.android.zip.Global;
 import de.k3b.io.StringUtils;
 import de.k3b.zip.LibZipGlobal;
 import de.k3b.zip.ZipStorage;
@@ -175,7 +176,7 @@ public class SettingsImpl {
     public static ZipStorage getCurrentStorage(Context context, String baseFileName) {
         if (Global.USE_DOCUMENT_PROVIDER) {
             DocumentFile docDir = getDocFile(context, zipDocDirUri);
-            return new ZipStorageDocumentFile(context, docDir, baseFileName);
+            return new de.k3b.android.zip.ZipStorageDocumentFile(context, docDir, baseFileName);
 
         } else {
             File absoluteZipFile = getAbsoluteFile(baseFileName);

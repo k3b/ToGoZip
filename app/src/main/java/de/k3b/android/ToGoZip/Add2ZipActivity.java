@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import de.k3b.android.AndroidCompressJob;
 import de.k3b.android.widget.LocalizedActivity;
+import de.k3b.android.zip.Global;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.FileCompressItem;
 import de.k3b.zip.ZipLog;

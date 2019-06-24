@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.k3b.android.MediaUtil;
+import de.k3b.android.zip.AndroidUriCompressItem;
+import de.k3b.android.zip.DocumentFileCompressItem;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.ZipLog;
 

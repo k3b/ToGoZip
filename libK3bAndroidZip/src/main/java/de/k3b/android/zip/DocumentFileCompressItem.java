@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>
  */
-package de.k3b.android.toGoZip;
+package de.k3b.android.zip;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v4.provider.DocumentFile;
 
 import java.io.File;
 import java.io.IOException;

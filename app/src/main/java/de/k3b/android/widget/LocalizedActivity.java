@@ -31,7 +31,7 @@ import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
-import de.k3b.android.toGoZip.Global;
+import de.k3b.android.zip.Global;
 
 /**
  * An activity that can change the locale (language) of its content.

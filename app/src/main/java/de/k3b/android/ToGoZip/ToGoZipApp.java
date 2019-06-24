@@ -22,15 +22,14 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import de.k3b.LibGlobal;
 import de.k3b.android.util.LogCat;
 import de.k3b.android.widget.Clipboard;
+import de.k3b.android.zip.Global;
 import de.k3b.io.FileUtils;
 import de.k3b.zip.LibZipGlobal;
 import de.k3b.zip.ZipStorage;
