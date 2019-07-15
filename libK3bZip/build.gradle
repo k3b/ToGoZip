@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'info.solidsoft.pitest'
 
 // ---------------
 // required for jitpack
@@ -11,6 +12,10 @@ version = "L2.0.15"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+pitest {
+    targetClasses = ['de.k3b.*']
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
