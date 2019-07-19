@@ -88,7 +88,7 @@ public class MediaUtil {
 
     /*
     Input: URI -- something like content://com.example.app.provider/table2/dataset1
-    Output: null or date
+    Output: null or filename (with or without path)
     */
     public static String getFileName(Context context, Uri uri, String mimeType) {
         String baseName = getString(context, uri, MediaStore.Images.Media.DISPLAY_NAME);

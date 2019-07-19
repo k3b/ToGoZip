@@ -227,7 +227,7 @@ public class CompressJobIntegrationTests {
     }
 
     private CompressJob createCompressJob(ZipStorage testZip) {
-        return new CompressJob(null, "changeHistory.txt").setDestZipFile(testZip);
+        return new CompressJob(null, "changeHistory.txt").setZipStorage(testZip);
     }
 
 }

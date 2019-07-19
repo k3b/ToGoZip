@@ -23,7 +23,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Encapsulates all storage related operations that relate to a Zipfile.
+ * Defines the Zipfile where zip processing is done with.
+ *
+ * Encapsulates all storage related operations on the Zipfile.
  *
  * Goal  Having two implementations for zipiing:
  * * an android-independant {@link ZipStorageFile} based on java.io.File

@@ -31,7 +31,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import de.k3b.android.zip.Global;
 import de.k3b.zip.ZipStorage;
 
 /**
@@ -152,7 +151,7 @@ public class ZipStorageDocumentFile implements ZipStorage {
 
     public static String getPath(final Context context, final Uri uri) {
         // DocumentProvider
-        if (Global.USE_DOCUMENT_PROVIDER && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);

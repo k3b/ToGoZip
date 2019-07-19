@@ -76,16 +76,16 @@ public class CompressJob implements ZipLog {
     /** this item from the que will receive all log texts */
     private TextCompressItem compressLogItem = null;
 
-    private ZipStorage destZipFile;
+    private ZipStorage zipStorage;
 
     // used to copy content
     private byte[] buffer = new byte[4096];
 
     /**
-     * Creates a job.
+     * Creates an empty job.
      *
-     * @param zipLog  if not null use this for logging.
-     * @param fileLogInZip
+     * @param zipLog  if not null use zipLog to write logging info into while executing zipping.
+     * @param fileLogInZip if not null: path inside the generated that will receive the zip-logging.
      */
     public CompressJob(ZipLog zipLog, String fileLogInZip) {
         this.zipLog = zipLog;
@@ -95,6 +95,14 @@ public class CompressJob implements ZipLog {
             // do not process this item in qoueOutPutLoop
             this.compressLogItem.setProcessed(true);
         }
+    }
+
+    /**
+     * Mandatory: Define the source/target zip file used to process the zip
+     */
+    public CompressJob setZipStorage(ZipStorage zipStorage) {
+        this.zipStorage = zipStorage;
+        return this;
     }
 
     public static String readAll(InputStream is, byte[] buffer) throws IOException {
@@ -183,13 +191,13 @@ public class CompressJob implements ZipLog {
         }
     }
 
-    public TextCompressItem addTextToCompressQue(String textfile, String textToBeAdded) {
-        this.compressTextItem = addTextToCompressQue(this.compressTextItem, textfile, textToBeAdded);
+    public TextCompressItem addTextToCompressQue(String zipEntryPath, String textToBeAdded) {
+        this.compressTextItem = addTextToCompressQue(this.compressTextItem, zipEntryPath, textToBeAdded);
         return this.compressTextItem;
     }
 
-    public TextCompressItem addLog2CompressQue(String textfile, String textToBeAdded) {
-        this.compressLogItem = addTextToCompressQue(this.compressLogItem, textfile, textToBeAdded);
+    public TextCompressItem addLog2CompressQue(String zipEntryPath, String textToBeAdded) {
+        this.compressLogItem = addTextToCompressQue(this.compressLogItem, zipEntryPath, textToBeAdded);
         return this.compressLogItem;
     }
 
@@ -371,17 +379,17 @@ public class CompressJob implements ZipLog {
             // map from path to lastModifiedDate used to find the duplicates
             Map<String, Long> existingEntries = new HashMap<>();
 
-            String curZipFileName = this.destZipFile.getZipFileNameWithoutPath(ZipStorage.ZipInstance.current);
-            String newZipFileName = this.destZipFile.getZipFileNameWithoutPath(ZipStorage.ZipInstance.new_);
+            String curZipFileName = this.zipStorage.getZipFileNameWithoutPath(ZipStorage.ZipInstance.current);
+            String newZipFileName = this.zipStorage.getZipFileNameWithoutPath(ZipStorage.ZipInstance.new_);
 
             context = traceMessage("(0) create new result file {0}", newZipFileName);
-            zipOutputStream = new ZipOutputStream(this.destZipFile.createOutputStream(ZipStorage.ZipInstance.new_));
+            zipOutputStream = new ZipOutputStream(this.zipStorage.createOutputStream(ZipStorage.ZipInstance.new_));
 
             String oldZipFileName = null;
-            if (this.destZipFile.exists()) {
+            if (this.zipStorage.exists()) {
                 context = traceMessage("(1a) copy existing compressQue from {0} to {1}",
                         curZipFileName, newZipFileName);
-                zipInputStream = new ZipInputStream(this.destZipFile.createInputStream());
+                zipInputStream = new ZipInputStream(this.zipStorage.createInputStream());
 
                 InputStream prependInputStream = null;
                 for (ZipEntry zipOldEntry = zipInputStream.getNextEntry(); zipOldEntry != null; zipOldEntry = zipInputStream
@@ -417,7 +425,7 @@ public class CompressJob implements ZipLog {
                 zipInputStream.close();
                 zipInputStream = null;
                 // i.e. /path/to/somefile.bak.zip
-                oldZipFileName = this.destZipFile.getZipFileNameWithoutPath(ZipStorage.ZipInstance.old);
+                oldZipFileName = this.zipStorage.getZipFileNameWithoutPath(ZipStorage.ZipInstance.old);
             }
 
             boolean oldProcessed = false;
@@ -479,14 +487,14 @@ public class CompressJob implements ZipLog {
             // no exception yet: Assume it is save to change the old zip
             // (2) rename existing-old somefile.zip to somefile.bak.zip
             if (oldZipFileName != null) {
-                this.destZipFile.delete(ZipStorage.ZipInstance.old);
+                this.zipStorage.delete(ZipStorage.ZipInstance.old);
 
                 context = traceMessage(
                         "(2) rename old zip file from {0}  to {1}",
                         curZipFileName, oldZipFileName);
                 // i.e. /path/to/somefile.zip => /path/to/somefile.bak.zip
 
-                if (!destZipFile.rename(ZipStorage.ZipInstance.current, ZipStorage.ZipInstance.old)) {
+                if (!zipStorage.rename(ZipStorage.ZipInstance.current, ZipStorage.ZipInstance.old)) {
                     thowrError(context);
                 }
             }
@@ -495,11 +503,11 @@ public class CompressJob implements ZipLog {
             context = traceMessage("(3) rename new created zip file {0} to {1}",
                     newZipFileName, curZipFileName);
 
-            if (!destZipFile.rename(ZipStorage.ZipInstance.new_, ZipStorage.ZipInstance.current)) {
+            if (!zipStorage.rename(ZipStorage.ZipInstance.new_, ZipStorage.ZipInstance.current)) {
                 // something went wrong. try to restore old zip
                 // i.e. somefile.bak.zip => somefile.zip
                 if (oldZipFileName != null) {
-                    destZipFile.rename(ZipStorage.ZipInstance.old, ZipStorage.ZipInstance.current);
+                    zipStorage.rename(ZipStorage.ZipInstance.old, ZipStorage.ZipInstance.current);
                 }
 
                 thowrError(context);
@@ -509,7 +517,7 @@ public class CompressJob implements ZipLog {
             if ((optDeleteBakFileWhenFinished) && (oldZipFileName != null)) {
                 context = traceMessage(
                         "(4) delete existing renamed old zip file {0}", oldZipFileName);
-                this.destZipFile.delete(ZipStorage.ZipInstance.old);
+                this.zipStorage.delete(ZipStorage.ZipInstance.old);
             }
             context = traceMessage("(5a) successfull updated zip file {0}",
                     curZipFileName);
@@ -642,10 +650,13 @@ public class CompressJob implements ZipLog {
         return "";
     }
 
-    public CompressJob setDestZipFile(ZipStorage destZipFile) {
-        this.destZipFile = destZipFile;
-        return this;
+    /**
+     * @deprecated use setZipStorage instead
+     */
+    @Deprecated
+    public CompressJob setDestZipFile(ZipStorage zipStorage) {
+        return setZipStorage(zipStorage);
     }
 
-    public String getAbsolutePath() {return this.destZipFile.getAbsolutePath();}
+    public String getAbsolutePath() {return this.zipStorage.getAbsolutePath();}
 }

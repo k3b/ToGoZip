@@ -55,7 +55,7 @@ public class CompressJobTests {
     }
 
     private CompressJob createCompressJob(ZipStorage testZip) {
-        return new CompressJob(null, null).setDestZipFile(testZip);
+        return new CompressJob(null, null).setZipStorage(testZip);
     }
 
     private File createMockFile(String name, long date) {
