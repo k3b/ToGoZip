@@ -18,7 +18,7 @@ android:
 
     # values in gradle.properties and .travis must be the same
     # - build-tools-24.0.2
-    - build-tools-25.0.2
+    - build-tools-28.0.3
     - android-23
 
     - add-on
@@ -32,7 +32,7 @@ before_install:
 # - chmod +x gradlew
 #
 # https://stackoverflow.com/questions/52274229/travis-ci-android-28-licenses-have-not-been-accepted
-- yes | sdkmanager "platforms;android-28"
+# - yes | sdkmanager "platforms;android-28"
 
  
 script:
