@@ -67,6 +67,15 @@ public class CompressJobTests {
     }
 
     @Test
+    public void shouldAddAsList() {
+        CompressJob sut = createCompressJob(null);
+        int addCount = sut.addToCompressQueue(new CompressItem[] {
+                new FileCompressItem("", new File("a.txt"), null)});
+
+        Assert.assertEquals(1, addCount);
+    }
+
+    @Test
     public void shouldRenameExisting() {
         CompressJob sut = createCompressJob(null);
         File mockedFile = createMockFile("a.txt", 300000l);

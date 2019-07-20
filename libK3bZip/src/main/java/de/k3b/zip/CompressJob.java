@@ -38,6 +38,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import de.k3b.io.FileUtils;
 import de.k3b.io.StringUtils;
 
 /**
@@ -105,25 +106,6 @@ public class CompressJob implements ZipLog {
         return this;
     }
 
-    public static String readAll(InputStream is, byte[] buffer) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        copyStream(byteArrayOutputStream, is, buffer);
-        String result = new String(byteArrayOutputStream.toByteArray());
-        byteArrayOutputStream.flush();
-        byteArrayOutputStream.close();
-        return result;
-    }
-
-    /**
-     * local helper to copy stream-data to zip
-     */
-    static void copyStream(OutputStream outputStream, InputStream inputStream, byte[] buffer) throws IOException {
-        for (int read = inputStream.read(buffer); read > -1; read = inputStream
-                .read(buffer)) {
-            outputStream.write(buffer, 0, read);
-        }
-    }
-
     /**
      * Remember files that should be added to the zip.
      * Used in unittests.
@@ -183,12 +165,16 @@ public class CompressJob implements ZipLog {
         return null;
     }
 
-    public void addToCompressQueue(CompressItem[] items) {
+    public int addToCompressQueue(CompressItem[] items) {
+        int addCount = 0;
         if (items != null) {
             for (CompressItem item : items) {
-                addToCompressQueue(item);
+                if (addToCompressQueue(item)) {
+                    addCount++;
+                }
             }
         }
+        return addCount;
     }
 
     public TextCompressItem addTextToCompressQue(String zipEntryPath, String textToBeAdded) {
@@ -405,7 +391,7 @@ public class CompressJob implements ZipLog {
                                     "- (1a+) read old log text from {0} to {1} : {2}",
                                     curZipFileName, newZipFileName, zipOldEntry);
 
-                            this.compressLogItem.addText(readAll(zipInputStream, this.buffer ));
+                            this.compressLogItem.addText(FileUtils.readFile(zipInputStream, this.buffer));
                             this.compressLogItem.setZipEntryComment(zipOldEntry.getComment());
 
                             // add latter when all log entries are written
@@ -472,6 +458,11 @@ public class CompressJob implements ZipLog {
                 String newFullDestZipItemName = item.getZipEntryFileName();
                 context = traceMessage("(1c) copy log item {0} as {1} to {2}",
                         item, newFullDestZipItemName, newZipFileName);
+
+                if (this.zipLog != null) {
+                    this.compressLogItem.addText("Detailed log");
+                    this.compressLogItem.addText(zipLog.getLastError(true));
+                }
                 zipEntryInputStream = item.getFileInputStream();
                 ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
                         item.getLastModified(), item.getZipEntryComment());
@@ -533,16 +524,8 @@ public class CompressJob implements ZipLog {
         } finally {
             context = traceMessage("(5b) free resources");
 
-            try {
-                if (zipEntryInputStream != null)
-                    zipEntryInputStream.close();
-                if (zipInputStream != null)
-                    zipInputStream.close();
-                if (zipOutputStream != null)
-                    zipOutputStream.close();
-            } catch (IOException e) {
-                logger.info("Error in " + context, e);
-            }
+            FileUtils.close(zipEntryInputStream,context + "zipEntryInputStream");
+            FileUtils.close(zipOutputStream,context + "zipOutputStream");
         }
         return itemCount;
     }
@@ -576,7 +559,13 @@ public class CompressJob implements ZipLog {
 
     private static boolean isSameFile(CompressItem compressItem, ZipEntry zipEntry) {
         if ((compressItem == null) || (zipEntry == null)) return false;
-        return zipEntry.getName().equalsIgnoreCase(compressItem.getZipEntryFileName());
+        final String zipEntryFileName = compressItem.getZipEntryFileName();
+        return isSameFile(zipEntryFileName, zipEntry);
+    }
+
+    protected static boolean isSameFile(String zipEntryFileName, ZipEntry zipEntry) {
+        if (zipEntry == null) return false;
+        return zipEntry.getName().equalsIgnoreCase(zipEntryFileName);
     }
 
     /**
@@ -619,10 +608,10 @@ public class CompressJob implements ZipLog {
         outZipStream.putNextEntry(zipEntry);
 
         if (prependInputStream != null) {
-            copyStream(outZipStream, prependInputStream, buffer);
+            FileUtils.copyStream(outZipStream, prependInputStream, buffer);
             prependInputStream.close();
         }
-        copyStream(outZipStream, inputStream, buffer);
+        FileUtils.copyStream(outZipStream, inputStream, buffer);
         outZipStream.closeEntry();
     }
 

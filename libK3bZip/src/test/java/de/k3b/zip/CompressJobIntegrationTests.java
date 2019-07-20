@@ -66,12 +66,58 @@ public class CompressJobIntegrationTests {
     }
 
     @Test
+    public void shouldPrependShortText() throws IOException {
+        final String textToBeAdded = "new added text should be before old";
+
+        // arrange
+        ZipStorage testZip = createZipStorage("shouldPrependShortText");
+
+        CompressJob initialContent = createCompressJob(testZip, null);
+        initialContent.addToCompressQue("", testContent);
+        initialContent.compress(false);
+
+        // act
+        CompressJob sut = createCompressJob(testZip, null);
+        sut.addTextToCompressQue(testContent.getName(), textToBeAdded);
+        sut.compress(false);
+
+        // assert
+        Uncompressor uncompress = new Uncompressor(testZip);
+        String content = uncompress.getContentOfZipEntryAsText(testContent.getName());
+
+        Assert.assertTrue("new text prepended", content.startsWith(textToBeAdded));
+        Assert.assertTrue("read text longer than new text", content.length() > textToBeAdded.length() + 10);
+    }
+
+    @Test
+    public void shouldAppendWithLogging() throws IOException {
+        // arrange
+        ZipStorage testZip = createZipStorage("shouldAppendWithLogging");
+
+        CompressJob initialContent = createCompressJob(testZip, null);
+        initialContent.addToCompressQue("", testContent);
+        initialContent.compress(false);
+
+        // act
+        ZipLog log = new ZipLogImpl(true);
+        CompressJob sut = createCompressJob(testZip, log);
+        sut.addTextToCompressQue("b.txt", "text for a newly created file");
+        sut.compress(false);
+
+        // assert
+        String content = log.getLastError(true);
+
+        assertContains(content, testContent.getName(), "b.txt");
+    }
+
+    @Test
     public void shouldNotAddDuplicate() {
         CompressJob sut = createCompressJob("shouldNotAddDuplicate");
         sut.addToCompressQue("", testContent.getAbsolutePath());
         int itemCount = sut.compress(false) - NUMBER_OF_LOG_ENTRIES;
         Assert.assertEquals(CompressJob.RESULT_NO_CHANGES, itemCount);
     }
+
 
     @Test
     public void shouldAddDuplicateInDifferentDirs() {
@@ -123,7 +169,7 @@ public class CompressJobIntegrationTests {
         Assert.assertEquals("testFile(1).txt", item.getZipEntryFileName());
     }
 
-    /** bug #14: Duplicate file detection/renaming does not work correctly for files in zip-subdirectories */
+    /** bugfix for #14: Duplicate file detection/renaming does not work correctly for files in zip-subdirectories */
     @Test
     public void shouldRenameSameFileNameInSubfolderWithDifferentDate_14() {
         String relDir = "testdir/";
@@ -183,6 +229,12 @@ public class CompressJobIntegrationTests {
 
     // ----------- local test helper ------------------
 
+    private void assertContains(String content, String... mustBeIncluded) {
+        for(String candidate : mustBeIncluded) {
+            Assert.assertTrue(candidate + " must be inside " + content, content.contains(candidate));
+        }
+    }
+
     private static String getCalRelPath(String notFoundRelPath, File srcFile, String refPath) {
         String result = FileCompressItem.calculateZipEntryName(notFoundRelPath, srcFile,
                 FileCompressItem.getCanonicalPath(new File(refPath)));
@@ -198,12 +250,11 @@ public class CompressJobIntegrationTests {
     private static void createTestFile(File testContent, Date fileDate) throws IOException {
         OutputStream testContentFile = new FileOutputStream(testContent);
 
-        final String someContent = "some test data";
+        final String someContent = "some test data from '" + testContent + "' with date " + fileDate;
         InputStream someContentStream = new ByteArrayInputStream(someContent.getBytes("UTF-8"));
 
-        CompressJob.copyStream(
-                testContentFile,
-                someContentStream, new byte[1024]);
+        byte[] buffer = new byte[1024];
+        FileUtils.copyStream(testContentFile, someContentStream, buffer);
         testContentFile.close();
         someContentStream.close();
         testContent.setLastModified(fileDate.getTime());
@@ -214,20 +265,25 @@ public class CompressJobIntegrationTests {
     }
 
     private CompressJob createCompressJob(String testName, String destZipPath, File... srcFiles) {
-        ZipStorage testZip = new ZipStorageFile(root+ testName + ".zip");
-        testZip.delete(ZipStorage.ZipInstance.current);
+        ZipStorage testZip = createZipStorage(testName);
 
-        CompressJob initialContent = createCompressJob(testZip);
+        CompressJob initialContent = createCompressJob(testZip, null);
         initialContent.addToCompressQue(destZipPath, srcFiles);
         int itemCount = initialContent.compress(false);
         Assert.assertEquals("exampleItem + log == 2",
                 srcFiles.length + NUMBER_OF_LOG_ENTRIES, itemCount);
 
-        return createCompressJob(testZip);
+        return createCompressJob(testZip, null);
     }
 
-    private CompressJob createCompressJob(ZipStorage testZip) {
-        return new CompressJob(null, "changeHistory.txt").setZipStorage(testZip);
+    private ZipStorage createZipStorage(String testName) {
+        ZipStorage testZip = new ZipStorageFile(root+ testName + ".zip");
+        testZip.delete(ZipStorage.ZipInstance.current);
+        return testZip;
+    }
+
+    private CompressJob createCompressJob(ZipStorage testZip, ZipLog zipLog) {
+        return new CompressJob(zipLog, "changeHistory.txt").setZipStorage(testZip);
     }
 
 }
