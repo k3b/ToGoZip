@@ -23,8 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 
-import de.k3b.LibGlobal;
-
 /**
  /**
  * A slf4j based, android inependant consumer that can receive log messages that shows what is going on.
@@ -33,6 +31,7 @@ import de.k3b.LibGlobal;
  */
 public class ZipLogImpl  implements ZipLog {
     private static final Logger logger = LoggerFactory.getLogger(LibZipGlobal.LOG_TAG);
+    private static final String BLANK = " ";
     /**
      * last errormessage
      */
@@ -48,14 +47,30 @@ public class ZipLogImpl  implements ZipLog {
     }
 
     /**
+     * @deprecated use traceMessage with ZipJobState param instead
+     */
+    @Deprecated
+    public String traceMessage(String format, Object... params) {
+        return traceMessage(ZipJobState.UNKNOWN, 0,0, format, params);
+    }
+
+    /**
      * formats context message and does low level logging
      */
     @Override
-    public String traceMessage(String format, Object... params) {
+    public String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params) {
         String result = MessageFormat.format(format, params);
         logger.debug(result);
         if (this.debugLogMessages != null) {
-            this.debugLogMessages.append(result).append("\n");
+            this.debugLogMessages
+                    .append(itemNumber)
+                    .append("/")
+                    .append(itemTotal)
+                    .append(": ")
+                    .append(result)
+                    .append(BLANK)
+                    .append(state)
+                    .append("\n");
         }
         // System.out.println(result);
         return result;

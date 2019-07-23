@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014-2019 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -24,10 +24,24 @@ package de.k3b.zip;
  * Created by k3b on 25.11.2014.
  */
 public interface ZipLog {
+
+    /* Needs java8 :-(; Android supports only java7
+
+    default String traceMessage(String format, Object... params) {
+        return traceMessage(ZipJobState.UNKNOWN, 0,0, format, params);
+    }
+    */
+
+    /**
+     * @deprecated use traceMessage with ZipJobState param instead
+     */
+    @Deprecated
+    String traceMessage(String format, Object... params);
+
     /**
      * formats context message and does low level logging
      */
-    String traceMessage(String format, Object... params);
+    String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params);
 
     /** adds an errormessage to error-result */
     void addError(String errorMessage);

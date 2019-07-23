@@ -40,13 +40,5 @@
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: powermock-reflect-1.5.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: javassist-3.18.0-GA" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: objenesis-1.2" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
-    <orderEntry type="library" exported="" name="libK3b.libK3b-L2.0.15" level="project" />
   </component>
 </module>

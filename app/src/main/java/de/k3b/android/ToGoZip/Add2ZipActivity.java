@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014-2019 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import de.k3b.android.widget.LocalizedActivity;
 import de.k3b.android.zip.Global;
+import de.k3b.android.zip.IntentParser;
 import de.k3b.zip.CompressItem;
 import de.k3b.zip.FileCompressItem;
 import de.k3b.zip.ZipLog;
