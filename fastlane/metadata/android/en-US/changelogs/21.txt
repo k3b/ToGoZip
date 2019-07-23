@@ -1,0 +1,3 @@
+* If enabled: More detailed logging
+* Translation updates pt by chacal_exodius
+* lib api changes: libK3bZip incompatible ZipLog.trace gets more parameters; created new libK3bAndroidZip
