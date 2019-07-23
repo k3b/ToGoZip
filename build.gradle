@@ -18,6 +18,9 @@ buildscript {
 
         // mutation testing with pitest
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.0'
+
+        // needed for android-library https://jitpack.io/docs/ANDROID/
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 

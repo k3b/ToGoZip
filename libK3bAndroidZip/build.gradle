@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 
 group = "com.github.k3b"
-version = "L2.1.21.1"
+version = "L2.1.21.2"
 
 android {
     compileSdkVersion 23
@@ -11,7 +12,7 @@ android {
         minSdkVersion 7
         targetSdkVersion 23
         versionCode 21
-        versionName "L2.1.21.1"
+        versionName "L2.1.21.2"
     }
 
     buildTypes {
