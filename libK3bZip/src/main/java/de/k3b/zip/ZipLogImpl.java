@@ -47,14 +47,6 @@ public class ZipLogImpl  implements ZipLog {
     }
 
     /**
-     * @deprecated use traceMessage with ZipJobState param instead
-     */
-    @Deprecated
-    public String traceMessage(String format, Object... params) {
-        return traceMessage(ZipJobState.UNKNOWN, 0,0, format, params);
-    }
-
-    /**
      * formats context message and does low level logging
      */
     @Override

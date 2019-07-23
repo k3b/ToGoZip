@@ -33,12 +33,6 @@ public interface ZipLog {
     */
 
     /**
-     * @deprecated use traceMessage with ZipJobState param instead
-     */
-    @Deprecated
-    String traceMessage(String format, Object... params);
-
-    /**
      * formats context message and does low level logging
      */
     String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params);

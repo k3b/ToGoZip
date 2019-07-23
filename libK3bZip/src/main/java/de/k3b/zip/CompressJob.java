@@ -644,15 +644,6 @@ public class CompressJob implements ZipLog {
         return this.compressQue.size();
     }
 
-    /**
-     * @deprecated use traceMessage with ZipJobState param instead
-     */
-    @Deprecated
-    @Override
-    public String traceMessage(String format, Object... params) {
-        return traceMessage(ZipJobState.UNKNOWN, itemNumber, itemTotal, format, params);
-    }
-
     @Override
     public String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params) {
         if (zipLog != null) return zipLog.traceMessage(state, itemNumber, itemTotal, format, params);
