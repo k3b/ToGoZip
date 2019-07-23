@@ -5,7 +5,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = "com.github.k3b"
-version = "L2.1.21"
+version = "L2.1.21.1"
 // ---------------
 
 dependencies {

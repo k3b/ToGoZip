@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+group = "com.github.k3b"
+version = "L2.1.21.1"
+
 android {
     compileSdkVersion 23
 
@@ -8,7 +11,7 @@ android {
         minSdkVersion 7
         targetSdkVersion 23
         versionCode 21
-        versionName "L2.1.21"
+        versionName "L2.1.21.1"
     }
 
     buildTypes {
@@ -25,4 +28,23 @@ dependencies {
     api 'com.android.support:support-v4:23.2.1'
     implementation project(':libK3bZip')
     implementation project(':libK3b')
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath +=     project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }

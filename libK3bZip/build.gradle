@@ -7,7 +7,7 @@ apply plugin: 'info.solidsoft.pitest'
 apply plugin: 'maven' 
 
 group = "com.github.k3b"
-version = "L2.1.21"
+version = "L2.1.21.1"
 // ---------------
 
 sourceCompatibility = 1.7
