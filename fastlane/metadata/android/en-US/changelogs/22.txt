@@ -1,0 +1,4 @@
+21 => 22 changes: lib api implementation "L2.1.22.3"
+
+* CompressJob.cancel(): allows async canceling of running compression job from other thread
+* api breaking change: ZipLog.traceMessage uses int instead of ZipJobState for state info
