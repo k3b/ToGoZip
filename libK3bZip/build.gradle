@@ -7,7 +7,12 @@ apply plugin: 'info.solidsoft.pitest'
 apply plugin: 'maven' 
 
 group = "com.github.k3b"
-version = "L2.1.21.2"
+
+version = "L2.1.22.3"
+// L2.1.22.3 (22 190804) lib Incompatible api changes: ZipLog: Replace enum ZipJobState with int (smaller android footprint); CompressJob can be async caneceld from gui thread
+// L2.1.21.2 (21 190723) lib Incompatible api changes for more ZipLog-ing
+// 2.1.21.190725 (21) More detailed logging api; new libK3bAndroidZip
+
 // ---------------
 
 sourceCompatibility = 1.7

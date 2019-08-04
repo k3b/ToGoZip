@@ -35,7 +35,7 @@ public interface ZipLog {
     /**
      * formats context message and does low level logging
      */
-    String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params);
+    String traceMessage(int zipStateID, int itemNumber, int itemTotal, String format, Object... params);
 
     /** adds an errormessage to error-result */
     void addError(String errorMessage);

@@ -50,7 +50,7 @@ public class ZipLogImpl  implements ZipLog {
      * formats context message and does low level logging
      */
     @Override
-    public String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params) {
+    public String traceMessage(int zipStateID, int itemNumber, int itemTotal, String format, Object... params) {
         String result = MessageFormat.format(format, params);
         logger.debug(result);
         if (this.debugLogMessages != null) {
@@ -61,7 +61,7 @@ public class ZipLogImpl  implements ZipLog {
                     .append(": ")
                     .append(result)
                     .append(BLANK)
-                    .append(state)
+                    .append(zipStateID)
                     .append("\n");
         }
         // System.out.println(result);

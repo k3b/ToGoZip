@@ -16,9 +16,11 @@ android {
         minSdkVersion 7
         // targetSdkVersion 26
         targetSdkVersion 23
-        versionCode 21
-        versionName '2.1.21.190725'
+        versionCode 22
+        versionName '2.1.22.190804 (22) L2.1.22.3'
 
+        // 2.1.22.190804 (22) L2.1.22.3 lib Incompatible api changes: ZipLog: Replace enum ZipJobState with int (smaller android footprint); CompressJob can be async caneceld from gui thread
+        // L2.1.21.2 (21 190723) lib Incompatible api changes for more ZipLog-ing
         // 2.1.21.190725 (21) More detailed logging api; new libK3bAndroidZip
         // 2.0.20.190606 (20) Fix crash when writing to root dir; ar translation update
         // 2.0.19.190413 (19) Minified reduced apk-size from 536kb to 178kb

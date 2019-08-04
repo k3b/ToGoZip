@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -89,8 +90,21 @@ public class CompressJobIntegrationTests {
         Assert.assertTrue("read text longer than new text", content.length() > textToBeAdded.length() + 10);
     }
 
+    private static void createTestFile(File testContent, Date fileDate) throws IOException {
+        OutputStream testContentFile = new FileOutputStream(testContent);
+
+        final String someContent = "some test data from '" + testContent + "' with date " + fileDate;
+        InputStream someContentStream = new ByteArrayInputStream(someContent.getBytes(StandardCharsets.UTF_8));
+
+        byte[] buffer = new byte[1024];
+        FileUtils.copyStream(testContentFile, someContentStream, buffer);
+        testContentFile.close();
+        someContentStream.close();
+        testContent.setLastModified(fileDate.getTime());
+    }
+
     @Test
-    public void shouldAppendWithLogging() throws IOException {
+    public void shouldAppendWithLogging() {
         // arrange
         ZipStorage testZip = createZipStorage("shouldAppendWithLogging");
 
@@ -108,6 +122,29 @@ public class CompressJobIntegrationTests {
         String content = log.getLastError(true);
 
         assertContains(content, testContent.getName(), "b.txt");
+    }
+
+    @Test
+    public void shouldAsyncCanclelExisting() {
+        // arrange
+        ZipStorage testZip = createZipStorage("shouldAsyncCanclelExisting");
+
+        CompressJob initialContent = createCompressJob(testZip, null);
+        initialContent.addToCompressQue("", testContent);
+        initialContent.compress(false);
+
+        // act
+        final CancelingZipLog log = new CancelingZipLog();
+        CompressJob sut = createCompressJob(testZip, log);
+        log.sut = sut;
+
+        sut.addTextToCompressQue("b.txt", "text for a newly created file");
+        sut.compress(false);
+
+        // assert
+        String content = log.getLastError(true);
+
+        assertContains(content, "[cancel");
     }
 
     @Test
@@ -247,17 +284,21 @@ public class CompressJobIntegrationTests {
         return result.replaceAll("\\\\","/");
     }
 
-    private static void createTestFile(File testContent, Date fileDate) throws IOException {
-        OutputStream testContentFile = new FileOutputStream(testContent);
+    /**
+     * cancels {@link CompressJob}  when log entry is added
+     */
+    private static class CancelingZipLog extends ZipLogImpl {
+        CompressJob sut = null;
 
-        final String someContent = "some test data from '" + testContent + "' with date " + fileDate;
-        InputStream someContentStream = new ByteArrayInputStream(someContent.getBytes("UTF-8"));
+        CancelingZipLog() {
+            super(true);
+        }
 
-        byte[] buffer = new byte[1024];
-        FileUtils.copyStream(testContentFile, someContentStream, buffer);
-        testContentFile.close();
-        someContentStream.close();
-        testContent.setLastModified(fileDate.getTime());
+        @Override
+        public String traceMessage(int zipStateID, int itemNumber, int itemTotal, String format, Object... params) {
+            if (zipStateID == ZipJobState.COPY_LOG_ITEM_1C) sut.cancel();
+            return super.traceMessage(zipStateID, itemNumber, itemTotal, format, params);
+        }
     }
 
     private CompressJob createCompressJob(String testName) {

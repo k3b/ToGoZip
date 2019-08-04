@@ -18,65 +18,36 @@
  */
 package de.k3b.zip;
 
-import java.io.Serializable;
-
 /**
- * Steps that happen in {@Link CompressJob}
+ * Steps that happen in a {@link CompressJob}
  *
  * Small footprint replacement for java enum
  * because enums in android should be avoided (even if compressed)
  */
-public final class ZipJobState implements Comparable<ZipJobState> {
-    public static final ZipJobState UNKNOWN = new ZipJobState(-1);
+public final class ZipJobState {
+    public static final int UNKNOWN = -1;
 
-    public static final ZipJobState PARSER_ADD_TEXT = new ZipJobState(1);
-    public static final ZipJobState PARSER_ADD_CLIP_ITEM = new ZipJobState(2);
-    public static final ZipJobState PARSER_ADD_FILE = new ZipJobState(3);
-    public static final ZipJobState PARSER_ADD_URI = new ZipJobState(4);
-    public static final ZipJobState PARSER_ERROR = new ZipJobState(1001);
+    public static final int PARSER_ADD_TEXT = 1;
+    public static final int PARSER_ADD_CLIP_ITEM = 2;
+    public static final int PARSER_ADD_FILE = 3;
+    public static final int PARSER_ADD_URI = 4;
+    public static final int PARSER_ERROR = 1001;
 
-    public static final ZipJobState RENAME_COMMENT = new ZipJobState(10);
+    public static final int RENAME_COMMENT = 10;
 
-    public static final ZipJobState CREATE_NEW_ZIP_0 = new ZipJobState(101);
-    public static final ZipJobState COPY_EXISTING_ITEM_1A = new ZipJobState(110);
-    public static final ZipJobState ADD_TEXT_TO_EXISTING_1A1 = new ZipJobState(111);
-    public static final ZipJobState READ_OLD_EXISTING_LOG_ITEM_1A2 = new ZipJobState(112);
-    public static final ZipJobState COPY_NEW_ITEM_1B = new ZipJobState(120);
-    public static final ZipJobState COPY_LOG_ITEM_1C = new ZipJobState(130);
-    public static final ZipJobState RENAME_OLD_ZIP_2 = new ZipJobState(200);
-    public static final ZipJobState RENAME_NEW_CREATED_ZIP_3 = new ZipJobState(300);
-    public static final ZipJobState DELETE_EXISTING_RENAMED_ZIP_4 = new ZipJobState(400);
-    public static final ZipJobState SUCCESSFULL_UPDATED_ZIP_5A = new ZipJobState(501);
-    public static final ZipJobState FREE_RESOURCES_5B = new ZipJobState(502);
+    public static final int CREATE_NEW_ZIP_0 = 101;
+    public static final int COPY_EXISTING_ITEM_1A = 110;
+    public static final int ADD_TEXT_TO_EXISTING_1A1 = 111;
+    public static final int READ_OLD_EXISTING_LOG_ITEM_1A2 = 112;
+    public static final int COPY_NEW_ITEM_1B = 120;
+    public static final int COPY_LOG_ITEM_1C = 130;
+    public static final int RENAME_OLD_ZIP_2 = 200;
+    public static final int RENAME_NEW_CREATED_ZIP_3 = 300;
+    public static final int DELETE_EXISTING_RENAMED_ZIP_4 = 400;
+    public static final int SUCCESSFULL_UPDATED_ZIP_5A = 501;
+    public static final int FREE_RESOURCES_5B = 502;
 
-    public static final ZipJobState ERROR = new ZipJobState(1000);
-    public static final ZipJobState CANCELED = new ZipJobState(1100);
+    public static final int ERROR = 1000;
+    public static final int CANCELED = 1100;
 
-    private final int value;
-
-    private ZipJobState(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public int compareTo(ZipJobState other) {
-        if (other == null) return -1;
-        return Integer.compare(this.value, other.value);
-    }
-
-    @Override public int hashCode() {
-        return this.value;
-    }
-
-    @Override public boolean equals(Object var1) {
-        if (var1 instanceof ZipJobState) {
-            return this.value == ((ZipJobState)var1).value;
-        } else {
-            return false;
-        }
-    }
-
-    @Override public String toString() {
-        return Integer.toString(value);
-    }
 }

@@ -94,7 +94,7 @@ public class CompressJob implements ZipLog {
      */
     public CompressJob(ZipLog zipLog, String fileLogInZip) {
         this.zipLog = zipLog;
-        if (!StringUtils.isNullOrEmpty(fileLogInZip)) {
+        if (!StringUtils.isNullOrEmpty((CharSequence) fileLogInZip)) {
             this.compressLogItem = addLog2CompressQue(fileLogInZip, null);
 
             // do not process this item in qoueOutPutLoop
@@ -135,7 +135,7 @@ public class CompressJob implements ZipLog {
         if (srcFiles != null) {
             for (File srcFile : srcFiles) {
                 if (srcFile.isDirectory()) {
-                    String subDir = (!StringUtils.isNullOrEmpty(destZipPath))
+                    String subDir = (!StringUtils.isNullOrEmpty((CharSequence) destZipPath))
                             ? destZipPath + srcFile.getName() + "/"
                             : srcFile.getName() + "/";
                     addToCompressQue(subDir, srcFile.listFiles());
@@ -219,7 +219,6 @@ public class CompressJob implements ZipLog {
      * a unittest friendly version of handleDuplicates:<br/>
      * depending on global options: duplicate zip entries are either ignored or renamed
      *
-     * @param existingZipEntries
      * @return For unittests-only: collection of items that where renamed or null if no renaming
      *         took place.
      */
@@ -501,6 +500,8 @@ public class CompressJob implements ZipLog {
             zipOutputStream.close();
             zipOutputStream = null;
 
+            throwIfCancleded();
+
             // no exception yet: Assume it is save to change the old zip
             // (2) rename existing-old somefile.zip to somefile.bak.zip
             if (oldZipFileName != null) {
@@ -660,8 +661,9 @@ public class CompressJob implements ZipLog {
     }
 
     @Override
-    public String traceMessage(ZipJobState state, int itemNumber, int itemTotal, String format, Object... params) {
-        if (zipLog != null) return zipLog.traceMessage(state, itemNumber, itemTotal, format, params);
+    public String traceMessage(int zipStateID, int itemNumber, int itemTotal, String format, Object... params) {
+        if (zipLog != null)
+            return zipLog.traceMessage(zipStateID, itemNumber, itemTotal, format, params);
         return format;
     }
 
@@ -685,5 +687,12 @@ public class CompressJob implements ZipLog {
     }
 
     public String getAbsolutePath() {return this.zipStorage.getAbsolutePath();}
+
+    /**
+     * allows async canceling of running compression job from other thread
+     */
+    public void cancel() {
+        continueProcessing = false;
+    }
 }
 
