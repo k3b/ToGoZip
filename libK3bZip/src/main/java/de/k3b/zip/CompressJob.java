@@ -47,7 +47,11 @@ public class CompressJob implements ZipLog {
     public static final int RESULT_ERROR_ABOART = -1;
     private static final Logger logger = LoggerFactory.getLogger(CompressJob.class);
 
+
     // global processing options
+    /** set to false (in gui thread) if operation is canceled and should be rolled back */
+    protected boolean continueProcessing = true;
+
     /**
      * true: remove obsolete bak file when done
      */
@@ -338,7 +342,7 @@ public class CompressJob implements ZipLog {
      *
      * @param renameDuplicateTextFile true: add an additional renamed entry for the texts.
      *                                 False: append to existing entry
-     * @return number of modified items (compressQue and/or text appended)
+     * @return number of modified items (compressQue and/or text appended);  -1 if error/cancleded
      */
     public int compress(boolean renameDuplicateTextFile) {
         // Workflow (that makes shure that orginal is not broken if there is an error):
@@ -386,6 +390,7 @@ public class CompressJob implements ZipLog {
                 InputStream prependInputStream = null;
                 for (ZipEntry zipOldEntry = zipInputStream.getNextEntry(); zipOldEntry != null; zipOldEntry = zipInputStream
                         .getNextEntry()) {
+                    throwIfCancleded();
                     if (null != zipOldEntry) {
                         if (null != (prependInputStream = this.getPrependInputStream(zipOldEntry, this.compressTextItem))) {
                             itemNumber++; itemTotal++;
@@ -431,7 +436,9 @@ public class CompressJob implements ZipLog {
                 oldProcessed = this.compressTextItem.isProcessed();
                 this.compressTextItem.setProcessed(true);
             }
-			handleDuplicates(existingEntries);
+
+			if (continueProcessing) handleDuplicates(existingEntries);
+
 			if (preventTextFromRenaming) this.compressTextItem.setProcessed(oldProcessed);
 
             if ((this.compressTextItem != null) && !this.compressTextItem.isProcessed()) {
@@ -446,6 +453,8 @@ public class CompressJob implements ZipLog {
 
             // (1b) copy new compressQue
             for (CompressItem item : this.compressQue) {
+                throwIfCancleded();
+
                 if (!item.isProcessed()) {
                     String newFullDestZipItemName = item.getZipEntryFileName();
 
@@ -468,7 +477,7 @@ public class CompressJob implements ZipLog {
                 }
             }
 
-            if (compressLogItem != null) {
+            if (continueProcessing && (compressLogItem != null)) {
                 CompressItem item = compressLogItem;
                 String newFullDestZipItemName = item.getZipEntryFileName();
                 itemNumber++;
@@ -618,8 +627,8 @@ public class CompressJob implements ZipLog {
         return result;
     }
 
-    private void thowrError(String message) throws Exception {
-        throw new Exception("failed in " + message);
+    private void thowrError(String message) throws IOException {
+        throw new IOException("failed in " + message);
     }
 
     /**
@@ -642,6 +651,12 @@ public class CompressJob implements ZipLog {
      */
     public int getAddCount() {
         return this.compressQue.size();
+    }
+
+    protected void throwIfCancleded() throws IOException {
+         if (!continueProcessing) {
+             thowrError("[canceled by user]");
+         }
     }
 
     @Override
@@ -671,3 +686,4 @@ public class CompressJob implements ZipLog {
 
     public String getAbsolutePath() {return this.zipStorage.getAbsolutePath();}
 }
+
