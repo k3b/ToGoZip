@@ -195,7 +195,7 @@ public class SettingsImpl {
 
         if (Global.USE_DOCUMENT_PROVIDER) {
             DocumentFile docDir = getDocFile(context, dir);
-            return ((docDir != null) && docDir.canWrite());
+            return ((docDir != null) && (docDir.exists()) && docDir.canWrite());
         }
 
         File fileDir = new File(dir);

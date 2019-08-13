@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2018 k3b
+ * Copyright (C) 2017-2019 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
@@ -20,12 +20,10 @@ package de.k3b.android.toGoZip;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 /**
