@@ -36,6 +36,11 @@ abstract public class CompressItem {
     /** if not null this will become the zip entry comment */
     private String zipEntryComment;
 
+    /**
+     * false means store without compression, which is faster
+     */
+    private boolean doCompress = true;
+
     /** stream where the source file can be read from. */
     abstract public InputStream getFileInputStream() throws IOException ;
 
@@ -57,6 +62,17 @@ abstract public class CompressItem {
     public CompressItem setZipEntryFileName(String zipEntryFileName) {
         this.zipEntryFileName = zipEntryFileName;
         return this;
+    }
+
+    /**
+     * false means store without compression, which is faster
+     */
+    public boolean isDoCompress() {
+        return doCompress;
+    }
+
+    public void setDoCompress(boolean doCompress) {
+        this.doCompress = doCompress;
     }
 
     public boolean isProcessed() {

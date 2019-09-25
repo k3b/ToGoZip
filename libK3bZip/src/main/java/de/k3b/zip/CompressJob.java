@@ -464,6 +464,7 @@ public class CompressJob implements ZipLog {
                     zipEntryInputStream = item.getFileInputStream();
                     ZipEntry zipEntry = createZipEntry(newFullDestZipItemName,
                             item.getLastModified(), item.getZipEntryComment());
+                    if (!item.isDoCompress()) zipEntry.setMethod(ZipEntry.STORED);
                     add(zipOutputStream, zipEntry, null, zipEntryInputStream);
                     zipEntryInputStream.close();
                     zipEntryInputStream = null;

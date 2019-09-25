@@ -1,28 +1,5 @@
 todo.txt for k3b.add2Zip
 =========
 
-
-* #13: Add to Settings: save with full path
-    * comment
-        * uri, source-path
-    * path relative to
-    * logfile zip-path,source-file-path,source-uri-path
-
-
-* Add2ZipActivity:onCreate
-	* hasRuntimePermission && hasFolderPermission
-		* no: SettingsActivity()
-		* yes: executeZipJob()
-		
-
-* Add2ZipActivity:onCreate
-	* hasRuntimePermission
-		* no: RequestRuntimePermission onRequestPermissionsResult
-			* fail: aboard finish()
-			* success: checkFolderPermission
-		* yes: checkFolderPermission()
-		
-* Add2ZipActivity:checkFolderPermission
-	* if not hasFolderPermission
-		* showFolderPicker
+https://jitpack.io/com/github/k3b/ToGoZip/L2.1.22.3/build.log
 
