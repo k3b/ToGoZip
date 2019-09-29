@@ -43,12 +43,14 @@ public class FileCompressItem extends CompressItem {
 
     /**
      *
-     * @param destZipPathWithoutFileName directory with trailing "/" (without filename) where the entry goes to. null==root dir.
+     * @param outDirInZipForNoneRelPath directory with trailing "/" (without filename) where
+     *                                   the entry goes to if outside FileCompressItem.zipRelPath.
+     *                                   null==root dir.
      * @param srcFile full path to source file
      * @param zipEntryComment
      */
-    public FileCompressItem(String destZipPathWithoutFileName, File srcFile, String zipEntryComment) {
-        String zipEntryName = calculateZipEntryName(destZipPathWithoutFileName, srcFile, FileCompressItem.zipRelPath);
+    public FileCompressItem(String outDirInZipForNoneRelPath, File srcFile, String zipEntryComment) {
+        String zipEntryName = calculateZipEntryName(outDirInZipForNoneRelPath, srcFile, FileCompressItem.zipRelPath);
         setFile(srcFile);
         setZipEntryFileName(zipEntryName);
         setZipEntryComment(zipEntryComment);
@@ -59,18 +61,21 @@ public class FileCompressItem extends CompressItem {
      *
      * Scope: package to allow unittesting.
      *
-     * @param destZipPathWithoutFileName
-     * @param srcFile
-     * @param zipRelPath
+     * @param outDirInZipForNoneRelPath directory with trailing "/" (without filename) where
+     *                                   the entry goes to if outside zipRelPath.
+     *                                   null==root dir.
+     * @param srcFile full path to source file
+     * @param zipRelPath if not empty paths are caclulated relative to this directory.
+     *                   Must have trailing "/" and be lower case.
      * @return
      */
-    static String calculateZipEntryName(String destZipPathWithoutFileName, File srcFile, String zipRelPath) {
+    static String calculateZipEntryName(String outDirInZipForNoneRelPath, File srcFile, String zipRelPath) {
         boolean match = false;
         String result = null;
         String srcPath = "";
         if (!StringUtils.isNullOrEmpty(zipRelPath)) {
             srcPath = getCanonicalPath(srcFile);
-            match = srcPath.startsWith(zipRelPath);
+            match = srcPath.toLowerCase().startsWith(zipRelPath);
             if (match) {
                 result = srcPath.substring(zipRelPath.length()+1);
             }
@@ -79,8 +84,8 @@ public class FileCompressItem extends CompressItem {
         if (result == null) {
             StringBuilder resultMessage = new StringBuilder();
 
-            if (destZipPathWithoutFileName != null)
-                resultMessage.append(destZipPathWithoutFileName);
+            if (outDirInZipForNoneRelPath != null)
+                resultMessage.append(outDirInZipForNoneRelPath);
             resultMessage.append(srcFile.getName());
             result = resultMessage.toString();
         }
@@ -91,9 +96,13 @@ public class FileCompressItem extends CompressItem {
         return result;
     }
 
-    /** if not null file adds will be relative to this path if file is below this path */
+    /** if not null enables zipRelPath mode. "add"-s will be relative to this path if file is below this path */
     public static void setZipRelPath(File zipRelPath) {
-        FileCompressItem.zipRelPath = getCanonicalPath(zipRelPath);
+        if (zipRelPath != null) {
+            FileCompressItem.zipRelPath = getCanonicalPath(zipRelPath).toLowerCase();
+        } else {
+            FileCompressItem.zipRelPath = null;
+        }
         if (LibZipGlobal.debugEnabled) {
             logger.info(DBG_CONTEXT + "setZipRelPath('{}') from '{}'",FileCompressItem.zipRelPath, zipRelPath );
         }

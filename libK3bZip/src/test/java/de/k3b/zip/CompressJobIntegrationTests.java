@@ -243,12 +243,16 @@ public class CompressJobIntegrationTests {
 
     @Test
     public void shouldCalculateRelPath() {
-        File srcFile = new File("/path/to/my/source/file.txt");
+        File srcFile = new File("/path/to/my/source/File.txt");
 
-        Assert.assertEquals("source/file.txt",
-                getCalRelPath("root/", srcFile, "/path/to/my/"));
-        Assert.assertEquals("root/file.txt",
-                getCalRelPath("root/", srcFile, "/path/to/other/"));
+        Assert.assertEquals("happy case1 with trailing '/'", "source/File.txt",
+                sutExec_calculateZipEntryName("root/", srcFile, "/path/to/my/"));
+        Assert.assertEquals("happy case2 without trailing '/'", "source/File.txt",
+                sutExec_calculateZipEntryName("root/", srcFile, "/path/to/my"));
+        Assert.assertEquals("case doesn-t matter", "source/File.txt",
+                sutExec_calculateZipEntryName("root/", srcFile, "/path/To/my/"));
+        Assert.assertEquals("outside rel path", "root/File.txt",
+                sutExec_calculateZipEntryName("root/", srcFile, "/path/to/other/"));
     }
 
     @Test
@@ -272,9 +276,19 @@ public class CompressJobIntegrationTests {
         }
     }
 
-    private static String getCalRelPath(String notFoundRelPath, File srcFile, String refPath) {
-        String result = FileCompressItem.calculateZipEntryName(notFoundRelPath, srcFile,
-                FileCompressItem.getCanonicalPath(new File(refPath)));
+    /**
+     * Encapsulates call to sut calculateZipEntryName to Calculates the path within the zip file.
+     *
+     * @param outDirInZipForNoneRelPath directory with trailing "/" (without filename) where
+     *                                   the entry goes to if outside zipRelPath.
+     *                                   null==root dir.
+     * @param srcFile full path to source file
+     * @param zipRelPath if not empty paths are caclulated relative to this directory. Mus have trailing "/".
+     * @return
+     */
+    private static String sutExec_calculateZipEntryName(String outDirInZipForNoneRelPath, File srcFile, String zipRelPath) {
+        String result = FileCompressItem.calculateZipEntryName(outDirInZipForNoneRelPath, srcFile,
+                FileCompressItem.getCanonicalPath(new File(zipRelPath)).toLowerCase());
 
         // fix windows path seperator
         return fixPathDelimiter(result);

@@ -159,10 +159,10 @@ public class CompressJob implements ZipLog {
 
     /**
      * adds one file to the CompressQue
-     * @param destZipPath directory within zip where the files will go to (either empty or with trailing "/"
+     * @param outDirInZipForNoneRelPath directory within zip where the files will go to (either empty or with trailing "/"
      */
-    CompressItem addItemToCompressQue(String destZipPath, File srcFile, String zipEntryComment) {
-        CompressItem item = new FileCompressItem(destZipPath, srcFile, zipEntryComment);
+    CompressItem addItemToCompressQue(String outDirInZipForNoneRelPath, File srcFile, String zipEntryComment) {
+        CompressItem item = new FileCompressItem(outDirInZipForNoneRelPath, srcFile, zipEntryComment);
         if (addToCompressQueue(item)) {
             return item;
         }
@@ -677,14 +677,6 @@ public class CompressJob implements ZipLog {
     public String getLastError(boolean detailed) {
         if (zipLog != null) return zipLog.getLastError(detailed);
         return "";
-    }
-
-    /**
-     * @deprecated use setZipStorage instead
-     */
-    @Deprecated
-    public CompressJob setDestZipFile(ZipStorage zipStorage) {
-        return setZipStorage(zipStorage);
     }
 
     public String getAbsolutePath() {return this.zipStorage.getAbsolutePath();}

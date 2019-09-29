@@ -35,9 +35,9 @@ public class DocumentFileCompressItem extends FileCompressItem {
     private final Context context;
     private final Uri uri;
 
-    public DocumentFileCompressItem(Context context, String destZipPath, File srcFile, Uri uri,
+    public DocumentFileCompressItem(Context context, String outDirInZipForNoneRelPath, File srcFile, Uri uri,
                                     String zipEntryComment) {
-        super(destZipPath, srcFile, zipEntryComment);
+        super(outDirInZipForNoneRelPath, srcFile, zipEntryComment);
         this.context = context;
         this.uri = uri;
     }

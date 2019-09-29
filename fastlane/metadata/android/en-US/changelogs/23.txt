@@ -1,1 +1,1 @@
-21 => 23 changes: 
+Fix: made "Generate Zip-Subfolders below" case-insensitive
