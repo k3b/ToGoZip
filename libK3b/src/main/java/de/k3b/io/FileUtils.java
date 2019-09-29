@@ -20,6 +20,9 @@
 
 package de.k3b.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,9 +37,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.k3b.LibGlobal;
 
@@ -104,7 +104,7 @@ public class FileUtils {
             }
         }
     }
-
+		
     /** tryGetCanonicalFile without exception */
     public static File tryGetCanonicalFile(String path) {
         if (path == null) return null;
@@ -119,7 +119,7 @@ public class FileUtils {
 
         try {
             return file.getCanonicalFile();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             logger.warn(DBG_CONTEXT + "Error tryGetCanonicalFile('" + file.getAbsolutePath() + "') => '" + errorValue + "' exception " + ex.getMessage(), ex);
             return errorValue;
         }
@@ -143,7 +143,7 @@ public class FileUtils {
     }
 
     /** @return true if directory is an alias of an other (symlink-dir). */
-    public static  boolean isSymlinkDir(File directory, boolean errorValue) {
+    public static boolean isSymlinkDir(File directory, boolean errorValue) {
         if (LibGlobal.ignoreSymLinks || (directory == null)) {
             return false;
         }
@@ -190,12 +190,12 @@ public class FileUtils {
 
     /** return parent of path if path is not a dir. else return path */
     public static File getDir(String path) {
+        return getDir(createFile(path));
+    }
+
+    public static File createFile(String path) {
         if ((path == null) || (path.length() == 0)) return null;
-        if (path.endsWith("%")) {
-            // remove sql wildcard at end of name
-            return getDir(new File(path.substring(0,path.length() - 1)));
-        }
-        return getDir(new File(path));
+        return new File(FileNameUtil.getWithoutWildcard(path));
     }
 
     /** return parent of file if path is not a dir. else return file */
