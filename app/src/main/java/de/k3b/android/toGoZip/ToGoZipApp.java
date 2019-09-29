@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2018 k3b
+ * Copyright (C) 2018-2019 k3b
  *
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  *
