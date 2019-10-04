@@ -547,6 +547,9 @@ public class CompressJob implements ZipLog {
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
+            if (errorMessage == null) {
+                errorMessage = "";
+            }
             if (!errorMessage.contains(context)) {
                 errorMessage = "Error in " + context + ":" + errorMessage;
             }
