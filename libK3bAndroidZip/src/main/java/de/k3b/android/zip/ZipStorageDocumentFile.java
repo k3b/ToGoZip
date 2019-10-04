@@ -72,6 +72,14 @@ public class ZipStorageDocumentFile implements ZipStorage {
     }
 
     /**
+     * return true if zip file directory exists
+     */
+    @Override
+    public boolean writableZipFileParentDirectoryExists() {
+        return (directory != null) && (directory.exists()) && (directory.isDirectory()) && (directory.canWrite());
+    }
+
+    /**
      *  {@inheritDoc}
      */
     @Override

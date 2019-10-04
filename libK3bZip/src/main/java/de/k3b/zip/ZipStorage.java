@@ -42,6 +42,11 @@ public interface ZipStorage {
     boolean exists();
 
     /**
+     * return true if zip file directory exists and is writable
+     */
+    boolean writableZipFileParentDirectoryExists();
+
+    /**
      * deletes the zip file.
      *  i.e. new ZipStorage("/path/to/file.zip").delete(ZipStorage.ZipInstance.new_) will
      *  delete "/path/to/file.tmp.zip"

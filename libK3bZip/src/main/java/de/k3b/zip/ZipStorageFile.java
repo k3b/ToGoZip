@@ -24,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 
 /**
  * Encapsulates all storage related operations that relate to Zipfile.
@@ -61,6 +60,15 @@ public class ZipStorageFile implements de.k3b.zip.ZipStorage {
     @Override
     public boolean exists() {
         return fileCur.exists();
+    }
+
+    /**
+     * return true if zip file directory exists
+     */
+    @Override
+    public boolean writableZipFileParentDirectoryExists() {
+        File directory = (fileCur != null) ? fileCur.getParentFile() : null;
+        return (directory != null) && (directory.exists()) && (directory.isDirectory()) && (directory.canWrite());
     }
 
     /**
