@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -377,7 +378,20 @@ public class CompressJob implements ZipLog {
 
             context = traceMessage(ZipJobState.CREATE_NEW_ZIP_0, itemNumber, itemTotal,
                     "(0) create new result file {0}", newZipFileName);
-            zipOutputStream = new ZipOutputStream(this.zipStorage.createOutputStream(ZipStorage.ZipInstance.new_));
+            try {
+                OutputStream outputStream = this.zipStorage.createOutputStream(ZipStorage.ZipInstance.new_);
+                zipOutputStream = new ZipOutputStream(outputStream);
+            } catch (IOException ex) {
+                continueProcessing = false;
+                String errorMessage = "Cannot create '"
+                        + newZipFileName
+                        + "' for '"
+                        + this.zipStorage.getAbsolutePath()
+                        + "': " + ex.getMessage();
+
+                addError(errorMessage);
+                return RESULT_ERROR_ABOART;
+            }
 
             String oldZipFileName = null;
             if (this.zipStorage.exists()) {
