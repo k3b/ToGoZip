@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2018 k3b
+ * Copyright (C) 2014-2019 k3b
  * 
  * This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/) .
  * 
@@ -242,20 +242,6 @@ public class CompressJobIntegrationTests {
     }
 
     @Test
-    public void shouldCalculateRelPath() {
-        File srcFile = new File("/path/to/my/source/File.txt");
-
-        Assert.assertEquals("happy case1 with trailing '/'", "source/File.txt",
-                sutExec_calculateZipEntryName("root/", srcFile, "/path/to/my/"));
-        Assert.assertEquals("happy case2 without trailing '/'", "source/File.txt",
-                sutExec_calculateZipEntryName("root/", srcFile, "/path/to/my"));
-        Assert.assertEquals("case doesn-t matter", "source/File.txt",
-                sutExec_calculateZipEntryName("root/", srcFile, "/path/To/my/"));
-        Assert.assertEquals("outside rel path", "root/File.txt",
-                sutExec_calculateZipEntryName("root/", srcFile, "/path/to/other/"));
-    }
-
-    @Test
     public void shouldAddWithRelPath() {
         CompressJob sut = createCompressJob("shouldAddWithRelPath");
 
@@ -276,25 +262,8 @@ public class CompressJobIntegrationTests {
         }
     }
 
-    /**
-     * Encapsulates call to sut calculateZipEntryName to Calculates the path within the zip file.
-     *
-     * @param outDirInZipForNoneRelPath directory with trailing "/" (without filename) where
-     *                                   the entry goes to if outside zipRelPath.
-     *                                   null==root dir.
-     * @param srcFile full path to source file
-     * @param zipRelPath if not empty paths are caclulated relative to this directory. Mus have trailing "/".
-     * @return
-     */
-    private static String sutExec_calculateZipEntryName(String outDirInZipForNoneRelPath, File srcFile, String zipRelPath) {
-        String result = FileCompressItem.calculateZipEntryName(outDirInZipForNoneRelPath, srcFile,
-                FileCompressItem.getCanonicalPath(new File(zipRelPath)).toLowerCase());
-
-        // fix windows path seperator
-        return fixPathDelimiter(result);
-    }
-
     private static String fixPathDelimiter(String result) {
+        if (result == null) return null;
         return result.replaceAll("\\\\","/");
     }
 

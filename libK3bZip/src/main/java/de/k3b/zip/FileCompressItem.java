@@ -21,10 +21,12 @@ package de.k3b.zip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-import de.k3b.io.FileUtils;
-import de.k3b.io.StringUtils;
+import de.k3b.io.FileNameUtil;
 
 /**
  * One android independant, java.io.File based  dto-item that should be compressed.<br/>
@@ -70,16 +72,7 @@ public class FileCompressItem extends CompressItem {
      * @return
      */
     static String calculateZipEntryName(String outDirInZipForNoneRelPath, File srcFile, String zipRelPath) {
-        boolean match = false;
-        String result = null;
-        String srcPath = "";
-        if (!StringUtils.isNullOrEmpty(zipRelPath)) {
-            srcPath = getCanonicalPath(srcFile);
-            match = srcPath.toLowerCase().startsWith(zipRelPath);
-            if (match) {
-                result = srcPath.substring(zipRelPath.length()+1);
-            }
-        }
+        String result = FileNameUtil.makePathRelative(zipRelPath, srcFile);
 
         if (result == null) {
             StringBuilder resultMessage = new StringBuilder();
@@ -90,8 +83,8 @@ public class FileCompressItem extends CompressItem {
             result = resultMessage.toString();
         }
         if (LibZipGlobal.debugEnabled) {
-            logger.info(DBG_CONTEXT + "[match={}] '{}' <== calculateZipEntryName(... , srcFile='{}' '{}', zipRelPath='{}')",
-                    result, match, srcFile, srcPath, zipRelPath);
+            logger.info(DBG_CONTEXT + "[match={}]  <== calculateZipEntryName(... , srcFile='{}' , zipRelPath='{}')",
+                    result, srcFile, zipRelPath);
         }
         return result;
     }
@@ -99,22 +92,13 @@ public class FileCompressItem extends CompressItem {
     /** if not null enables zipRelPath mode. "add"-s will be relative to this path if file is below this path */
     public static void setZipRelPath(File zipRelPath) {
         if (zipRelPath != null) {
-            FileCompressItem.zipRelPath = getCanonicalPath(zipRelPath).toLowerCase();
+            FileCompressItem.zipRelPath = FileNameUtil.getCanonicalPath(zipRelPath).toLowerCase();
         } else {
             FileCompressItem.zipRelPath = null;
         }
         if (LibZipGlobal.debugEnabled) {
             logger.info(DBG_CONTEXT + "setZipRelPath('{}') from '{}'",FileCompressItem.zipRelPath, zipRelPath );
         }
-    }
-
-    /** so that files are comparable */
-    static String getCanonicalPath(File zipRelPath) {
-        File canonicalFile = FileUtils.tryGetCanonicalFile(zipRelPath);
-        if (canonicalFile != null) {
-            return FileUtils.fixPath(canonicalFile.getAbsolutePath());
-        }
-        return null;
     }
 
 
