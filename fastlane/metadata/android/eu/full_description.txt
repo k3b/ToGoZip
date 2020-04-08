@@ -1,0 +1,16 @@
+Bildu fitxategiak erraz onartutako aplikazioetatik
+zip fitxategi bakarrean, kalean edo deskonektatuta zaudela ere.
+
+'2go.zip'-fitxategi hau maleta bat bezala da, non
+gauzak (fitxategiak) sartu ditzakezun ia edonondik
+(bidali/partekatu onartzen duen edozein aplikaziotik)
+eta edonora bidaiatu dezakeena (e-mail, bluetooth, nfc... bidez)
+
+Programaren egileak ToGoZip erabiltzen du gero ordenagailuko egutegian
+sartu nahi dituen egutegiko sarrera berriak biltzeko,
+
+Beharrezko Android baimenak:
+
+* WRITE_EXTERNAL_STORAGE '2go.zip' karpeta publiko batean gordetzeko eta eguneratzeko.
+
+.

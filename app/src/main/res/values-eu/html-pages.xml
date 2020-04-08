@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Translation 2020 to Basque (eu) by Osoitz
+-->
+<resources>
+  <string name="about_content_about"><![CDATA["
+Gehitu zip fitxategira Androideko bidali/partekatu menutik.
+
+Bildu fitxategiak erraz onartutako aplikazioetatik
+zip fitxategi bakarrean, kalean edo deskonektatuta zaudela ere.
+
+'2go.zip'-fitxategi hau maleta bat bezala da, non
+gauzak (fitxategiak) sartu ditzakezun ia edonondik
+(bidali/partekatu onartzen duen edozein aplikaziotik)
+eta edonora bidaiatu dezakeena (e-mail, bluetooth, nfc... bidez)
+
+Programaren egileak ToGoZip erabiltzen du gero ordenagailuko egutegian
+sartu nahi dituen egutegiko sarrera berriak biltzeko,
+
+Beharrezko Android baimenak:
+
+<ul>
+<li>WRITE_EXTERNAL_STORAGE '2go.zip' karpeta publiko batean gordetzeko eta eguneratzeko.</li>
+</ul>
+<br/>
+<br/>
+    "]]></string>
+
+</resources>
