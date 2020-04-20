@@ -1,0 +1,13 @@
+<p>Thêm vào Zip cho Android-s chia sẻ / gửi trình đơn.</p>
+<p>Dễ dàng thu thập các tệp tin từ mọi ứng dụng hỗ trợ vào một tệp zip trong khi vẫn đang 'đang di
+chuyển' hoặc ngoại tuyến.
+(Lưu ý tiếng Anh 'to go' có nghĩa là 'đang đi du lịch').</p>
+<p>Tập tin '2go.zip' này thu thập giống như một va li nơi bạn có thể đưa mọi thứ (các tệp tin)
+vào từ gần như mọi nơi (từ mọi ứng dụng hỗ trợ 'share' / 'send') và rằng có thể đi khắp mọi
+nơi (qua email, bluetooth, nfc).</p>
+<p>Tác giả của chương trình sử dụng ToGoZip để thu thập các mục lịch mới của Android mà
+sau này phải được nhập khẩu vào lịch của desktop-pcs.</p>
+<p>Yêu cầu quyền của Android:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE để lưu / cập nhật '2go.zip' vào một số thư mục công cộng.</li>
+</ul>

@@ -1,0 +1,15 @@
+<p>Dodaj do Zip Dla androidów 'udostępnij'/'wyślij' menu;</p>
+<p>łatwe zbieranie plików z każdej aplikacji pomocniczej w jednym
+pliku zip będąc 'w drodze' lub w trybie offline.</p>
+<p>To zbieranie 2go.zip- plik jest jak walizka
+gdzie można umieścic rzeczy (pliki) z każdego miejsca (z każdej
+aplikacji, która obsługuje 'udostępnij'/'wyslij') i które
+mogą podróżować&nbsp; wszędzie (za pośrednictwem email,
+bluetooth,&nbsp;nfc).</p>
+<p>Autor programu używa ToGoZip do zbierania nowych wpisów w kalendarz android,
+które powinny być później zaimportowane do kalendarza panelu-psc-s.</p>
+<p>Required Android Permissions:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.</li>
+</ul>
+<p>.</p>

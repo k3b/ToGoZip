@@ -1,0 +1,1 @@
+ToGoZip: Android の共有/送信メニューに、Zip を追加します。

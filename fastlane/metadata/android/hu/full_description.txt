@@ -1,0 +1,15 @@
+<p>Adja hozzá Ziphez az androidos megosztási / küldés menüjét.</p>
+<p>Könnyű gyűjteni fájlokat minden támogató alkalmazásból
+egy zip-fájl, miközben 'on the go' vagy offline állapotban van.
+(Megjegyzés: az angol 'menni' jelentése 'utazás közben').</p>
+<p>Ez a '2go.zip' fájl összegyűjtése olyan, mint egy bőrönd
+ahol a dolgokat (fájlokat) majdnem mindenhol beillesztheti (a
+minden olyan alkalmazás, amely támogatja a 'megosztás' / 'küldés' -t)
+utazhat mindenhol (e-mailben,
+bluetooth, nfc).</p>
+<p>A program szerzője a ToGoZip-t használja az új android naptár bejegyzések gyűjtésére
+amelyet később be kell vinni a desktop-pcs-s kalanderbe.</p>
+<p>Szükséges Android jogosultságok:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE a '2go.zip' mentéséhez / frissítéséhez néhány nyilvános mappába</li>
+</ul>

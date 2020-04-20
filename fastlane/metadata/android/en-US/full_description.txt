@@ -1,17 +1,17 @@
-Add to Zip for android-s share/send menu.
-
-Easy collecting files from every supporting app into
-one zip-file while beeing 'on the go' or offline.
-(Note the english 'to go` means 'while traveling').
-
-This collecting '2go.zip'-file is like a suitcase
+<p>Add to Zip for android-s share/send menu.</p>
+<p>Easy collecting files from every supporting app into
+one zip-file while being 'on the go' or offline.
+(Note the english 'to go' means 'while traveling').</p>
+<p>This collecting '2go.zip'-file is like a suitcase
 where you can put things (files) into from nearly everywhere (from
-every app that supports 'share/send') and that
+every app that supports 'share' / 'send') and that
 can travel  everywhere (via email,
-bluetooth, nfc).
-
-Required Android Permissions:
-
-* WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.
-* READ_LOGS: after app crash the errorlog is written to {last-zip-dir}/toGoZip.logcat-*.txt or clipboard
-.
+bluetooth, nfc).</p>
+<p>The program's author uses ToGoZip to collect new android calendar entries
+that should be later imported into the desktop-pcs-s calender.</p>
+<p>Required Android Permissions:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.</li>
+<li>READ_LOGS: after app crash the errorlog is written to {last-zip-dir}/toGoZip.logcat-*.txt or clipboard</li>
+</ul>
+<p>.</p>

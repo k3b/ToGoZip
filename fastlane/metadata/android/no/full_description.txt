@@ -1,0 +1,15 @@
+<p>Legg til i zip for android s share / send-meny.</p>
+<p>Enkel å samle filer fra hver støttende app inn i
+en zip-fil mens du er "på farten" eller frakoblet.
+(Merk at engelsk "å gå" betyr "mens du reiser").</p>
+<p>Denne samlefilen "2go.zip" er som en koffert
+hvor du kan sette ting (filer) inn fra nesten overalt (fra
+hver app som støtter 'share' / 'send') og det
+kan reise overalt (via e-post,
+bluetooth, nfc).</p>
+<p>Programmets forfatter bruker ToGoZip til å samle inn nye android kalenderoppføringer
+Det skal senere importeres til desktop-pcs-kalenderen.</p>
+<p>Påkrevde Android Tillatelser:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE for å lagre / oppdatere '2go.zip' til noen offentlige mapper</li>
+</ul>

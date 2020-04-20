@@ -1,0 +1,16 @@
+<p>Adicione a Zip para o menu de compartilhamento / envio do Android.</p>
+<p>Recolher arquivos facilmente de todas as aplicações de suporte para
+um arquivo zip enquanto estiver sendo 'on the go' ou offline.
+(Note que o inglês 'to go' significa 'enquanto viaja').</p>
+<p>Este arquivo coletando '2go.zip' é como uma mala
+onde você pode colocar as coisas (arquivos) em quase todos os lugares (de
+cada app que suporta 'share' / 'send') e que
+pode viajar em qualquer lugar (via e-mail,
+bluetooth, nfc).</p>
+<p>O autor do programa usa o ToGoZip para coletar novas entradas do calendário do Android
+que deve ser importado mais tarde na agenda do desctop-pcs.</p>
+<p>Permissões requeridas do Android:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE para salvar / atualizar '2go.zip' para alguma pasta pública.</li>
+</ul>
+<p>.</p>

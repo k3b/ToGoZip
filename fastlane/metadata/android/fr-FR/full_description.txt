@@ -1,15 +1,13 @@
-'Add to Zip' pour le menu 'Partager'/'Envoyer' d'Android : 
- 
-Collecte facile de fichiers depuis les applis supportées dans un fichier zip, 'très efficace' et hors-ligne.
-
-Ce fichier 2go.zip est comme un coffre
+<p>'Add to Zip' pour le menu 'Partager'/'Envoyer' d'Android : </p>
+<p>Collecte facile de fichiers depuis les applis supportées dans un fichier zip, 'très efficace' et hors-ligne.</p>
+<p>Ce fichier 2go.zip est comme un coffre
 où vous pouvez ajouter des fichiers depuis n'importe où (depuis toutes les
 Apps qui supportent la fonction 'Partager') et qui peut être ensuite
-envoyé partout (par mail, bluetooth, NFC).
-
-Ce programme était initialement développé pour collecter les nouvelles entrées
-du calendrier Android qui devaient être transférées vers le calendrier du PC.
-
-Autorisation Android Requise : 
-
-* WRITE_EXTERNAL_STORAGE pour sauvegarder/mettre à jour '2go.zip' dans un dossier public quelconque.
+envoyé partout (par mail, bluetooth, NFC).</p>
+<p>Ce programme était initialement développé pour collecter les nouvelles entrées
+du calendrier Android qui devaient être transférées vers le calendrier du PC.</p>
+<p>Autorisation Android Requise : </p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE pour sauvegarder/mettre à jour '2go.zip' dans un dossier public quelconque.</li>
+</ul>
+<p>.</p>

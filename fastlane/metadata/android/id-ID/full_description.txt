@@ -1,17 +1,14 @@
-Tambahkan ke Zip untuk android-s share / send menu.
-
-Mudah mengumpulkan file dari setiap aplikasi pendukung ke
+<p>Tambahkan ke Zip untuk android-s share / send menu.</p>
+<p>Mudah mengumpulkan file dari setiap aplikasi pendukung ke
 satu zip-file saat beeing 'on the go' atau offline.
-(Perhatikan bahasa inggris 'untuk pergi` berarti 'saat bepergian').
-
-File pengumpul '2go.zip' ini seperti sebuah koper
+(Perhatikan bahasa inggris 'untuk pergi` berarti 'saat bepergian').</p>
+<p>File pengumpul '2go.zip' ini seperti sebuah koper
 di mana Anda dapat memasukkan barang (file) dari hampir ke mana - mana (dari
 setiap aplikasi yang mendukung 'share / send') dan itu
 dapat melakukan perjalanan kemana-mana (via email,
-bluetooth, nfc).
-
-Izin Android yang Diperlukan:
-
-* WRITE_EXTERNAL_STORAGE untuk menyimpan / memperbarui '2go.zip' ke beberapa folder publik.
-
-.
+bluetooth, nfc).</p>
+<p>Izin Android yang Diperlukan:</p>
+<ul>
+<li>WRITE_EXTERNAL_STORAGE untuk menyimpan / memperbarui '2go.zip' ke beberapa folder publik.</li>
+</ul>
+<p>.</p>
