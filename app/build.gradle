@@ -16,9 +16,10 @@ android {
         minSdkVersion 7
         // targetSdkVersion 26
         targetSdkVersion 23
-        versionCode 24
-        versionName '2.1.24.200404'
+        versionCode 25
+        versionName '2.1.25.200422'
 
+        // 2.1.25.200422 (25) Translation updates cs, es, eu, fr
         // 2.1.24.200404 (24) Translation updates nl, zh-CN
         // 2.1.23.191001 (23) L2.1.23 Fix made "Generate Zip-Subfolders below" case-insensitive
         // 2.1.22.190804 (22) L2.1.22.3 lib Incompatible api changes: ZipLog: Replace enum ZipJobState with int (smaller android footprint); CompressJob can be async caneceld from gui thread

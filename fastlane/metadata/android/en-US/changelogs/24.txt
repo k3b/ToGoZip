@@ -1,3 +1,1 @@
-23 => 24 changes:
-
-* translation updates cs, es,, eu, fr
+Translation updates nl, zh-CN
