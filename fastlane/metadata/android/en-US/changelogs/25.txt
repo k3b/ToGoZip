@@ -1,0 +1,2 @@
+* New translation: Basque (eu), cs
+* Translation updates es, fr, nl
