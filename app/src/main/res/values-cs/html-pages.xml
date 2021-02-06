@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?><!--
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
 /* 
  * This file is part of "A Photo Manager" (A(ndro)FotoFinder).
  *
@@ -6,8 +7,8 @@
  */
  -->
 <resources>
-    <!--!!generated from .../values-cs/fdroid.xml!!-->
-    <string name="about_content_about"><![CDATA["
+  <!--!!generated from .../values-cs/fdroid.xml!!-->
+  <string name="about_content_about"><![CDATA["
 <h1>ToGoZip ('==> Zip')</h1>
 <br />
 <h2>ToGoZip: Přidat do Zip pro sdílení/odesílání nabídky android-s.</h2>
