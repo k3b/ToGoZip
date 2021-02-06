@@ -23,7 +23,7 @@ every app that supports 'share' / 'send') and that
 can travel  everywhere (via email,
 bluetooth, nfc).</p>
 <p>The program's author uses ToGoZip to collect new android calendar entries
-that should be later imported into the desctop-pcs-s calender.</p>
+that should be later imported into a desktop PC calender.</p>
 <p>Required Android Permissions:</p>
 <ul>
 <li>WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.</li>
