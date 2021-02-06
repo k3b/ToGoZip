@@ -1,1 +1,2 @@
-TODO updates 25 -> 26
+* New translation: uk
+* Translation updates ru

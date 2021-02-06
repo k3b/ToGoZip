@@ -28,9 +28,10 @@ import java.util.Date;
 import de.k3b.io.DateUtil;
 
 /**
- * Created by k3b on 15.01.2018.
+ * (c) 2018-2021 by k3b
+ *
+ * For details see comments/values in translation-history.ini
  */
-
 public class TranslationStatisticsTests {
     @Test
     public void shouldMatchFastlane() {
