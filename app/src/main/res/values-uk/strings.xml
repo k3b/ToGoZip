@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Ukrainian tramsöatopm 2020 by Vladislav Glinsky (cl0ne)
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+    <string name="title_activity_add2zip">Додати в Zip</string>
+    <string name="cmd_use_default">Типове значення</string>
+    <string name="cmd_cancel">Скасувати</string>
+    <string name="cmd_edit">Редагувати</string>
+    <string name="ERR_ADD"><![CDATA["Не вдалося оновити  %1$s :
+%2$s"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">Немає прав на запис до %1$s %2$s.</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Немає дозволу на запис до поточного zip-архіву '%1$s'.
+Бажаєте використовувати типовий '%2$s' натомість?"]]></string>
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA["Файли вже включені в
+%1$s"]]></string>
+    <string name="SUCCESS_ADD"><![CDATA["додано %2$d файл(ів) до
+%1$s"]]></string>
+    <string name="WARN_ADD_NO_FILES">Немає обраних файлів</string>
+    <string name="WARN_ADD_CANCELED">Скасовано: файли не додано</string>
+    <string name="about_summary">Про ToGoZip</string>
+    <string name="banner">Зібрано з ToGoZip версії $versionName$</string>
+    <string name="pref_debug_title">Режим зневадження</string>
+    <string name="pref_debug_summary">Повідомлення зневадження копіюватимуться в буфер обміну та додаватимуться до LogCat</string>
+    <string name="pref_long_text_file_title">Довгий текстовий файл в zip</string>
+    <string name="pref_long_text_file_len_min">Довгий файл: мінімальна довжина тексту</string>
+    <string name="pref_short_text_file_title">Короткий текстовий файл в zip</string>
+    <string name="pref_zipfile_title">Назва zip-файлу</string>
+    <string name="pref_settings_title">Налаштування</string>
+    <string name="settings_locale_title"> Мова</string>
+    <string name="settings_locale_os_language">Системна типова</string>
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">Директорія збереження Zip-файлу</string>
+    <string name="folder_picker_parent_dir">Вгору</string>
+    <string name="folder_picker_create_new_directory">Нова директорія</string>
+    <!-- generate a changelogfile within zip file -->
+    <string name="pref_log_file_in_zip_debug_summary">Оновити ToGoZip.log в Zip-файлі</string>
+    <string name="pref_log_file_in_zip_debug_title">Зберігати в журналі повні вихідні шляхи доданих файлів.</string>
+    <!-- #13: if not empty: create subfolders in zip relative to this path -->
+    <string name="pref_short_text_zip_rel_path_title">Зберігати в zip структуру дочірніх директорій</string>
+    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/директорія/файл.txt')
+    ==> Zip: 'директорія/файл.txt'"]]></string>
+    <string name="pref_short_text_zip_rel_path_disabled_summayr">-- Вимкнено --</string>
+    <string name="delete_menu_title">Видалити %1$s</string>
+    <string name="view_zip_menu_title">Переглянути %1$s</string>
+    <string name="send_zip_menu_title">Поділитися/Надіслати %1$s до</string>
+    <string name="show_in_filemanager_menu_title">Відкрити у файловому менеджері</string>
+    <string name="viewer_not_installed">Не встановлено переглядача для %1$s</string>
+</resources>

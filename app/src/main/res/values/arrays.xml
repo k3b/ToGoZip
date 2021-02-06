@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2017 k3b
+Copyright (C) 2014-2021 k3b
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -22,8 +22,6 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string-array name="pref_locale_names" translatable="false">
         <item>@string/settings_locale_os_language</item>
         <item>العربية (Arabic)</item>
-        <item>简体中文 (simplified Chinese)</item>
-		<item>繁体中文 (traditional Chinese)</item>
         <item>বাঙালি (Bengali)</item>
         <item>Deutsch (German)</item>
         <item>English</item>
@@ -32,21 +30,22 @@ this program. If not, see <http://www.gnu.org/licenses/>
 		<item>हिंदी (Hindi)</item>
 		<item>Magyar (Hungarian)</item>
         <item>Indonesia (Indonesian)</item>
+        <item>日本人 (Japanese)</item>
         <item>Nederlands (Dutch)</item>
         <item>Norsk (Norwegian)</item>
         <item>Polskie (Polish)</item>
         <item>Português (Portuguese)</item>
         <item>Русский (Russian)</item>
         <item>Türk (Turkish)</item>
+        <item>Українська (Ukrainian)</item>
         <item>Tiếng Việt (Vietnamese)</item>
-        <item>日本人 (Japanese)</item>
+        <item>简体中文 (simplified Chinese)</item>
+        <item>繁体中文 (traditional Chinese)</item>
         <item>(For Translators)</item>
     </string-array>
     <string-array name="pref_locale_values" translatable="false">
         <item></item>
         <item>ar</item>
-        <item>zh-CN</item>
-		<item>zh-TW</item>
         <item>bn</item>
         <item>de</item>
         <item>en</item>
@@ -55,14 +54,17 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>hi</item>
         <item>hu</item>
         <item>in</item> <!-- iso uses "id" but java uses "in" -->
+        <item>ja</item>
         <item>nl</item>
         <item>no</item>
         <item>pl</item>
         <item>pt</item>
         <item>ru</item>
         <item>tr</item>
+        <item>uk</item>
         <item>vi</item>
-        <item>ja</item>
+        <item>zh-CN</item>
+        <item>zh-TW</item>
         <item>zz</item>
     </string-array>
 </resources>

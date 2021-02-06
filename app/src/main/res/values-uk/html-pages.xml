@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ukrainian tramsöatopm 2020 by Vladislav Glinsky (cl0ne)
+
+         strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
+         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
+         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
+         and in github homepage.
+         -->
+    <string name="about_content_about"><![CDATA["
+ToGoZip: <b><i>"Додати в Zip"</i></b>
+ для меню Android <i>'поділитися'/'надіслати'</i>:<br/>
+ <br/>
+ Легко збирайте файли в єдиний zip-архів з будь-якої програми, яка це підтримує, під час '<i>подорожі</i>' або поза мережею.<br/>
+<br/>
+Файл <i>2go.zip</i> схожий на валізу, в яку можна покласти речі (файли) майже звідусіль (із будь-якої програми, яка підтримує <i>'поділитися'/'надіслати'</i>), а потім надіслати її куди завгодно (наприклад, електронною поштою,
+через bluetooth чи NFC).<br/>
+<br/>
+Автор програми за допомогою ToGoZip збирає нові записи календаря Android, аби пізніше імпортувати їх в програмі календаря на ПК.
+ <br/>
+<br/>
+<br/>
+"]]></string>
+</resources>
