@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Russian translation 2018 by mesnevi,HenriDellal.
+Russian (ru) translation 2020 by Vladislav Glinsky (cl0ne), 2018 by mesnevi,HenriDellal.
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -19,11 +19,12 @@ this program. If not, see <http://www.gnu.org/licenses/>
 -->
 <resources>
   <!-- strings.xml.about_content_about and fdroid.xml.full_description  have the same content.
-         strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
-         fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
-         and in github homepage.
-         -->
-  <string name="about_content_about"><![CDATA["<b><i>Пункт "Добавить в Zip"</i></b>
+       strings.xml.about_content_about is in html format to be displayed in apps aboutbox.
+       fdroid.xml.full_description is in simple markdown syntax to be displayed in fdroid apstore
+       and in github homepage.
+       -->
+  <string name="about_content_about"><![CDATA["
+ToGoZip: <b><i>Пункт "Добавить в Zip"</i></b>
  для меню Android <i>"поделиться/ отправить"</i><br/>
  <br/>
  Собирает файлы из любого поддерживающего эту возможность приложения в один zip архив «<i>на лету</i>» или в автономном режиме.<br/>

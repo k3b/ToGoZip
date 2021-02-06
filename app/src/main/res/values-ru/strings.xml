@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Russian translation 2018 by mesnevi,HenriDellal.
+Russian ru translation 2020 by Vladislav Glinsky (cl0ne), 2018 by mesnevi,HenriDellal.
 
 This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
 
@@ -47,4 +47,17 @@ this program. If not, see <http://www.gnu.org/licenses/>
   <string name="pref_zipfolder_title">Путь сохранения архива</string>
   <string name="folder_picker_parent_dir">Наверх</string>
   <string name="folder_picker_create_new_directory">Новая папка</string>
+  <!-- generate a changelogfile within zip file -->
+  <string name="pref_log_file_in_zip_debug_summary">Обновить ToGoZip.log в Zip</string>
+  <string name="pref_log_file_in_zip_debug_title">Сохранять полные исходные пути добавляемых файлов.</string>
+  <!-- #13: if not empty: create subfolders in zip relative to this path -->
+  <string name="pref_short_text_zip_rel_path_title">Сохранять в Zip структуру дочерних директорий</string>
+  <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/директория/файл.txt')
+    ==> Zip: 'директория/файл.txt'"]]></string>
+  <string name="pref_short_text_zip_rel_path_disabled_summayr">-- Отключено --</string>
+  <string name="delete_menu_title">Удалить %1$s</string>
+  <string name="view_zip_menu_title">Просмотреть %1$s</string>
+  <string name="send_zip_menu_title">Поделиться/Отправить %1$s в</string>
+  <string name="show_in_filemanager_menu_title">Открыть в файловом менеджере</string>
+  <string name="viewer_not_installed">Не установлен просмотрщик для %1$s</string>
 </resources>
