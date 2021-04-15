@@ -1,1 +1,3 @@
-TODO updates 26 -> 27
+Updates 26 -> 27
+
+* Library Update: Migrated to api29 , AndroidX ,minSdk-16

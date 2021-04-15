@@ -33,9 +33,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 import android.util.Log;
-import android.support.v4.provider.DocumentFile;
+import androidx.documentfile.provider.DocumentFile;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -284,7 +284,6 @@ public class SettingsActivity extends PreferenceActivity
         } else {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
             intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             startActivityForResult(intent, folderpickerCode);
         }
@@ -431,19 +430,21 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.cmd_send:
-                return onCmdSend(item.getTitle());
-            case R.id.cmd_delete:
-                return onCmdDeleteQuestion();
-            case R.id.cmd_view_zip:
-                return onShowZip();
-            case R.id.cmd_filemanager:
-                ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
-                return FileManagerUtil.showInFilemanager(this, getZipFolder(storage));
-            case R.id.cmd_about:
-                AboutDialogPreference.createAboutDialog(this).show();
-                return true;
+        int itemId = item.getItemId();
+
+        // cannot use switch case because resource-ids will not be final in future version
+        if (itemId == R.id.cmd_send) {
+            return onCmdSend(item.getTitle());
+        } else if (itemId == R.id.cmd_delete) {
+            return onCmdDeleteQuestion();
+        } else if (itemId == R.id.cmd_view_zip) {
+            return onShowZip();
+        } else if (itemId == R.id.cmd_filemanager) {
+            ZipStorage storage = SettingsImpl.getCurrentZipStorage(this);
+            return FileManagerUtil.showInFilemanager(this, getZipFolder(storage));
+        } else if (itemId == R.id.cmd_about) {
+            AboutDialogPreference.createAboutDialog(this).show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -455,16 +456,18 @@ public class SettingsActivity extends PreferenceActivity
         Uri fileUri = Uri.fromFile(new File(storage.getAbsolutePath()));
         String mime = "application/zip";
 
-        // try different combinations. first matching wins
-        boolean success = tryStartActivity(startIntent, fileUri, mime)
-                || tryStartActivity(startIntent, fileUri, null)
-                || tryStartActivity(startIntent, contentUri, mime)
-                || tryStartActivity(startIntent, contentUri, null);
-        if (!success) {
-            String message = getString(R.string.viewer_not_installed, contentUri.toString());
-            Toast
-               .makeText(this, message, Toast.LENGTH_LONG)
-               .show();
+        if (fileUri != null) {
+            // try different combinations. first matching wins
+            boolean success = tryStartActivity(startIntent, fileUri, mime)
+                    || tryStartActivity(startIntent, fileUri, null)
+                    || tryStartActivity(startIntent, contentUri, mime)
+                    || tryStartActivity(startIntent, contentUri, null);
+            if (!success) {
+                String message = getString(R.string.viewer_not_installed, contentUri.toString());
+                Toast
+                        .makeText(this, message, Toast.LENGTH_LONG)
+                        .show();
+            }
         }
         return true;
     }

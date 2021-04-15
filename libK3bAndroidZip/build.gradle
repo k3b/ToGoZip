@@ -5,14 +5,17 @@ group = "com.github.k3b"
 version = "L2.1.22.3"
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 29
 
 
     defaultConfig {
         minSdkVersion 7
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 23
-        versionCode 23
-        versionName "L2.1.23"
+        versionCode 27
+        version = "L2.1.27"
+
+        // 2.1.27.210419 (27) Migrated to api29/AndroidX/minSdk-14
 // 2.1.23.191001 (23) L2.1.23 Fix made "Generate Zip-Subfolders below" case-insensitive
 // L2.1.22.3 (22 190804) lib Incompatible api changes: ZipLog: Replace enum ZipJobState with int (smaller android footprint); CompressJob can be async caneceld from gui thread
 // L2.1.21.2 (21 190723) lib Incompatible api changes for more ZipLog-ing
@@ -30,7 +33,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.android.support:support-v4:23.2.1'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(':libK3bZip')
     implementation project(':libK3b')
 }

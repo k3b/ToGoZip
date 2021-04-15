@@ -2,8 +2,5 @@
 .idea
 .DS_Store
 /build
-.iml
-/*.iml
-/app/*.iml
+*.iml
 /*.properties
-/libK3bZip/*.iml

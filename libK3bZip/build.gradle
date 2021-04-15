@@ -8,7 +8,9 @@ apply plugin: 'maven'
 
 group = "com.github.k3b"
 
-version = "L2.1.23"
+version = "L2.1.27"
+
+// 2.1.27.210419 (27) Migrated to api29/AndroidX/minSdk-14
 // 2.1.23.191001 (23) L2.1.23 Fix made "Generate Zip-Subfolders below" case-insensitive
 // L2.1.22.3 (22 190804) lib Incompatible api changes: ZipLog: Replace enum ZipJobState with int (smaller android footprint); CompressJob can be async caneceld from gui thread
 // L2.1.21.2 (21 190723) lib Incompatible api changes for more ZipLog-ing
@@ -24,14 +26,14 @@ pitest {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    //  compile 'org.slf4j:slf4j-android:1.7.7'
-    compile 'org.slf4j:slf4j-api:1.7.7'
-    testCompile 'junit:junit:4.11'
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.5.2'
-    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '1.5.2'
-    testCompile 'org.slf4j:slf4j-simple:1.7.7'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //  implementation 'org.slf4j:slf4j-android:1.7.7'
+    implementation 'org.slf4j:slf4j-api:1.7.7'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation group: 'org.powermock', name: 'powermock-api-mockito', version: '1.6.6'
+    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.7'
 
-    compile project(':libK3b')
+    implementation project(':libK3b')
 
 }

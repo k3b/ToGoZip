@@ -22,9 +22,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import android.widget.Toast;
+
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 /**
  * Support for android-6.0 (M) ff runtime permissons.
@@ -42,9 +44,10 @@ public class PermissionHelper {
     /**
      * Permissions required to read and write Storage.
      */
-    private static String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE,
+    private static final String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+    private PermissionHelper() {/*hide public constructor*/};
     /**
      * called before permission is required.
      *
@@ -67,10 +70,10 @@ public class PermissionHelper {
      * */
     public static boolean hasPermission(Activity context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            boolean needsRead = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+            boolean needsRead = checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED;
 
-            boolean needsWrite = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            boolean needsWrite = checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED;
 
             if (needsRead || needsWrite) {

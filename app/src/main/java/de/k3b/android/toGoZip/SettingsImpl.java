@@ -25,8 +25,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.provider.DocumentFile;
+import androidx.annotation.NonNull;
+import androidx.documentfile.provider.DocumentFile;
 import android.util.Log;
 
 import java.io.File;
@@ -117,7 +117,7 @@ public class SettingsImpl {
 
     private static void fixPathIfNeccessary(Context context) {
         // convert from togozip-ver-1 to togozip-ver-2
-        if ((SettingsImpl.zipfile != null) && (zipfile.indexOf("/") >= 0)) {
+        if ((SettingsImpl.zipfile != null) && (zipfile.contains("/"))) {
             // old formt of togozip-ver-1.x with path
             // new forman in togozip-ver-2.x dir and filename are seperate
             File f = new File(SettingsImpl.zipfile).getAbsoluteFile();
@@ -149,7 +149,7 @@ public class SettingsImpl {
 
             // DocumentFile docDir = DocumentFile.fromTreeUri(context, Uri.parse(zipDocDirUri));
             DocumentFile docDir = DocumentFile.fromFile(new File(zipDocDirUri));
-            if ((docDir != null) && docDir.canWrite()) {
+            if ((rootDir != null) && (docDir != null) && docDir.canWrite()) {
                 return rootDir.getAbsolutePath();
             }
         }
@@ -210,11 +210,13 @@ public class SettingsImpl {
     private static DocumentFile getDocFile(Context context, @NonNull String dir ) {
         DocumentFile docDir = null;
 
-        if (dir.indexOf(":") >= 0) {
+        if (dir.contains(":")) {
             Uri uri = Uri.parse(dir);
 
             if ("file".equals(uri.getScheme())) {
-                File fileDir = new File(uri.getPath());
+                String path = uri.getPath();
+                if (path == null) return null;
+                File fileDir = new File(path);
                 docDir = DocumentFile.fromFile(fileDir);
             } else {
                 docDir = DocumentFile.fromTreeUri(context, uri);
@@ -331,7 +333,7 @@ public class SettingsImpl {
     }
     public static File getZipRelPathAsFile() {
         String rel = getZipRelPath();
-        if (StringUtils.isNullOrEmpty(rel)) return null;
+        if (StringUtils.isNullOrEmpty((CharSequence) rel)) return null;
         return new File(rel);
     }
 

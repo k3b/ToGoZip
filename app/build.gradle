@@ -10,15 +10,17 @@ apply plugin: 'maven'
 
 android {
     // compileSdkVersion 26
-    compileSdkVersion 23
+    compileSdkVersion 29
     defaultConfig {
         applicationId 'de.k3b.android.toGoZip'
-        minSdkVersion 7
+        minSdkVersion 16
         // targetSdkVersion 26
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 23
-        versionCode 26
-        versionName '2.1.26.210206'
+        versionCode 27
+        versionName '2.1.27.210419'
 
+        // 2.1.27.210419 (27) Migrated to api29/AndroidX/minSdk-16
         // 2.1.26.210206 (26) Translation updates ur, ru
         // 2.1.25.200422 (25) Translation updates cs, es, eu, fr
         // 2.1.24.200404 (24) Translation updates nl, zh-CN
@@ -77,7 +79,7 @@ dependencies {
     // implementation 'com.android.support:support-v4:26.2.1'
     // workaround: android-studio-3.2.1 editor marks "DocumentFile" as unknown if using api or implementation
     // implementation 'com.android.support:support-v4:23.2.1'
-    api 'com.android.support:support-v4:23.2.1'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(':libK3bAndroidZip')
     implementation project(':libK3bZip')
     implementation project(':libK3b')
