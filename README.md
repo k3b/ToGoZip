@@ -35,3 +35,14 @@ and that can travel everywhere (via email, bluetooth, nfc).
 ![](https://raw.githubusercontent.com/k3b/ToGoZip/master/fastlane/metadata/android/en-US/images/1-send.png)
 
 ![](https://github.com/k3b/ToGoZip/raw/master/fastlane/metadata/android/en-US/images/2-settings.png)
+
+
+-----
+
+## Donations: 
+
+If you like this app please consider to donating to https://f-droid.org/donate .
+
+Since android-developping is a hobby (and an education tool) i donot want any 
+money for my apps so donation should go to projects i benefit from.
+
