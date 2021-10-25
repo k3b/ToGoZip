@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100mm"
+   height="100mm"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg2560"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="logo-round.svg"
+   inkscape:export-filename="/home/jeinzi/Programme/Android/ToGoZip/logo.png"
+   inkscape:export-xdpi="36.576"
+   inkscape:export-ydpi="36.576">
+  <defs
+     id="defs2554" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="204.8814"
+     inkscape:cy="178.77028"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="721"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2557">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-28.233047,-34.745757)">
+    <g
+       id="g1641"
+       transform="matrix(0.64959266,0,0,0.64959266,9.8930668,12.175168)">
+      <circle
+         style="fill:#252527;stroke-width:0.3;paint-order:markers stroke fill"
+         id="path3123"
+         cx="105.20436"
+         cy="111.71707"
+         r="76.971313" />
+      <g
+         id="g3131"
+         transform="translate(0,-9.1428841)">
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.236029;paint-order:markers stroke fill"
+           id="rect3125"
+           width="99.553764"
+           height="61.527603"
+           x="55.427479"
+           y="93.090019" />
+        <path
+           style="fill:none;stroke:#f9f9f9;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 89.931179,93.392949 c 0,-8.943065 -0.03351,-8.951917 15.505171,-8.951917 14.94092,0 15.03948,-0.05426 15.03948,8.683048"
+           id="path3127"
+           sodipodi:nodetypes="ccc" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:37.8239px;line-height:1.25;font-family:Impact;-inkscape-font-specification:'Impact, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.9955;fill:#101012;fill-opacity:1;stroke:none;stroke-width:0.945605"
+         x="47.308128"
+         y="155.73846"
+         id="text3135"
+         transform="rotate(-15)"><tspan
+           sodipodi:role="line"
+           id="tspan3133"
+           x="47.308128"
+           y="155.73846"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:37.8239px;font-family:Anton;-inkscape-font-specification:'Anton, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#101012;fill-opacity:1;stroke-width:0.945605">ZIP!</tspan></text>
+    </g>
+  </g>
+</svg>
