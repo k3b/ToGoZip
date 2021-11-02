@@ -21,24 +21,24 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <!-- #6: which gui language to use ? pref_locale_names must correspond with pref_locale_values -->
     <string-array name="pref_locale_names" translatable="false">
         <item>@string/settings_locale_os_language</item>
-        <item>العربية (Arabic)</item>
+        <item>العربية 🇸🇦 (Arabic)</item>
         <item>বাঙালি (Bengali)</item>
-        <item>Deutsch (German)</item>
-        <item>English</item>
-        <item>Espanol (Spanish)</item>
-        <item>Français (French)</item>
-		<item>हिंदी (Hindi)</item>
-		<item>Magyar (Hungarian)</item>
-        <item>Indonesia (Indonesian)</item>
-        <item>日本人 (Japanese)</item>
-        <item>Nederlands (Dutch)</item>
-        <item>Norsk (Norwegian)</item>
-        <item>Polskie (Polish)</item>
-        <item>Português (Portuguese)</item>
-        <item>Русский (Russian)</item>
-        <item>Türk (Turkish)</item>
-        <item>Українська (Ukrainian)</item>
-        <item>Tiếng Việt (Vietnamese)</item>
+        <item>Deutsch (German) 🇩🇪</item>
+        <item>English🇺🇸 🇬🇧</item>
+        <item>Espanol (Spanish) 🇪🇸</item>
+        <item>Français (French) 🇫🇷</item>
+        <item>हिंदी (Hindi)</item>
+        <item>Magyar (Hungarian) 🇭🇺</item>
+        <item>Indonesia (Indonesian) 🇮🇩</item>
+        <item>日本人 (Japanese) 🇯🇵</item>
+        <item>Nederlands (Dutch) 🇳🇱</item>
+        <item>Norsk (Norwegian) 🇳🇴</item>
+        <item>Polskie (Polish) 🇵🇱</item>
+        <item>Português (Portuguese) 🇵🇹 🇧🇷</item>
+        <item>Русский (Russian) 🇷🇺</item>
+        <item>Türk (Turkish) 🇹🇷</item>
+        <item>Українська (Ukrainian) 🇺🇦</item>
+        <item>Tiếng Việt (Vietnamese) 🇻🇳</item>
         <item>简体中文 (simplified Chinese)</item>
         <item>繁体中文 (traditional Chinese)</item>
         <item>(For Translators)</item>
