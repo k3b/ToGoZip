@@ -283,8 +283,10 @@ public class SettingsActivity extends PreferenceActivity
             startActivityForResult(intent, folderpickerCode);
         } else {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                    | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
             startActivityForResult(intent, folderpickerCode);
         }
         return true;
@@ -381,8 +383,8 @@ public class SettingsActivity extends PreferenceActivity
         if (docPath != null) {
             final ContentResolver resolver = ctx.getContentResolver();
             resolver.takePersistableUriPermission(data,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
     }
 
