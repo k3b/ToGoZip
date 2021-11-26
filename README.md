@@ -22,7 +22,9 @@ in order to transfer them to a desktop PC's calendar.
 * Settings automatically pop up if the ZIP folder is not writable.
 * [Translations](https://crowdin.com/project/togozip) : bn, de, en, es, fr, hi, hu, id, ja, nl, no, pl, pt, tr, zh-CN, zh-TW
   * [![Crowdin](https://d322cqt584bo4o.cloudfront.net/togozip/localized.svg)](https://crowdin.com/project/togozip) [Help us to translate into other languages.](https://crowdin.com/project/togozip)
-* Minimal requirements: Works with android-2.1 (API 7) and up.
+* Minimual requirements: 
+  * Version 2.0.17 works with Android-2.1 (api 7) up to Android-5. apk size is only about 100 KB.
+  * Version 2.1.27 works with Android-4.1 (api 16) and later (including Android-10). apk size is only about 200 KB.
 
 ## Required Android Permissions
 * WRITE_EXTERNAL_STORAGE used to store the created/updated ZIP file.
