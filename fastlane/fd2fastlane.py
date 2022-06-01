@@ -96,15 +96,11 @@ def save_to_wiki_homepage(title, short_description, full_description, android_lo
 
 def generate_wiki_homepage(label, title, short_description, full_description):
     md = f"""{label}
-## ![](https://raw.githubusercontent.com/k3b/APhotoManager/master/app/src/main/res/drawable-hdpi/foto_gallery.png) {title}
+## ![](https://raw.githubusercontent.com/k3b/ToGoZip/master/app/src/main/res/drawable-hdpi/ic_launcher.png) {title}
 
 {short_description}
 
 {full_description}
-
-![](https://raw.githubusercontent.com/k3b/APhotoManager/master/wiki/png/SelectArea.png)
-
-![](https://raw.githubusercontent.com/k3b/APhotoManager/master/wiki/png/Gallery.png)
 
 """
     return md
