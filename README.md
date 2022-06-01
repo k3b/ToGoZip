@@ -20,7 +20,7 @@ in order to transfer them to a desktop PC's calendar.
 * Automatic file renaming in the ZIP if the same name with different file date already exists.
 * If settings/DebugMode is enabled, processing is logged to logcat and to clipboard as text.
 * Settings automatically pop up if the ZIP folder is not writable.
-* [Translations](https://crowdin.com/project/togozip) : bn, de, en, es, fr, hi, hu, id, ja, nl, no, pl, pt, tr, zh-CN, zh-TW
+* [Translations](https://crowdin.com/project/togozip) : ar,  bn,  cs,  de,  en,  es,  eu,  fr,  hi,  hu,  id,  ja,  nl,  no,  pl,  pt,  ru,  tr,  uk,  vi,  zh-CN,  zh-TW
   * [![Crowdin](https://d322cqt584bo4o.cloudfront.net/togozip/localized.svg)](https://crowdin.com/project/togozip) [Help us to translate into other languages.](https://crowdin.com/project/togozip)
 * Minimual requirements: 
   * Version 2.0.17 works with Android-2.1 (api 7) up to Android-5. apk size is only about 100 KB.
