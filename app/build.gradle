@@ -17,9 +17,10 @@ android {
         // targetSdkVersion 26
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 23
-        versionCode 27
-        versionName '2.1.27.210419'
+        versionCode 28
+        versionName '2.1.28.220601'
 
+        // 2.1.28.220601 (28) new logo and feature graphic; Fix: lost permissions under android-11, Translations eu, cs
         // 2.1.27.210419 (27) Migrated to api29/AndroidX/minSdk-16
         // 2.1.26.210206 (26) Translation updates ur, ru
         // 2.1.25.200422 (25) Translation updates cs, es, eu, fr
@@ -45,8 +46,8 @@ android {
         // Initial Version v0.1.1.20141109
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {

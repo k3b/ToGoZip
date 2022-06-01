@@ -43,16 +43,16 @@ import de.k3b.io.FileUtils;
  */
 public class CompressJobIntegrationTests {
     private static final int NUMBER_OF_LOG_ENTRIES = 1;
-    static private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
+    static private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmmss-S");
     // static private File root = new File(System.getProperty("java.io.tmpdir")
-    static private String root = FileUtils.fixPath(System.getProperty("java.io.tmpdir")
+    static private final String root = FileUtils.fixPath(System.getProperty("java.io.tmpdir")
             + "/k3bZipTests/CompressJobIntegrationTests/");
-    static private String rootInput = root + "inputFiles/";
-    static private File testContent = new File(rootInput + "testFile.txt");
-    static private File testContent2 = new File(rootInput + "testFile2.txt");
-    static private File testDirWith2SubItems = new File(rootInput + "dir");
-    static private File testContent3 = new File(testDirWith2SubItems, "testFile3.txt");
-    static private File testContent4 = new File(testDirWith2SubItems, "testFile4.txt");
+    static private final String rootInput = root + "inputFiles/";
+    static private final File testContent = new File(rootInput + "testFile.txt");
+    static private final File testContent2 = new File(rootInput + "testFile2.txt");
+    static private final File testDirWith2SubItems = new File(rootInput + "dir");
+    static private final File testContent3 = new File(testDirWith2SubItems, "testFile3.txt");
+    static private final File testContent4 = new File(testDirWith2SubItems, "testFile4.txt");
 
     @BeforeClass
     static public void createTestData() throws IOException, ParseException {
