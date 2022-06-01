@@ -11,22 +11,22 @@
   <string name="about_content_about"><![CDATA["
 <h1>ToGoZip ('==> Zip')</h1>
 <br />
-<h2>ToGoZip: Přidat do Zip pro sdílení/odesílání nabídky android-s.</h2>
+<h2>ToGoZip: Přidat do zipu pro sdílení/odesílání nabídky androidu. </h2>
 <br />
-<p>Add to Zip for android-s share/send menu.</p>
-<p>Easy collecting files from every supporting app into
-one zip-file while being 'on the go' or offline.
-(Note the english 'to go' means 'while traveling').</p>
-<p>This collecting '2go.zip'-file is like a suitcase
-where you can put things (files) into from nearly everywhere (from
-every app that supports 'share' / 'send') and that
-can travel  everywhere (via email,
+<p>Přidat do Zip pro sdílení/odesílání nabídky android-s.</p>
+<p>Snadné shromažďování souborů z každé podpůrné aplikace do
+jednoho zip-souboru během 'na cestě' nebo offline.
+(Poznámte si, že \"to go\" znamená \"během cestování\").</p>
+<p>Tato sbírka '2go. ip'-file je jako suitcase
+, kde můžete vkládat věci (soubory) z téměř všude (z
+každé aplikace, která podporuje 'share' / 'send') a která
+může cestovat všude (e-mailem,
 bluetooth, nfc).</p>
-<p>The program's author uses ToGoZip to collect new android calendar entries
-that should be later imported into a desktop PC calender.</p>
-<p>Required Android Permissions:</p>
+<p>Autor programu používá ToGoZip pro sběr nových položek android kalendáře
+, které by měly být později importovány do desctop-pcs-kalendáře.</p>
+<p>Požadovaná oprávnění Androidu:</p>
 <ul>
-<li>WRITE_EXTERNAL_STORAGE to save/update '2go.zip' to some public folder.</li>
+<li>WRITE_EXTERNAL_STORAGE pro uložení/aktualizaci '2go.zip' na některou veřejnou složku.</li>
 </ul>
 <p>.</p>
 <br />

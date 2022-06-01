@@ -1,1 +1,1 @@
-ToGoZip: Přidat do Zip pro sdílení/odesílání nabídky android-s.
+ToGoZip: Přidat do zipu pro sdílení/odesílání nabídky androidu. 

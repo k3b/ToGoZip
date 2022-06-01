@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Translation cs 2022 by Jonáš Hanulík (matfyzacek)
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+    <string name="title_activity_add2zip">Přidat do zip.</string>
+    <string name="cmd_use_default">Use Default</string>
+    <string name="cmd_cancel">Zrušit</string>
+    <string name="cmd_edit">Upravit</string>
+    <string name="ERR_ADD"><![CDATA["Nelze aktualizovat  %1$s :
+%2$s"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">Žádná oprávnění k zápisu do %1$s %2$s.</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["Žádná oprávnění k zápisu do aktuálního souboru zip '%1$s'.
+Chcete místo toho použít výchozí '%2$s'?"]]></string>
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA[Soubory jsou již zahrnuty v
+%1$s"]]></string>
+    <string name="SUCCESS_ADD"><![CDATA["přidal(a) %2$d soubor(ů) do
+%1$s"]]></string>
+    <string name="WARN_ADD_NO_FILES">Nebyly vybrány žádné soubory</string>
+    <string name="WARN_ADD_CANCELED">Zrušit: Nebyly přidány žádné soubory</string>
+    <string name="about_summary">O aplikaci ToGoZip</string>
+    <string name="banner">Vytvořeno s aplikací ToGoZip verzí $versionName$</string>
+    <string name="pref_debug_title">Režim ladění</string>
+    <string name="pref_debug_summary">Ladící zprávy zkopírovány do schránky a přidány do LogCat</string>
+    <string name="pref_long_text_file_title">Dlouhý textový souboý v souboru zip</string>
+    <string name="pref_long_text_file_len_min">Dlouhý soubor: Minimální delka textu</string>
+    <string name="pref_short_text_file_title">Krátký textový soubor v zip</string>
+    <string name="pref_zipfile_title">Výstupní ZIP soubor</string>
+    <string name="pref_settings_title">Nastavení</string>
+    <string name="settings_locale_title">Jazyk</string>
+    <string name="settings_locale_os_language">Systémový výchozí</string>
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">Složka ZIP složka</string>
+    <string name="folder_picker_parent_dir">Nahoru</string>
+    <string name="folder_picker_create_new_directory">Nová složka</string>
+    <!-- generate a changelogfile within zip file -->
+    <string name="pref_log_file_in_zip_debug_summary">Aktualizovat ToGoZip.log v Zip</string>
+    <string name="pref_log_file_in_zip_debug_title">Zaznamenat plné cesty ke přidaným souborům.</string>
+    <!-- #13: if not empty: create subfolders in zip relative to this path -->
+    <string name="pref_short_text_zip_rel_path_title">Generovat Zip-podsložky níže</string>
+    <string name="pref_short_text_zip_rel_path_enabled_summayr"><![CDATA["add2zip('%1$s/subfolder/file.txt')
+    ==> Zip: 'subfolder/file.txt'"]]></string>
+    <string name="pref_short_text_zip_rel_path_disabled_summayr">-- Nepovoleno --</string>
+    <string name="delete_menu_title">Smazat %1$s</string>
+    <string name="view_zip_menu_title">Zobrazit %1$s</string>
+    <string name="send_zip_menu_title">Odeslat/sdílet %1$s do</string>
+    <string name="show_in_filemanager_menu_title">Otevřít ve správci souborů</string>
+    <string name="viewer_not_installed">Pro soubor %1$s nemáte nainstalován žádný prohlížeč</string>
+</resources>

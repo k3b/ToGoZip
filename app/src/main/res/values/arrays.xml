@@ -23,9 +23,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>@string/settings_locale_os_language</item>
         <item>العربية 🇸🇦 (Arabic)</item>
         <item>বাঙালি (Bengali)</item>
+        <item>Čeština (Czech) 🇨🇿</item>
         <item>Deutsch (German) 🇩🇪</item>
         <item>English🇺🇸 🇬🇧</item>
         <item>Espanol (Spanish) 🇪🇸</item>
+        <item>Euskara (Basque)</item>
         <item>Français (French) 🇫🇷</item>
         <item>हिंदी (Hindi)</item>
         <item>Magyar (Hungarian) 🇭🇺</item>
@@ -47,9 +49,11 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item></item>
         <item>ar</item>
         <item>bn</item>
+        <item>cs</item>
         <item>de</item>
         <item>en</item>
         <item>es</item>
+        <item>eu</item>
         <item>fr</item>
         <item>hi</item>
         <item>hu</item>
