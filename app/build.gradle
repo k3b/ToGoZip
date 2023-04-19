@@ -17,9 +17,10 @@ android {
         // targetSdkVersion 26
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 23
-        versionCode 28
-        versionName '2.1.28.220601'
+        versionCode 29
+        versionName '2.1.29.230419'
 
+        // 2.1.29.230419 (29) translations new: si (sinhala), he (Hebrew); updated: pl
         // 2.1.28.220601 (28) new logo and feature graphic; Fix: lost permissions under android-11, Translations eu, cs
         // 2.1.27.210419 (27) Migrated to api29/AndroidX/minSdk-16
         // 2.1.26.210206 (26) Translation updates ur, ru
