@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+he (Hebrew) translation 2023 by Shopimisrel (user10122)
+
+Copyright (C) 2014-2018 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+    <string name="title_activity_add2zip">הוסף ל-Zip</string>
+    <string name="cmd_use_default">השתמש בברית המחדל</string>
+    <string name="cmd_cancel">בטל</string>
+    <string name="cmd_edit">ערוך</string>
+    <string name="ERR_ADD"><![CDATA["לא ניתן לעדכן את %1$s:
+ %2$s"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">אין הרשאות כתיבה אל %1$s %2$s.</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["אין הרשאות לכתוב ל-zip הנוכחי '%1$s'.
+ האם אתה רוצה להשתמש ברירת המחדל '%2$s' במקום זאת?"]]></string>
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA["קבצים כבר כלולים ב
+ %1$s"]]></string>
+    <string name="SUCCESS_ADD"><![CDATA["הוסיף %2$d קבצים ל
+ %1$s"]]></string>
+    <string name="WARN_ADD_NO_FILES">לא נבחרו קבצים</string>
+    <string name="WARN_ADD_CANCELED">ביטול: לא נוספו קבצים</string>
+    <string name="about_summary">אודות ToGoZip</string>
+    <string name="banner">נאסף עם גרסה של ToGoZip $versionName$</string>
+    <string name="pref_debug_title">מצב איתור באגים</string>
+    <string name="pref_debug_summary">הודעות ניפוי באגים הועתקו ללוח ונוספו ל-LogCat</string>
+    <string name="pref_long_text_file_title">קובץ טקסט ארוך ב-zip</string>
+    <string name="pref_long_text_file_len_min">קובץ ארוך: Min Text Len</string>
+    <string name="pref_short_text_file_title">קובץ טקסט קצר ב-zip</string>
+    <string name="pref_zipfile_title">פלט קובץ Zip</string>
+    <string name="pref_settings_title">הגדרות</string>
+    <string name="settings_locale_title">שפה</string>
+    <string name="settings_locale_os_language">ברירת המחדל של המערכת</string>
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">פלט תקיית  Zip</string>
+    <string name="folder_picker_parent_dir">למעלה</string>
+    <string name="folder_picker_create_new_directory">חדש</string>
+    <!-- generate a changelogfile within zip file -->
+    <string name="pref_log_file_in_zip_debug_summary">עדכן את ToGoZip.log ב-Zip</string>
+</resources>
