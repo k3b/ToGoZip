@@ -22,24 +22,24 @@ this program. If not, see <http://www.gnu.org/licenses/>
     <string-array name="pref_locale_names" translatable="false">
         <item>@string/settings_locale_os_language</item>
         <item>العربية 🇸🇦 (Arabic)</item>
-        <item>বাঙালি (Bengali)</item>
+        <item>বাঙালি (Bengali) 🇧🇩</item>
         <item>Čeština (Czech) 🇨🇿</item>
         <item>Deutsch (German) 🇩🇪</item>
         <item>English🇺🇸 🇬🇧</item>
         <item>Espanol (Spanish) 🇪🇸</item>
         <item>Euskara (Basque)</item>
         <item>Français (French) 🇫🇷</item>
-        <item>עברית (Hebrew)</item>
-        <item>हिंदी (Hindi)</item>
+        <item>हिंदी (Hindi) 🇮🇳</item>
         <item>Magyar (Hungarian) 🇭🇺</item>
         <item>Indonesia (Indonesian) 🇮🇩</item>
+        <item>עברית (Hebrew) 🇮🇱</item> <!-- iso uses "he" (Hebrew) but android uses "iw"  -->
         <item>日本人 (Japanese) 🇯🇵</item>
         <item>Nederlands (Dutch) 🇳🇱</item>
         <item>Norsk (Norwegian) 🇳🇴</item>
         <item>Polskie (Polish) 🇵🇱</item>
         <item>Português (Portuguese) 🇵🇹 🇧🇷</item>
         <item>Русский (Russian) 🇷🇺</item>
-        <item>සිංහල (Sinhala)</item>
+        <item>සිංහල (Sinhala) 🇱🇰</item>
         <item>Türk (Turkish) 🇹🇷</item>
         <item>Українська (Ukrainian) 🇺🇦</item>
         <item>Tiếng Việt (Vietnamese) 🇻🇳</item>
@@ -57,10 +57,10 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>es</item>
         <item>eu</item>
         <item>fr</item>
-        <item>he</item>
         <item>hi</item>
         <item>hu</item>
         <item>in</item> <!-- iso uses "id" but java uses "in" -->
+        <item>iw</item> <!-- iso uses "he" (Hebrew) but android uses "iw"  -->
         <item>ja</item>
         <item>nl</item>
         <item>no</item>
