@@ -1,1 +1,1 @@
-#6 added/updated translations: si (sinhala), he (Hebrew)
+#6 translations new: si (sinhala), he (Hebrew); updated: pl
