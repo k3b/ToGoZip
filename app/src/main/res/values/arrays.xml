@@ -38,6 +38,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>Polskie (Polish) 🇵🇱</item>
         <item>Português (Portuguese) 🇵🇹 🇧🇷</item>
         <item>Русский (Russian) 🇷🇺</item>
+        <item>සිංහල (Sinhala)</item>
         <item>Türk (Turkish) 🇹🇷</item>
         <item>Українська (Ukrainian) 🇺🇦</item>
         <item>Tiếng Việt (Vietnamese) 🇻🇳</item>
@@ -64,6 +65,7 @@ this program. If not, see <http://www.gnu.org/licenses/>
         <item>pl</item>
         <item>pt</item>
         <item>ru</item>
+        <item>si</item>
         <item>tr</item>
         <item>uk</item>
         <item>vi</item>

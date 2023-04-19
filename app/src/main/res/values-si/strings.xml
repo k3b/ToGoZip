@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+si (Sinhala) translation 2023 by නාමල් ජයසිංහ (nimnaya)
+
+Copyright (C) 2014-2018 k3b
+
+This file is part of de.k3b.android.toGoZip (https://github.com/k3b/ToGoZip/)
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>
+-->
+<resources>
+    <string name="title_activity_add2zip">Zip වෙත එක් කරන්න</string>
+    <string name="cmd_use_default">පෙරනිමි භාවිතාකරන්න</string>
+    <string name="cmd_cancel">අවලංගු කරන්න</string>
+    <string name="cmd_edit">සංස්කරණය කරන්න</string>
+    <string name="ERR_ADD"><![CDATA["  %1$s :
+%2$sයාවත්කාලීන කළ නොහැකි විය"]]></string>
+    <string name="ERR_NO_WRITE_PERMISSIONS">%1$s %2$sට ලිවීමට අවසර නැත.</string>
+    <string name="ERR_NO_WRITE_PERMISSIONS_CHANGE_TO_DEFAULT"><![CDATA["වර්තමාන zip '%1$s' වෙත ලිවීමට අවසර නැත.
+ඒ වෙනුවට පෙරනිමි '%2$s' භාවිතා කිරීමට ඔබට අවශ්‍යද?"]]></string>
+    <string name="WARN_ADD_NO_CHANGES"><![CDATA["ගොනු දැනටමත්
+%1$sහි ඇතුළත් කර ඇත"]]></string>
+    <string name="SUCCESS_ADD"><![CDATA["
+%1$sවෙත ගොනු (ය) %2$d ක් එකතු කරන ලදී"]]></string>
+    <string name="WARN_ADD_NO_FILES">ගොනු කිසිවක් තෝරා නැත</string>
+    <string name="WARN_ADD_CANCELED">අවලංගු කරන්න: ගොනු එකතු කර නැත</string>
+    <string name="about_summary">ToGoZip ගැන</string>
+    <string name="banner">ToGoZip අනුවාදය $versionName$සමඟ එකතු කර ඇත</string>
+    <string name="pref_debug_title">නිදොස් කිරීමේ මාදිලිය</string>
+    <string name="pref_debug_summary">නිදොස් කිරීමේ පණිවිඩ පසුරු පුවරුවට පිටපත් කර LogCat වෙත එක් කරන ලදී</string>
+    <string name="pref_long_text_file_title">zip හි දිගු පෙළ ගොනුව</string>
+    <string name="pref_long_text_file_len_min">දිගු ගොනුව: Min Text Len</string>
+    <string name="pref_short_text_file_title">zip හි කෙටි පෙළ ගොනුව</string>
+    <string name="pref_zipfile_title">ප්‍රතිදාන Zip ගොනුව</string>
+    <string name="pref_settings_title">සැකසුම්</string>
+    <string name="settings_locale_title">භාෂාව</string>
+    <string name="settings_locale_os_language">පද්ධති පෙරනිමිය</string>
+    <!-- #8: for folder picker -->
+    <string name="pref_zipfolder_title">ප්‍රතිදාන Zip ෆෝල්ඩරය</string>
+    <string name="folder_picker_parent_dir">ඉහළට</string>
+    <string name="folder_picker_create_new_directory">අලුත්</string>
+    <!-- generate a changelogfile within zip file -->
+    <string name="pref_log_file_in_zip_debug_summary">Zip හි ToGoZip.log යාවත්කාලීන කරන්න</string>
+    <string name="pref_log_file_in_zip_debug_title">එකතු කරන ලද ගොනු වල සම්පූර්ණ මූලාශ්‍ර ගොනු මාර්ග ලොග් කරන්න.</string>
+    <!-- #13: if not empty: create subfolders in zip relative to this path -->
+    <string name="pref_short_text_zip_rel_path_title">පහත Zip-උප ෆෝල්ඩර ජනනය කරන්න</string>
+    <string name="pref_short_text_zip_rel_path_disabled_summayr">-- ආබාධිත --</string>
+    <string name="delete_menu_title">%1$sමකන්න</string>
+    <string name="view_zip_menu_title">බලන්න %1$s</string>
+    <string name="send_zip_menu_title">බෙදාගන්න/ %1$s යවන්න</string>
+    <string name="show_in_filemanager_menu_title">ගොනු කළමනාකරු තුළ විවෘත කරන්න</string>
+    <string name="viewer_not_installed">%1$sසඳහා නරඹන්නෙකු ස්ථාපනය කර නැත</string>
+</resources>
