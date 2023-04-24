@@ -1,1 +1,2 @@
-TODO updates 29 -> 30
+#6  Translations new: si (sinhala), he (Hebrew); updated: pl
+#31 Fixed Build Problem
